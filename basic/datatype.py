@@ -11,12 +11,17 @@ logging.basicConfig(
     level=logging.DEBUG,            # ログレベル
     format=' %(asctime)s - %(levelname)s - %(message)s')
 
-# --------------------------------------------------------
-# リスト型
-# --------------------------------------------------------
-
 
 def listsample():
+    """リスト型の動作サンプル
+
+    入れ子の編集、タプルへの変換
+
+    Note:
+        基本動作の確認、関数内のコードは都度編集されることを想定。
+
+    """
+
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
 
     # 基本形
@@ -49,7 +54,13 @@ def listsample():
 
 
 def listisEmpty():
-    """ 空要素を判定する
+    """リスト型の空要素を判定
+
+    リスト型の空要素判定コード
+
+    Note:
+        コピー用途
+
     """
     mylist = []
     if not mylist:
@@ -58,12 +69,16 @@ def listisEmpty():
         logging.info('Exists!!')
 
 
-# --------------------------------------------------------
-# タプル型
-# --------------------------------------------------------
-
-
 def tuplesample():
+    """タプル型の動作サンプル
+
+    入れ子の編集、リスト型への変換
+
+    Note:
+        基本動作の確認、関数内のコードは都度編集されることを想定。
+
+    """
+
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
 
     # 基本形
@@ -92,12 +107,17 @@ def tuplesample():
     l = list(l)
     logging.info(type(l))
 
-# --------------------------------------------------------
-# 辞書型
-# --------------------------------------------------------
-
 
 def dicsample():
+    """辞書型の動作サンプル
+
+    入れ子の編集
+
+    Note:
+        基本動作の確認、関数内のコードは都度編集されることを想定。
+
+    """
+
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
 
     # 基本形
@@ -133,17 +153,11 @@ def dicsample():
 def listdiccreate():
     """リスト内辞書データの連結作成
 
-    Args:
-        無し
+    リスト内に辞書型が組合された場合の動作サンプル。
+    主にjsonを想定したケース。
 
     Returns:
         連結された辞書データ
-
-    Raises:
-        無し
-
-    Examples:
-        無し
 
     Note:
         呼び出し元でjsonとして扱う想定
@@ -154,6 +168,7 @@ def listdiccreate():
             ]
         }
     """
+
     result = {}
     mylist1 = []
     mylist2 = []
@@ -164,12 +179,5 @@ def listdiccreate():
     return result
 
 
-# --------------------------------------------------------
-# main
-# --------------------------------------------------------
-# listsample()
-# tuplesample()
-# dicsample()
-# param = listdiccreate()
-# logging.info(json.dumps(param))
-listisEmpty()
+if __name__ == '__main__':
+    listisEmpty()

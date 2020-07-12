@@ -2,4 +2,5 @@
 aws/_privatejson
 basic/_ignorefiles
 forwin
+docs/_*
 log

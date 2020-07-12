@@ -13,6 +13,8 @@ from logging import DEBUG,INFO,WARN,ERROR,CRITICAL
 from lxml import html    # pip install lxml
 import json
 import copy
+import openpyxl     # pip install openpyxl
+
 
 # ロギング初期化
 logging.basicConfig(
@@ -30,7 +32,6 @@ meigara_head = ['取得日']
 # --------------------------------------------------------
 # json内容をファイル出力
 # --------------------------------------------------------
-import openpyxl
 def filewrite(meigara_dic_list):
     wb = openpyxl.Workbook()
     sheet = wb.active

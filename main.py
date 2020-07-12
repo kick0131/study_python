@@ -3,6 +3,7 @@ import os
 from pprint import pformat
 from loggingHelper import createDeveloplogger
 import Cognito.cognitoMain
+import datatype
 
 # 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通すこと
 
@@ -19,11 +20,12 @@ def debuginfo():
 
 
 if __name__ == '__main__':
-    debuginfo()
+    # debuginfo()
 
     try:
         logger.debug('テスト')
-        Cognito.cognitoMain.lambda_handler('', '')
+        # Cognito.cognitoMain.lambda_handler('', '')
+        effectivePythonSample()
 
     except Exception as err:
         logger.error('エラー発生:{}'.format(err))

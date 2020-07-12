@@ -7,6 +7,9 @@ from Cognito.cognitoAuth import CognitoManage
 
 
 def lambda_handler(event, context):
+    """汎用Lambdaハンドラモジュール
+    """
+
     # TODO implement
     client_id = event['client_id']
     user_id = event['user_id']
