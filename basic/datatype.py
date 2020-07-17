@@ -179,5 +179,41 @@ def listdiccreate():
     return result
 
 
+def listdic_extraction():
+    """リスト内辞書データの抽出
+
+    リスト内に辞書型が組合されたデータの抽出サンプル。
+    DataAPIの応答結果を想定したケース。
+
+    Note:
+        以下テストデータとする
+        {
+            "data": [
+                {"name":"Taro","attr":"Man"},
+                {"name":"Hanako","attr":"Woman"},
+            ]
+        }
+
+        Valueのみを抽出し、レコード単位でリストにする
+        [["Taro","Man"]["Hanako","Woman"]]
+
+    """
+    # 抽出対象
+    result={}
+    result['data'] = [{"name":"Taro","attr":"Man"},{"name":"Hanako","attr":"Woman"}]
+
+    # 処理ロジック
+    newlist =[]
+    for dicitem in result['data']:
+        locallist=[]
+        for value in dicitem.values():
+            locallist.append(value)
+        newlist.append(locallist)
+
+    # 取得結果確認
+    logging.info(newlist)
+
+
 if __name__ == '__main__':
-    listisEmpty()
+    logging.error('エラー')
+    listdic_extraction()
