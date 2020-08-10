@@ -53,7 +53,7 @@ def sampleRun():
         result = 'Error'
 
     else:   # 正常終了 本来やりたい事
-        pprint.pprint(count)
+        pprint.pprint(result)
 
     finally:  # 強制実行 どうしてもやる必要のある事
         pass  # 何もしない場合の構文

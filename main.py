@@ -25,7 +25,6 @@ if __name__ == '__main__':
     try:
         logger.debug('テスト')
         # Cognito.cognitoMain.lambda_handler('', '')
-        effectivePythonSample()
 
     except Exception as err:
         logger.error('エラー発生:{}'.format(err))
