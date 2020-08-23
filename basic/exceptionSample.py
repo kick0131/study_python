@@ -46,7 +46,7 @@ def sampleRun():
         result = 'Error'
 
     # とにかく補足
-    except:
+    except Exception:
         # スタックトレースは出すべき
         pprint.pprint('== Error occured reason:{}'.format(
             traceback.format_exc()))

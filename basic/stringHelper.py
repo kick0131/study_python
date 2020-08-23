@@ -20,13 +20,14 @@ def parse_idtoken(idtoken: str):
     logging.info(f'{sys._getframe().f_code.co_name} start')
     logging.info(f'{idtoken}')
 
-    repatter = re.compile('\.')
+    repatter = re.compile('\\.')
     separaterIdx = [m.start() for m in repatter.finditer(idtoken)]
     logging.info(f'{separaterIdx}')
-    logging.info(idtoken[separaterIdx[0]+1:separaterIdx[1]])
+    logging.info(idtoken[separaterIdx[0] + 1:separaterIdx[1]])
 
     logging.info(f'{sys._getframe().f_code.co_name} end')
-    return idtoken[separaterIdx[0]+1:separaterIdx[1]]
+    return idtoken[separaterIdx[0] + 1:separaterIdx[1]]
+
 
 def encode_idtoken(idtoken_payload: str):
     """IDトークンペイロード部解析
@@ -41,6 +42,7 @@ def encode_idtoken(idtoken_payload: str):
     logging.info(dictdata)
     logging.info(type(dictdata))
     logging.info(dictdata['cognito:username'])
+
 
 if __name__ == '__main__':
     logging.error('テスト開始')

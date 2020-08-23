@@ -2,6 +2,7 @@ import os
 import pprint
 import traceback
 
+
 def createDir(dirpath: str):
     """
     ディレクトリが無ければ作成
@@ -55,7 +56,7 @@ def sampleRun():
         createDir(r'log/logA/sample.log')
 
     # とにかく補足
-    except:
+    except Exception:
         # スタックトレースは出すべき
         pprint.pprint('== Error occured reason:{}'.format(
             traceback.format_exc()))
@@ -73,4 +74,3 @@ def sampleRun():
 # メイン処理
 if __name__ == '__main__':
     print("result:{0}".format(sampleRun()))
-

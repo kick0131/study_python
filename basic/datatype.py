@@ -5,7 +5,7 @@
 
 import logging
 import sys
-import json
+# import json
 
 logging.basicConfig(
     level=logging.DEBUG,            # ログレベル
@@ -25,32 +25,32 @@ def listsample():
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
 
     # 基本形
-    l = [1, 'cat', 3, 'dog']
-    for i in range(len(l)):
-        print(l[i])
+    val = [1, 'cat', 3, 'dog']
+    for i in range(len(val)):
+        print(val[i])
 
     # 入れ子
-    l = [
+    val = [
         [1, 'cat', 3, 'dog'],
         [2, 'lion', 4, 'tiger']
     ]
-    print(l)
-    for i in range(len(l)):
-        for k in range(len(l[i])):
-            print(l[i][k])
+    print(val)
+    for i in range(len(val)):
+        for k in range(len(val[i])):
+            print(val[i][k])
 
     # 編集
-    l[1][2] = '★★★'
-    print(l)
+    val[1][2] = '★★★'
+    print(val)
 
     # 検索
     # loggingモジュールとprintメソッドの出力順に注意
     # print分が出力された後にloggingが出力される
-    logging.debug('cat' in l[0])
+    logging.debug('cat' in val[0])
 
     # タプルに変換
-    l = tuple(l)
-    logging.info(type(l))
+    val = tuple(val)
+    logging.info(type(val))
 
 
 def listisEmpty():
@@ -82,30 +82,30 @@ def tuplesample():
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
 
     # 基本形
-    l = (1, 'cat', 3, 'dog')
-    for i in range(len(l)):
-        print(l[i])
+    val = (1, 'cat', 3, 'dog')
+    for i in range(len(val)):
+        print(val[i])
 
     # 入れ子
-    l = (
+    val = (
         (1, 'cat', 3, 'dog'),
         (2, 'lion', 4, 'tiger')
     )
-    print(l)
-    for i in range(len(l)):
-        for k in range(len(l[i])):
-            print(l[i][k])
+    print(val)
+    for i in range(len(val)):
+        for k in range(len(val[i])):
+            print(val[i][k])
 
     # 編集
 #    l[1][2] = '★★★'  # NG imutable
 #    print(l)
 
     # 検索
-    logging.debug('cat' in l[0])
+    logging.debug('cat' in val[0])
 
     # リストに変換
-    l = list(l)
-    logging.info(type(l))
+    val = list(val)
+    logging.info(type(val))
 
 
 def dicsample():
@@ -122,12 +122,12 @@ def dicsample():
 
     # 基本形
     # キーが同じものは後勝ちで上書きされる
-    l = {'key1': 1, 'key2': 'cat', 'key3': 3, 'key4': 'dog'}
-    for i in l.items():
+    val = {'key1': 1, 'key2': 'cat', 'key3': 3, 'key4': 'dog'}
+    for i in val.items():
         print(i)
 
     # 入れ子
-    l = {
+    val = {
         'key1': {'key11': 1, 'key12': 'cat', 'key13': 3, 'key14': 'dog'},
         'key2': {'key21': 5, 'key22': 'lion', 'key23': 7, 'key24': 'tiger'}
     }
@@ -137,17 +137,17 @@ def dicsample():
     #            2~~~~~~~~  2~~~~~~~~~~~~~  2~~~~~~~~~~  2~~~~~~~~~~~~~
     # 1: 外側のループのvaluesで取得する範囲
     # 2: 内側のループのitemsで取得する範囲
-    for i in l.values():
+    for i in val.values():
         print(i)
         for k in i.items():
             print(k)
 
     # 編集
-    l['key2']['key22'] = '★★★'
-    print(l)
+    val['key2']['key22'] = '★★★'
+    print(val)
 
     # 検索
-    logging.info('cat' in l['key1'].values())
+    logging.info('cat' in val['key1'].values())
 
 
 def listdiccreate():
@@ -199,13 +199,14 @@ def listdic_extraction():
 
     """
     # 抽出対象
-    result={}
-    result['data'] = [{"name":"Taro","attr":"Man"},{"name":"Hanako","attr":"Woman"}]
+    result = {}
+    result['data'] = [{"name": "Taro", "attr": "Man"},
+                      {"name": "Hanako", "attr": "Woman"}]
 
     # 処理ロジック
-    newlist =[]
+    newlist = []
     for dicitem in result['data']:
-        locallist=[]
+        locallist = []
         for value in dicitem.values():
             locallist.append(value)
         newlist.append(locallist)

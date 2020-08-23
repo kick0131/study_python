@@ -1,4 +1,4 @@
-from loggingHelper import createDeveloplogger
+from basic.loggingHelper import createDeveloplogger
 
 # ロガー
 logger = createDeveloplogger(__name__, 'log/debug.log')

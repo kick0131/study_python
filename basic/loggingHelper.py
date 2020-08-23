@@ -1,7 +1,7 @@
 import logging
 import logging.handlers
 from logging import DEBUG
-from fileAccessSample import createDir
+from basic.fileAccessSample import createDir
 
 # ハンドラ共通フォーマット
 COMMON_HANDLER_FORMAT = '%(asctime)s - %(levelname)s - [%(name)s:%(lineno)s] %(message)s'

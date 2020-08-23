@@ -1,5 +1,5 @@
 import functools
-from loggingHelper import createDeveloplogger
+from basic.loggingHelper import createDeveloplogger
 
 # ロガー
 logger = createDeveloplogger(__name__, 'log/debug.log')
@@ -13,12 +13,13 @@ def trace(func):
         return result
     return wrapper
 
+
 @trace
 def fibonacci(n):
     """Return the n-th Fibonacci number"""
     if n in (0, 1):
         return n
-    return (fibonacci(n - 2) + fibonacci(n-1))
+    return (fibonacci(n - 2) + fibonacci(n - 1))
 
 
 class EffectivePythonSample():
@@ -26,7 +27,7 @@ class EffectivePythonSample():
     """
 
     def __init__(self, message):
-        logger.debug(f'message')
+        logger.debug('message')
 
     # def trace(self, func):
     #     def wrapper(self, *args, **kwargs):
@@ -52,7 +53,7 @@ class EffectivePythonSample():
         """
         if n in (0, 1):
             return n
-        return (self.fibonacci(n - 2) + self.fibonacci(n-1))
+        return (self.fibonacci(n - 2) + self.fibonacci(n - 1))
 
 
 if __name__ == '__main__':
@@ -60,4 +61,3 @@ if __name__ == '__main__':
     target = EffectivePythonSample('hoge')
     target.fibonacci(3)
     logger.info(f'=== {target.fibonacci}')
-

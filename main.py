@@ -1,11 +1,9 @@
 import sys
 import os
 from pprint import pformat
-from loggingHelper import createDeveloplogger
-import Cognito.cognitoMain
-import datatype
-
-# 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通すこと
+from basic.loggingHelper import createDeveloplogger
+# import aws.Cognito.cognitoMain
+# import basic.datatype
 
 # ロガー
 logger = createDeveloplogger(__name__, 'log/debug.log')

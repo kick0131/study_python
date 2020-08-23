@@ -5,11 +5,11 @@ python sample
 * boto3利用方法
 
 ## 準備
-* 環境変数PYTHONPATHにaws,basicまでのディレクトリを追加  
+* 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通す
 
 * 仮想環境作成  
 `python3 -m venv forwin`  
-※環境によってはpython3ではなくpython
+※ディレクトリ名は環境に応じて適宜読み替える環境によってはpython3ではなくpython
 
 * 仮想環境有効化  
 `./forwin/Scripts/activate`  

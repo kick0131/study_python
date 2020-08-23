@@ -9,17 +9,17 @@ import bs4          # pip install beautifulsoup4
 import sys          # nessesaly nead bs4
 import os           # nessesaly nead bs4
 import logging
-from logging import DEBUG,INFO,WARN,ERROR,CRITICAL
+# from logging import DEBUG, INFO, WARN, ERROR, CRITICAL
 from lxml import html    # pip install lxml
-import json
+# import json
 import copy
 import openpyxl     # pip install openpyxl
 
 
 # ロギング初期化
 logging.basicConfig(
-        level=logging.DEBUG,            # ログレベル
-        format=' %(asctime)s - %(levelname)s - %(lineno)s - %(message)s')
+    level=logging.DEBUG,            # ログレベル
+    format=' %(asctime)s - %(levelname)s - %(lineno)s - %(message)s')
 
 # 銘柄情報見出し部分
 MEIGARA_HEAD = "//table[@class='tbl_dataOutputloop_02']/tr[1]/*"
@@ -32,6 +32,8 @@ meigara_head = ['取得日']
 # --------------------------------------------------------
 # json内容をファイル出力
 # --------------------------------------------------------
+
+
 def filewrite(meigara_dic_list):
     wb = openpyxl.Workbook()
     sheet = wb.active
@@ -49,19 +51,21 @@ def filewrite(meigara_dic_list):
     # 初期位置A2
     work_r = 2
     work_c = 1
-    logging.debug("meigara_dic_list type:{} data:{}".format(type(meigara_dic_list), meigara_dic_list))
+    logging.debug("meigara_dic_list type:{} data:{}".format(
+        type(meigara_dic_list), meigara_dic_list))
     for dic_item in meigara_dic_list:
         logging.debug("dic_item : {}".format(dic_item))
         work_c = 1
         for i in range(len(meigara_head)):
             # 1列名の取得日はデータを取得した内容ではなく、本日の日付を設定する
-            if( i == 0 ):
+            if(i == 0):
                 sheet.cell(row=work_r, column=work_c).value = 'yyyy/mm/dd'
             else:
                 # 列名に対応する値を取得し、セルに設定
                 logging.debug("i : {}".format(i))
                 logging.debug("meigara_head[i] : {}".format(meigara_head[i]))
-                sheet.cell(row=work_r, column=work_c).value = dic_item[meigara_head[i]]
+                sheet.cell(
+                    row=work_r, column=work_c).value = dic_item[meigara_head[i]]
             work_c += 1
         work_r += 1
 
@@ -70,7 +74,9 @@ def filewrite(meigara_dic_list):
 # --------------------------------------------------------
 # 汎用Xpath
 # --------------------------------------------------------
-def getXpathList(dom,xpathStr):
+
+
+def getXpathList(dom, xpathStr):
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
     result = []
 
@@ -78,13 +84,16 @@ def getXpathList(dom,xpathStr):
     logging.debug('== xpath:{} list len:{}'.format(xpathStr, len(list)))
     if list is not None:
         for obj in list:
-            logging.debug('== tag:{} text:{} attr:{}'.format(obj.tag, obj.text, obj.attrib))
+            logging.debug('== tag:{} text:{} attr:{}'.format(
+                obj.tag, obj.text, obj.attrib))
 
     return result
 
 # --------------------------------------------------------
 # 各銘柄を取得し、辞書リスト化 ver3
 # --------------------------------------------------------
+
+
 def databody3(dom):
 
     listXpath = "//table[@class='tbl_dataOutputloop_02']//tr"
@@ -111,14 +120,15 @@ def databody3(dom):
         headidx = 0
         # 最後のtrタグは評価合計なので集計対象外
         logging.debug('== len:{}'.format(len(domlist)))
-        if(tridx == (len(domlist)-1)):
+        if(tridx == (len(domlist) - 1)):
             break
 
         # 最初のtrタグは見出し
         if(tridx == 0):
             trobj = domlist[tridx]
             for tdobj in trobj:
-                logging.debug('== tag:{} text:{}'.format(tdobj.tag, tdobj.text.strip()))
+                logging.debug('== tag:{} text:{}'.format(
+                    tdobj.tag, tdobj.text.strip()))
                 listhead.append(tdobj.text.strip())
                 headidx += 1
             continue
@@ -128,13 +138,15 @@ def databody3(dom):
         for headidx in range(len(listhead)):
 
             logging.debug('== tridx:{} headidx:{}'.format(tridx, headidx))
-            bodyxpath = listXpath + '[' + str(tridx+1) + ']' + listbodyxpaths[headidx]
+            bodyxpath = listXpath + \
+                '[' + str(tridx + 1) + ']' + listbodyxpaths[headidx]
             logging.debug('== xpath:{}'.format(bodyxpath))
             bodylist = dom.xpath(bodyxpath)
 
             # 1要素目のみ取得
             obj = bodylist[0]
-            logging.debug('== tag:{} text:{}'.format(obj.tag, obj.text.strip()))
+            logging.debug('== tag:{} text:{}'.format(
+                obj.tag, obj.text.strip()))
             tbody[listhead[headidx]] = obj.text.strip()
 
         # tr1要素分を戻り値リストの1要素として登録
@@ -179,7 +191,8 @@ def databody2(dom):
     for idx in range(len(listbodyxpaths)):
         bodylist = dom.xpath(listbodyxpaths[idx])
         for obj in bodylist:
-            logging.debug('== tag:{} text:{}'.format(obj.tag, obj.text.strip()))
+            logging.debug('== tag:{} text:{}'.format(
+                obj.tag, obj.text.strip()))
             result[listhead[idx].text.strip()] = obj.text.strip()
 
         # 他で使うので、銘柄一覧の見出し文字列は保持する
@@ -193,6 +206,8 @@ def databody2(dom):
 # 各銘柄を取得し、リスト化
 # ver2ができたことにより、未使用
 # --------------------------------------------------------
+
+
 def databody(dom):
     logging.debug('=== [{}] start ==='.format(sys._getframe().f_code.co_name))
     # 最終的なデータ構成イメージ
@@ -255,22 +270,23 @@ def databody(dom):
 # --------------------------------------------------------
 # 練習
 # --------------------------------------------------------
+
+
 def study(dom):
-        # ルート要素
-        localxpath = '/*'
-        get(dom, localxpath)
+    # ルート要素
+    localxpath = '/*'
+    requests.get(dom, localxpath)
 
-        # 属性
-        localxpath = "//div[@id='smenu_AstAdp']/a"
-        get(dom, localxpath)
+    # 属性
+    localxpath = "//div[@id='smenu_AstAdp']/a"
+    requests.get(dom, localxpath)
 
-        # 特定の要素（タイトル）
-        logging.debug('== タイトル取得')
-        #list = dom.xpath('//title')
-        list = dom.xpath("//a[@title = 'ログアウト']")
-        logging.debug('list idx:{}'.format(len(list)))
-        for obj in list:
-            logging.debug('== tag:{} text:{}'.format(obj.tag, obj.text))
+    # 特定の要素（タイトル）
+    logging.debug('== タイトル取得')
+    list = dom.xpath("//a[@title = 'ログアウト']")
+    logging.debug('list idx:{}'.format(len(list)))
+    for obj in list:
+        logging.debug('== tag:{} text:{}'.format(obj.tag, obj.text))
 
 
 # --------------------------------------------------------
@@ -286,16 +302,19 @@ def targetRun(filepath):
         # domオブジェクトの生成
         # ---------------------
         soup = bs4.BeautifulSoup(file1, features='html.parser')
+        logging.info(f'soup : {soup}')
+
         # fromstringを使用する場合はstr型ではなくエンコードしたbyte型で渡す必要がある
         text = file2.read().encode('shift_jis')
-        #logging.info('file2 type = {}'.format(type(text)))
+        # logging.info('file2 type = {}'.format(type(text)))
         dom = html.fromstring(text)
         # parseを使用する場合はファイルパスを渡す
-        #dom = html.parse(filepath)
-        #logging.info('type = {} dom = {} '.format(type(dom), dom))
+        # dom = html.parse(filepath)
+        # logging.info('type = {} dom = {} '.format(type(dom), dom))
 
         # Xpath確認
-        getXpathList(dom, "//table[@class='tbl_dataOutputloop_02']//tr[1]/td[1]/a")
+        getXpathList(
+            dom, "//table[@class='tbl_dataOutputloop_02']//tr[1]/td[1]/a")
         # -----------------------------
         # domオブジェクトを使用した処理
         # -----------------------------
@@ -304,10 +323,10 @@ def targetRun(filepath):
 
         # 辞書型のみ対応
         # ensure_ascii=Falseでunicodeエスケープをしない
-        #logging.info('== result:{}'.format(json.dumps(meigara_dic, ensure_ascii=False)))
-
+        # logging.info('== result:{}'.format(json.dumps(meigara_dic, ensure_ascii=False)))
 
     return meigara_dic
+
 
 # --------------------------------------------------------
 # main
@@ -322,6 +341,3 @@ logging.info('== targetrun result:{}'.format(meigara))
 
 # 引数はリスト型に辞書を入れた形式
 filewrite(meigara)
-
-
-
