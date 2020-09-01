@@ -1,10 +1,23 @@
 import logging
 import logging.handlers
-from logging import DEBUG
+from functools import wraps
+from logging import DEBUG, INFO
 from basic.fileAccessSample import createDir
 
 # ハンドラ共通フォーマット
 COMMON_HANDLER_FORMAT = '%(asctime)s - %(levelname)s - [%(name)s:%(lineno)s] %(message)s'
+
+
+def Infologlevel(func):
+    """ ログレベルを変更するデコレータ
+    """
+    @wraps(func)
+    def inner(*arg, **kwarg):
+        # get logger and change logLevel
+        ret = func(*arg, **kwarg)
+        ret.setLevel(INFO)
+        return ret
+    return inner
 
 
 def createDeveloplogger(loggername: str, logfilePath: str):
@@ -54,4 +67,8 @@ def createTimedRotatingFileHandler(loglevel: int, logfilePath: str):
 if __name__ == '__main__':
 
     logger = createDeveloplogger(__name__, 'log/debug.log')
-    logger.info('サンプル')
+    logger.debug('[D]サンプル')
+    logger.info('[I]サンプル')
+    logger.warning('[W]サンプル')
+    logger.error('[E]サンプル')
+
