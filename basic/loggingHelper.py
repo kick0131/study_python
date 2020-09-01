@@ -7,19 +7,34 @@ from basic.fileAccessSample import createDir
 # ハンドラ共通フォーマット
 COMMON_HANDLER_FORMAT = '%(asctime)s - %(levelname)s - [%(name)s:%(lineno)s] %(message)s'
 
+# 文字列のログレベル
+strloglevel = 'INFO'
 
-def Infologlevel(func):
-    """ ログレベルを変更するデコレータ
+
+def parseLogLevel(level: str):
+    """ 文字列のログレベルをLoggerのログレベルに変換する
     """
-    @wraps(func)
-    def inner(*arg, **kwarg):
-        # get logger and change logLevel
-        ret = func(*arg, **kwarg)
-        ret.setLevel(INFO)
-        return ret
-    return inner
+    return INFO
 
 
+def loglevel(level: int):
+    """ ログレベルを変更するデコレータ
+
+    Args: logging.loglevel
+
+    """
+    def _loglevel(func):
+        @wraps(func)
+        def inner(*arg, **kwarg):
+            # get logger and change logLevel
+            ret = func(*arg, **kwarg)
+            ret.setLevel(level)
+            return ret
+        return inner
+    return _loglevel
+
+
+@loglevel(parseLogLevel(strloglevel))
 def createDeveloplogger(loggername: str, logfilePath: str):
     """開発用ロガーを返す
     """
@@ -71,4 +86,3 @@ if __name__ == '__main__':
     logger.info('[I]サンプル')
     logger.warning('[W]サンプル')
     logger.error('[E]サンプル')
-
