@@ -1,8 +1,35 @@
 python sample
 ===
 
-* python利用方法
-* boto3利用方法
+## 作成方針
+* サンプルコードは`python 対象ファイル.py`で動作可能とする事
+* 利用するVsCode拡張機能など
+
+    | 名称 | 用途 | 備考 |
+    |---|---|---|
+    | autopep8 | フォーマッタ |---|
+
+## ディレクトリ説明
+
+### aws
+Python + AWS
+
+* Cognito
+* EC2StartandStop
+* SecretManager
+
+### basic
+Pythonの基本文法習得用
+
+### docs
+Sphinx練習
+
+### usage
+その他ライブラリ練習
+
+* psycopg2Sample.py
+    PostgreSQL接続
+
 
 ## 準備
 * 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通す
@@ -27,8 +54,9 @@ basic/_ignorefiles
 boto3
 
 ## Sphinx
-rstファイル生成
+* rstファイル生成
 `sphinx-apidoc -f -o ./docs .`
-rstファイルからhtmlファイル生成
+
+* rstファイルからhtmlファイル生成
 `sphinx-build ./docs ./docs/_build`
 

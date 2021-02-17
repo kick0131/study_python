@@ -82,7 +82,7 @@ def createTimedRotatingFileHandler(loglevel: int, logfilePath: str):
 if __name__ == '__main__':
 
     logger = createDeveloplogger(__name__, 'log/debug.log')
-    logger.debug('[D]サンプル')
-    logger.info('[I]サンプル')
-    logger.warning('[W]サンプル')
-    logger.error('[E]サンプル')
+    logger.debug('サンプル')
+    logger.info('サンプル')
+    logger.warning('サンプル')
+    logger.error('サンプル')
