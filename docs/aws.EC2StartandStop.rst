@@ -28,7 +28,6 @@ aws.EC2StartandStop.loginit module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

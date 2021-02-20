@@ -9,6 +9,8 @@ python sample
     |---|---|---|
     | autopep8 | フォーマッタ |---|
 
+### コメントルール
+
 ## ディレクトリ説明
 
 ### aws
@@ -24,6 +26,12 @@ Pythonの基本文法習得用
 ### docs
 Sphinx練習
 
+- 使い方
+```
+sphinx-apidoc -f -o ./docs .
+sphinx-build -b html ./docs ./docs/_build  
+```
+
 ### usage
 その他ライブラリ練習
 
@@ -34,18 +42,40 @@ Sphinx練習
 ## 準備
 * 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通す
 
-* 仮想環境作成  
-`python3 -m venv forwin`  
-※ディレクトリ名は環境に応じて適宜読み替える環境によってはpython3ではなくpython
+    for mac
+    ```
+    export PYTHONPATH="/Users/hiramatsu/work/study_python:${PYTHONPATH}"
+    ```
 
-* 仮想環境有効化  
-`./forwin/Scripts/activate`  
-※vsCodeでactivate実行時にPSSecurityExceptionが発生する場合、PowerShellで以下コマンドを実行  
-`Set-ExecutionPolicy RemoteSigned`
+* 仮想環境作成
+
+    - pipenv
+        ```
+        pip install pipenv
+        pipenv --version 3
+        ```
+
+        - pipenv導入後はPipfileがあるディレクトリで以下を実行することで環境の再現が可能
+
+        ```
+        pipenv shell
+        pipenv install
+        ```
+
+    - venv
+
+        `python3 -m venv forwin`  
+        ※ディレクトリ名は環境に応じて適宜読み替える。環境によってはpython3ではなくpython
+
+        - 仮想環境有効化  
+        `./forwin/Scripts/activate`  
+        ※vsCodeでactivate実行時にPSSecurityExceptionが発生する場合、PowerShellで以下コマンドを実行  
+        `Set-ExecutionPolicy RemoteSigned`
 
 * ローカルで必要なデータの配置
-aws/_privatejson/cognito_data.json
-basic/_ignorefiles
+    - aws/_privatejson/cognito_data.json
+
+    - basic/_ignorefiles
 
 
 テストデータ格納

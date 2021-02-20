@@ -28,7 +28,6 @@ aws.Cognito.loginit module
    :undoc-members:
    :show-inheritance:
 
-
 Module contents
 ---------------
 

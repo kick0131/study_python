@@ -1,7 +1,7 @@
 import logging
 import logging.handlers
 from functools import wraps
-from logging import DEBUG, INFO
+from logging import DEBUG, INFO, WARN
 from basic.fileAccessSample import createDir
 
 # ハンドラ共通フォーマット
@@ -34,19 +34,25 @@ def loglevel(level: int):
     return _loglevel
 
 
-@loglevel(parseLogLevel(strloglevel))
-def createDeveloplogger(loggername: str, logfilePath: str):
+def createDeveloplogger(loggername: str, logfilePath: str, loglevel: int = DEBUG):
     """開発用ロガーを返す
+
+    ログレベルはデフォルト引数を取り、デバッグレベルとする
+
+    Args:
+        loggername (str) : ロガー名
+        logfilePath (str) : ログ出力先
+        loglevel (int) : ログレベル
     """
     logger = logging.getLogger(loggername)
-    logger.setLevel(DEBUG)
+    logger.setLevel(loglevel)
     # ルートロガーの出力を抑止
     logger.propagate = False
     # ハンドラの登録
-    logger.addHandler(createStreamHandler(DEBUG))
+    logger.addHandler(createStreamHandler(loglevel))
     logger.addHandler(createTimedRotatingFileHandler(DEBUG, logfilePath))
     return logger
-
+    
 
 def createStreamHandler(loglevel: int):
     """標準出力を行うハンドラを返す

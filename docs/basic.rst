@@ -60,6 +60,13 @@ basic.loggingHelper module
    :undoc-members:
    :show-inheritance:
 
+basic.stringHelper module
+-------------------------
+
+.. automodule:: basic.stringHelper
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
