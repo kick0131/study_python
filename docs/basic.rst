@@ -4,66 +4,66 @@ basic package
 Submodules
 ----------
 
-basic.XPathSample module
+basic.effectivepython\_samples module
+-------------------------------------
+
+.. automodule:: basic.effectivepython_samples
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mydatatype module
+-----------------------
+
+.. automodule:: basic.mydatatype
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.myexception module
 ------------------------
 
-.. automodule:: basic.XPathSample
+.. automodule:: basic.myexception
    :members:
    :undoc-members:
    :show-inheritance:
 
-basic.datatype module
----------------------
-
-.. automodule:: basic.datatype
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-basic.effectivePythonSample module
-----------------------------------
-
-.. automodule:: basic.effectivePythonSample
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-basic.exceptionSample module
-----------------------------
-
-.. automodule:: basic.exceptionSample
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-basic.fileAccessSample module
------------------------------
-
-.. automodule:: basic.fileAccessSample
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-basic.generatorSample module
-----------------------------
-
-.. automodule:: basic.generatorSample
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-basic.loggingHelper module
---------------------------
-
-.. automodule:: basic.loggingHelper
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-basic.stringHelper module
+basic.myfileaccess module
 -------------------------
 
-.. automodule:: basic.stringHelper
+.. automodule:: basic.myfileaccess
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mygenerator module
+------------------------
+
+.. automodule:: basic.mygenerator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mylogging\_helper module
+------------------------------
+
+.. automodule:: basic.mylogging_helper
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mystring\_helper module
+-----------------------------
+
+.. automodule:: basic.mystring_helper
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.myxpath module
+--------------------
+
+.. automodule:: basic.myxpath
    :members:
    :undoc-members:
    :show-inheritance:

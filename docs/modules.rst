@@ -6,4 +6,5 @@ study_python
 
    aws
    basic
+   create_sphinxdoc
    main

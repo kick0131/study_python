@@ -1,7 +1,7 @@
 import sys
 import os
 import pprint
-from basic.loggingHelper import createDeveloplogger
+from basic.mylogging_helper import createDeveloplogger
 # import aws.Cognito.cognitoMain
 # import basic.datatype
 

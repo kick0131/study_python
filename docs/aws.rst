@@ -7,9 +7,9 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   aws.Cognito
-   aws.EC2StartandStop
-   aws.SecretManager
+   aws.cognito
+   aws.ec2
+   aws.secretmanager
 
 Module contents
 ---------------

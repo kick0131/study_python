@@ -8,6 +8,12 @@ python sample
     | 名称 | 用途 | 備考 |
     |---|---|---|
     | autopep8 | フォーマッタ |---|
+    | flake8 | コードチェック |---|
+    | Sphinx | ドキュメント生成 |---|
+
+### flake8設定
+python.linting.pylintEnabled　無効
+python.linting.flake8Enabled　有効
 
 ### コメントルール
 
