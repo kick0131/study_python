@@ -46,6 +46,10 @@ sphinx-build -b html ./docs ./docs/_build
 
 
 ## 準備
+* [win]環境変数PATHにpipenvのパスを通す
+    `python -m site --user-site`の出力(XXXX/Scripts)
+
+
 * 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通す
 
     for mac
@@ -85,6 +89,16 @@ sphinx-build -b html ./docs ./docs/_build
 
 
 テストデータ格納
+
+## Pipenvコマンド 
+    | 名称 | 用途 | 備考 |
+    |---|---|---|
+    | install | パッケージのインストール |---|
+    | run | Pythonのコマンド実行 |---|
+    | shell | 仮想環境起動 |---|
+    | update | piplockファイルの同期 |---|
+    | update | Pipenv.lockに記載されていない全てのパッケージをアンインストール |---|
+
 
 ## 利用モジュール
 boto3

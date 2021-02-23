@@ -20,7 +20,7 @@ def printfunc():
         def inner(*arg, **kwarg):
             # get logger and change logLevel
             ret = func(*arg, **kwarg)
-            ret.setLevel(level)
+            # ret.setLevel(level)
             return ret
         return inner
     return _printfunc

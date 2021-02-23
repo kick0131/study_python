@@ -14,14 +14,6 @@ def trace(func):
     return wrapper
 
 
-@trace
-def fibonacci(n):
-    """Return the n-th Fibonacci number"""
-    if n in (0, 1):
-        return n
-    return (fibonacci(n - 2) + fibonacci(n - 1))
-
-
 class EffectivePythonSample():
     """EffectivePythonSample class
     """
@@ -29,35 +21,23 @@ class EffectivePythonSample():
     def __init__(self, message):
         logger.debug('message')
 
-    # def trace(self, func):
-    #     def wrapper(self, *args, **kwargs):
-    #         result = self.func(*args, **kwargs)
-    #         logger.debug(f'{self.func.__name__}({args}, {kwargs}) -> {result}')
-    #         return result
-    #     return wrapper
-
     @trace
     def fibonacci(self, n):
         """フィボナッチ数列を返却
-
-        概要の通り。テストコード
-
-        Args:
-            階層の深さ
-
-        Returns:
-            フィボナッチ数列の総和
-
-        Note:
-            途中結果はtraceで出力
         """
         if n in (0, 1):
             return n
         return (self.fibonacci(n - 2) + self.fibonacci(n - 1))
 
 
+def arg_and_kwarg(*args, **kwargs):
+    logger.info(f'args:{args} kwargs:{kwargs}')
+
+
 if __name__ == '__main__':
     logger.info('=== EffectivePythonSample')
     target = EffectivePythonSample('hoge')
+    logger.info('-------------------------')
     target.fibonacci(3)
-    logger.info(f'=== {target.fibonacci}')
+    logger.info('-------------------------')
+    arg_and_kwarg('adam', 15, {'addr': 'tokyo'}, param='aaa', dummy='bbb')
