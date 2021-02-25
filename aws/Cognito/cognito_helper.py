@@ -13,9 +13,15 @@ def parse_idtoken(idtoken: str):
 
     CognitoのIDトークンからペイロード部を抽出する
 
-    Args:
-      idtoken(str) : IDトークン（ピリオドで区切られたBASE64エンコードされた文字列）
+    Parameters
+    ----------
+    idtoken : str
+        IDトークン（ピリオドで区切られたBASE64エンコードされた文字列）
 
+    Returns
+    -------
+    str
+        IDトークンペイロード部
     """
     logging.info(f'{sys._getframe().f_code.co_name} start')
     logging.info(f'{idtoken}')
@@ -34,9 +40,10 @@ def encode_idtoken(idtoken_payload: str):
 
     CognitoのIDトークンペイロード部の内容をBASE64デコードし、属性情報を表示する
 
-    Args:
-      idtoken(str) : IDトークンペイロード部
-
+    Parameters
+    ----------
+    idtoken_payload : str
+        IDトークンペイロード部
     """
     dictdata = json.loads(base64.b64decode(idtoken_payload).decode())
     logging.info(dictdata)

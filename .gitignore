@@ -6,3 +6,4 @@ basic/_ignorefiles
 forwin
 docs/_*
 log
+**/.ipynb_checkpoints

@@ -59,6 +59,13 @@ sphinx-build -b html ./docs ./docs/_build
 
 * 仮想環境作成
 
+    - 使用するライブラリ
+    | 名称 | 用途 | 備考 |
+    |---|---|---|
+    | flake8 | コードチェック |---|
+    | sphinx | ドキュメント生成 |---|
+    | jupyterlab | jupyterサーバ |---|
+
     - pipenv
         ```
         pip install pipenv
@@ -109,4 +116,28 @@ boto3
 
 * rstファイルからhtmlファイル生成
 `sphinx-build ./docs ./docs/_build`
+
+# Jupyter
+
+## カーネルをpipenvの環境に変更
+(引用)https://qiita.com/mzn/items/99d769d0ad9d03a5d73e
+```
+pipenv shell
+python -m ipykernel install --user --name=<お好きな名前>
+```
+jupyter接続後、インタープリタをpipenv環境のpythonに指定
+
+## 実行方法
+1. (vscodeとは別のターミナルで実行)pipenv環境（Jupyterインストール済）で以下コマンドを実行
+    ```
+    jupyter lab
+    ```
+    Jupyterが起動し、自動でブラウザからJupyterにアクセスする
+
+2. notebookを開き、右上のJupyterServerから手順１で立ち上げたJupyterServerを選択する
+
+
+# その他
+### pipenvのパッケージ削除
+`Pipfile`から不要なパッケージを削除し、`pipenv clean`を実行する
 

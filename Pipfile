@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 sphinx = "*"
 flake8 = "*"
+numpy = "*"
+matplotlib = "*"
+jupyterlab = "*"
 
 [dev-packages]
 pylint = "*"
