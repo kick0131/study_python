@@ -1,6 +1,7 @@
 import os
 import pprint
 import traceback
+import shutil
 
 
 def createDir(dirpath: str):
@@ -34,9 +35,37 @@ def mvSample():
     return
 
 
-def rmSample():
+def rmSample(delPath: str):
     """ディレクトリ、ファイルの削除
+
+    rm -rf相当の動作を期待する
+
+    Parameters
+    ----------
+    delPath : str
+        削除対象のディレクトリまたはファイルパス
     """
+    # ディレクトリ部,ファイル名を取得
+    dirname, basename = os.path.split(delPath)
+
+    # ファイル名が入力されている場合、ファイル指定されたと判断し、ファイルを削除する
+    if len(basename) != 0:
+        if os.path.exists(delPath):
+            os.remove(delPath)
+        else:
+            print(f'ERROR filepath is not exists.({delPath})')
+    # ディレクトリ名のみ入力されている場合、ディレクトリ指定されたと判断し、再帰削除を行う
+    elif len(dirname) != 0:
+        if os.path.exists(dirname):
+            shutil.rmtree(dirname)
+        else:
+            print(f'ERROR dirpath is not exists.({dirname})')
+    # 上記以外の場合はエラー
+    else:
+        print(f'ERROR arg is wrong.{os.getcwd()} {os.sep}')
+        return
+
+    print(f'Successfly remove {delPath}')
     return
 
 
@@ -73,4 +102,8 @@ def sampleRun():
 
 # メイン処理
 if __name__ == '__main__':
-    print("result:{0}".format(sampleRun()))
+    # print("result:{0}".format(sampleRun()))
+
+    # remove file path
+    rmfilepath = os.getcwd() + '/log/logA/'
+    rmSample(rmfilepath)

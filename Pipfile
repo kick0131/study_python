@@ -9,6 +9,8 @@ flake8 = "*"
 numpy = "*"
 matplotlib = "*"
 jupyterlab = "*"
+requests = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 pylint = "*"
