@@ -4,7 +4,7 @@ from boto3.session import Session
 import boto3
 
 # ロガー
-logger = Cognito.loginit.uselogger(__name__)
+logger = aws.cognito.loginit.uselogger(__name__)
 
 
 class CognitoManage:
@@ -12,11 +12,13 @@ class CognitoManage:
     def __init__(self, profile):
         logger.info('コンストラクタ')
         # プロファイル指定された場合はWindows環境からと判断
-        if(profile != None):
+        if(profile is not None):
+            logger.info('プロファイル指定あり')
             session = Session(profile_name=profile)
             self.client = session.client('cognito-idp', verify=False)
         # プロファイル指定されなかった場合はLambdaからと判断
         else:
+            logger.info('プロファイル指定なし')
             self.client = boto3.client('cognito-idp')
 
     # 一般ユーザのサインアップ
@@ -61,7 +63,8 @@ class CognitoManage:
         return response
 
     # 管理者ユーザのサインアップ
-    def admin_create_user(self, user_pool_id: str, user_id: str, email: str, password: str):
+    def admin_create_user(
+            self, user_pool_id: str, user_id: str, email: str, password: str):
         logger.info('=== SIGN UP ===')
         response = self.client.admin_create_user(
             UserPoolId=user_pool_id,
@@ -75,7 +78,9 @@ class CognitoManage:
         return response
 
     # 管理者ユーザのサインアップ承認
-    def confirm_admin_user(self, user_pool_id: str, client_id: str, user_id: str, email: str, password: str):
+    def confirm_admin_user(
+            self, user_pool_id: str, client_id: str,
+            user_id: str, email: str, password: str):
         # ログインを試みる。（パスワードの変更を要求される。）
         logger.info('=== INITIATE AUTH ===')
         response = self.client.admin_initiate_auth(
@@ -117,7 +122,9 @@ class CognitoManage:
         return response
 
     # サインイン（管理者ユーザ）
-    def signin_adminuser(self, user_pool_id: str, client_id: str, user_id: str, password: str):
+    def signin_adminuser(
+            self, user_pool_id: str, client_id: str,
+            user_id: str, password: str):
         logger.info('=== INITIATE AUTH(ADMIN) ===')
         response = self.client.admin_initiate_auth(
             UserPoolId=user_pool_id,
@@ -142,7 +149,9 @@ class CognitoManage:
         return response
 
     # パスワード変更（管理者権限）
-    def change_password(self, previousPassword: str, proposedPassword: str, accessToken: str):
+    def change_password(
+            self, previousPassword: str,
+            proposedPassword: str, accessToken: str):
         logger.info('=== CHANGE PASSWORD ===')
         response = self.client.change_password(
             PreviousPassword=previousPassword,
@@ -201,7 +210,8 @@ class CognitoManage:
         return response
 
     # 属性情報更新
-    def admin_update_user_attributes(self, user_pool_id: str, user_id: str, attributes: dir):
+    def admin_update_user_attributes(
+            self, user_pool_id: str, user_id: str, attributes: dir):
         logger.info('=== UPDATE USER ATTRIBUTES(ADMIN) ===')
         response = self.client.admin_update_user_attributes(
             UserPoolId=user_pool_id,
@@ -214,7 +224,8 @@ class CognitoManage:
         return response
 
     # トークン更新
-    def refresh_token(self, user_pool_id: str, client_id: str, refresh_token: str):
+    def refresh_token(
+            self, user_pool_id: str, client_id: str, refresh_token: str):
         logger.info('=== REFRESH TOKEN ===')
         response = self.client.initiate_auth(
             AuthFlow='REFRESH_TOKEN_AUTH',
@@ -239,7 +250,8 @@ class CognitoManage:
         for user in response['Users']:
             if 'PaginationToken' in response:
                 self.list_users_ex(user_pool_id, response["PaginationToken"])
-            logger.info('username:{} attr:{}'.format(user['Username'],user['Attributes']))
+            logger.info('username:{} attr:{}'.format(
+                user['Username'], user['Attributes']))
 
         logger.info('=== UPDATE USER ATTRIBUTES(ADMIN) RESULT ===')
         # logger.info(json.dumps(response))
@@ -257,7 +269,8 @@ class CognitoManage:
         for user in response['Users']:
             if 'PaginationToken' in response:
                 self.list_users_ex(user_pool_id, response["PaginationToken"])
-            logger.info('username:{} attr:{}'.format(user['Username'],user['Attributes']))
+            logger.info('username:{} attr:{}'.format(
+                user['Username'], user['Attributes']))
 
         logger.info('=== UPDATE USER ATTRIBUTES EX(ADMIN) RESULT ===')
         # logger.info(json.dumps(response))

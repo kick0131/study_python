@@ -1,9 +1,12 @@
 import os
-import cognito.loginit
+import aws.cognito.loginit
 import json
-from cognito.cognito_auth import CognitoManage
+from aws.cognito.cognito_auth import CognitoManage
 
 # 本ファイルは固有情報がある為、非公開
+
+# AWSプロファイル未使用の場合は空文字とする
+awsprofile = 'awshira'
 
 
 def lambda_handler(event, context):
@@ -15,15 +18,19 @@ def lambda_handler(event, context):
     user_id = event['user_id']
     email = event['email']
     password = event['password']
-    password2 = event['password2']
-    confirm_code = event['confirm_code']
+    # password2 = event['password2']
+    # confirm_code = event['confirm_code']
     user_pool_id = event['user_pool_id']
-    accesstoken = event['accesstoken']
-    refreshtoken = event['refreshtoken']
-    pagenationtoken = event['pagenationtoken']
-    attributes = event['attributes']
+    # accesstoken = event['accesstoken']
+    # refreshtoken = event['refreshtoken']
+    # pagenationtoken = event['pagenationtoken']
+    # attributes = event['attributes']
 
-    cognitoclass = CognitoManage('dashboardfront')
+    # 引数なしの場合はデフォルトプロファイル
+    if len(awsprofile) != 0:
+        cognitoclass = CognitoManage(awsprofile)
+    else:
+        cognitoclass = CognitoManage()
 
     # 動作確認OK
     # サインアップ（一般ユーザ）
@@ -41,8 +48,9 @@ def lambda_handler(event, context):
     # cognitoclass.signin_user(client_id, user_id, password)
 
     # サインアップ（管理者）
-    # cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
-    # cognitoclass.confirm_admin_user(user_pool_id, client_id, user_id, email, password)
+    cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
+    cognitoclass.confirm_admin_user(
+        user_pool_id, client_id, user_id, email, password)
 
     # サインイン（管理者）
     # cognitoclass.signin_adminuser(user_pool_id, client_id, user_id, password)
@@ -57,7 +65,8 @@ def lambda_handler(event, context):
     # cognitoclass.update_user_attributes(accesstoken, attributes)
 
     # 属性情報更新
-    # cognitoclass.admin_update_user_attributes(user_pool_id, user_id, attributes)
+    # cognitoclass.admin_update_user_attributes(
+    # user_pool_id, user_id, attributes)
 
     # 属性情報取得(カスタム属性が取得出来ないので使用しない)
     # cognitoclass.get_user(accesstoken)
@@ -82,7 +91,7 @@ def lambda_handler(event, context):
 # -------------------------------------------------------------------
 if __name__ == '__main__':
     try:
-        logger = Cognito.loginit.uselogger(__name__)
+        logger = aws.cognito.loginit.uselogger(__name__)
 
         logger.debug('テスト')
 
