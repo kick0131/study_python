@@ -1,7 +1,7 @@
 import os
 import json
-import loginit
 from ec2.ec2_manage import EC2Manage
+import aws.loginit
 
 
 def lambda_handler(event, context):
@@ -21,7 +21,7 @@ def lambda_handler(event, context):
 
 if __name__ == '__main__':
     try:
-        logger = Cognito.loginit.uselogger(__name__)
+        logger = aws.loginit.uselogger(__name__)
 
         # 操作対象のインスタンスID
         # オープンするファイルは非公開

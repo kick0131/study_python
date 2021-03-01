@@ -1,10 +1,17 @@
 import logging
-from logging import DEBUG,INFO,WARN,ERROR,CRITICAL
+# from logging import DEBUG, INFO, WARN, ERROR, CRITICAL
+from logging import DEBUG
 
-# --------------------------------------------------------
-# logger機構を使った方法
-# --------------------------------------------------------
+
 def uselogger(modulename):
+    """ロガー返却処理
+
+    コンソール出力のみ行うシンプルなロガー
+
+    Args
+      modulename(str): ロガーを使用するモジュール名
+
+    """
 
     # create logger
     logger = logging.getLogger(modulename)
@@ -16,7 +23,7 @@ def uselogger(modulename):
 
     # create formatter
     formatter = logging.Formatter(
-            '%(asctime)s - %(levelname)s - [%(name)s:%(lineno)s] %(message)s')
+        '%(asctime)s - %(levelname)s - [%(name)s:%(lineno)s] %(message)s')
     handler.setFormatter(formatter)
 
     # add handler to root logger
@@ -24,4 +31,3 @@ def uselogger(modulename):
     logger.setLevel(DEBUG)
 
     return logger
-

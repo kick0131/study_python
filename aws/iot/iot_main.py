@@ -1,5 +1,5 @@
 import os
-import aws.loginit
+import aws.cognito.loginit
 import json
 from aws.cognito.cognito_auth import CognitoManage
 
@@ -14,10 +14,10 @@ def lambda_handler(event, context):
     """
 
     # TODO implement
-    # client_id = event['client_id']
-    # user_id = event['user_id']
-    # email = event['email']
-    # password = event['password']
+    client_id = event['client_id']
+    user_id = event['user_id']
+    email = event['email']
+    password = event['password']
     # password2 = event['password2']
     # confirm_code = event['confirm_code']
     user_pool_id = event['user_pool_id']
@@ -25,9 +25,6 @@ def lambda_handler(event, context):
     # refreshtoken = event['refreshtoken']
     # pagenationtoken = event['pagenationtoken']
     # attributes = event['attributes']
-
-    # 引数eventの内容表示
-    logger.info(json.dumps(event, indent=2))
 
     # 引数なしの場合はデフォルトプロファイル
     if len(awsprofile) != 0:
@@ -51,9 +48,9 @@ def lambda_handler(event, context):
     # cognitoclass.signin_user(client_id, user_id, password)
 
     # サインアップ（管理者）
-    # cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
-    # cognitoclass.confirm_admin_user(
-        # user_pool_id, client_id, user_id, email, password)
+    cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
+    cognitoclass.confirm_admin_user(
+        user_pool_id, client_id, user_id, email, password)
 
     # サインイン（管理者）
     # cognitoclass.signin_adminuser(user_pool_id, client_id, user_id, password)
@@ -94,7 +91,7 @@ def lambda_handler(event, context):
 # -------------------------------------------------------------------
 if __name__ == '__main__':
     try:
-        logger = aws.loginit.uselogger(__name__)
+        logger = aws.cognito.loginit.uselogger(__name__)
 
         logger.debug('テスト')
 

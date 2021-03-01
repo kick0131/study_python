@@ -54,6 +54,7 @@ class SecretManage:
             else:
                 decoded_binary_secret = base64.b64decode(
                     get_secret_value_response['SecretBinary'])
+                print(decoded_binary_secret)
 
         # Your code goes here.
         assert(secret)

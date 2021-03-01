@@ -1,10 +1,10 @@
 import json
-import aws.cognito.loginit
+import aws.loginit
 from boto3.session import Session
 import boto3
 
 # ロガー
-logger = aws.cognito.loginit.uselogger(__name__)
+logger = aws.loginit.uselogger(__name__)
 
 
 class CognitoManage:

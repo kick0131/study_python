@@ -12,6 +12,7 @@ jupyterlab = "*"
 requests = "*"
 beautifulsoup4 = "*"
 boto3 = "*"
+autopep8 = "*"
 
 [dev-packages]
 pylint = "*"

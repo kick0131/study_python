@@ -2,9 +2,9 @@ import sys
 import boto3
 from boto3.session import Session
 from botocore.exceptions import ClientError
-import loginit
+import aws.loginit
 
-logger = loginit.uselogger(__name__)
+logger = aws.loginit.uselogger(__name__)
 
 
 class EC2Manage:
@@ -12,7 +12,7 @@ class EC2Manage:
     def __init__(self, profile=None):
         logger.info('コンストラクタ')
         # プロファイル指定された場合はWindows環境からと判断
-        if(profile != None):
+        if(profile is not None):
             session = Session(profile_name=profile)
             self.client = session.client('ec2', verify=False)
         # プロファイル指定されなかった場合はLambdaからと判断
