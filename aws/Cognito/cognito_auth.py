@@ -36,7 +36,7 @@ class CognitoManage:
             ]
         )
         logger.info('=== SIGN UP RESULT ===')
-        logger.info(json.dumps(response))
+        logger.info(json.dumps(response, indent=2))
         return response
 
     # 一般ユーザのサインアップ承認
@@ -118,7 +118,8 @@ class CognitoManage:
         )
 
         logger.info('=== SIGN IN RESULT ===')
-        logger.info(response)
+        # logger.info(response)
+        logger.info(json.dumps(response, indent=2))
         return response
 
     # サインイン（管理者ユーザ）
@@ -241,7 +242,7 @@ class CognitoManage:
 
     # ユーザ一覧取得
     def list_users(self, user_pool_id: str):
-        logger.info('=== UPDATE USER ATTRIBUTES(ADMIN) ===')
+        logger.info('=== LIST USERS ===')
         response = self.client.list_users(
             UserPoolId=user_pool_id,
             Limit=1,
@@ -250,10 +251,11 @@ class CognitoManage:
         for user in response['Users']:
             if 'PaginationToken' in response:
                 self.list_users_ex(user_pool_id, response["PaginationToken"])
-            logger.info('username:{} attr:{}'.format(
-                user['Username'], user['Attributes']))
+            logger.info(f'username: {user["Username"]}')
+            logger.info('attr:{}'.format(
+                json.dumps(user["Attributes"], indent=2)))
 
-        logger.info('=== UPDATE USER ATTRIBUTES(ADMIN) RESULT ===')
+        logger.info('=== LIST USERS RESULT ===')
         # logger.info(json.dumps(response))
         # return response
 

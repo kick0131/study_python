@@ -14,10 +14,10 @@ def lambda_handler(event, context):
     """
 
     # TODO implement
-    # client_id = event['client_id']
-    # user_id = event['user_id']
+    client_id = event['client_id']
+    user_id = event['user_id']
     # email = event['email']
-    # password = event['password']
+    password = event['password']
     # password2 = event['password2']
     # confirm_code = event['confirm_code']
     user_pool_id = event['user_pool_id']
@@ -48,12 +48,12 @@ def lambda_handler(event, context):
     # cognitoclass.admin_delete_user(user_pool_id,user_id)
 
     # サインイン（一般ユーザ）
-    # cognitoclass.signin_user(client_id, user_id, password)
+    cognitoclass.signin_user(client_id, user_id, password)
 
     # サインアップ（管理者）
     # cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
     # cognitoclass.confirm_admin_user(
-        # user_pool_id, client_id, user_id, email, password)
+    # user_pool_id, client_id, user_id, email, password)
 
     # サインイン（管理者）
     # cognitoclass.signin_adminuser(user_pool_id, client_id, user_id, password)

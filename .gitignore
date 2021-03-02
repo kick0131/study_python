@@ -7,3 +7,4 @@ forwin
 docs/_*
 log
 **/.ipynb_checkpoints
+**/*-output*
