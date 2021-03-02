@@ -20,7 +20,7 @@ Resources:
     Properties:
       CodeUri: .
       Handler: authorizer.lambda_handler
-      Runtime: python3.6
+      Runtime: python3.8
   LambdaPermissionHello:
     Type: "AWS::Lambda::Permission"
     Properties:
@@ -48,8 +48,8 @@ Resources:
         paths:      
           /:
             get:
-              summary: "lambda authorizer test"
-              description: "lambda authorizer test"
+              summary: "lambda authorizer test1"
+              description: "lambda authorizer test2"
               produces:
               - "application/json"
               responses:
