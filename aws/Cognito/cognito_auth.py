@@ -183,7 +183,8 @@ class CognitoManage:
         )
 
         logger.info('=== GET USER RESULT ===')
-        logger.info(response)
+        # logger.info(response)
+        logger.info(json.dumps(response, indent=2))
         return response
 
     # 属性情報取得(管理者)
