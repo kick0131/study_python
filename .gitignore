@@ -8,3 +8,4 @@ docs/_*
 log
 **/.ipynb_checkpoints
 **/*-output*
+**/.serverless
