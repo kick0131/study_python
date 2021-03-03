@@ -11,3 +11,10 @@ https://dev.classmethod.jp/articles/lambda-authorizer/
 `aws cloudformation deploy --template-file template-output.yaml --stack-name XXXXX --capabilities CAPABILITY_IAM --profile XXXXX`
 
 - スタック名は任意、CloudFormationのスタック名になる
+
+
+### 動作確認
+
+```
+curl https://XXXXX/Dev -H Authorization:1
+```
