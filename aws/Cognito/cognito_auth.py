@@ -183,7 +183,6 @@ class CognitoManage:
         )
 
         logger.info('=== GET USER RESULT ===')
-        # logger.info(response)
         logger.info(json.dumps(response, indent=2))
         return response
 
@@ -196,7 +195,9 @@ class CognitoManage:
         )
 
         logger.info('=== GET USER(ADMIN) RESULT ===')
-        logger.info(response)
+        for key, val in response.items():
+            logger.info(f'key:{key} val:{val}')
+
         return response
 
     # 属性情報更新

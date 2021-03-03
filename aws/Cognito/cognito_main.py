@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     # password2 = event['password2']
     # confirm_code = event['confirm_code']
     user_pool_id = event['user_pool_id']
-    # accesstoken = event['accesstoken']
+    accesstoken = event['accesstoken']
     # refreshtoken = event['refreshtoken']
     # pagenationtoken = event['pagenationtoken']
     # attributes = event['attributes']
@@ -48,7 +48,10 @@ def lambda_handler(event, context):
     # cognitoclass.admin_delete_user(user_pool_id,user_id)
 
     # サインイン（一般ユーザ）
-    cognitoclass.signin_user(client_id, user_id, password)
+    res = cognitoclass.signin_user(client_id, user_id, password)
+    if len(accesstoken) == 0:
+        accesstoken = res['AuthenticationResult']['AccessToken']
+        logger.info(accesstoken)
 
     # サインアップ（管理者）
     # cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
@@ -72,10 +75,10 @@ def lambda_handler(event, context):
     # user_pool_id, user_id, attributes)
 
     # 属性情報取得(カスタム属性が取得出来ないので使用しない)
-    # cognitoclass.get_user(accesstoken)
+    cognitoclass.get_user(accesstoken)
 
     # 属性情報取得
-    # cognitoclass.admin_get_user(user_pool_id, user_id)
+    cognitoclass.admin_get_user(user_pool_id, user_id)
 
     # トークン更新
     # cognitoclass.refresh_token(user_pool_id, client_id, refreshtoken)

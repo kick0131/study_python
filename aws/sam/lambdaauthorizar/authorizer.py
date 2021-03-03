@@ -5,6 +5,7 @@ def lambda_handler(event, context):
     print(f'--- {__name__} ---')
     pprint.pprint(event)
 
+    # IDトークンを期待
     token = event["headers"]["Authorization"]
 
     # IDトークン検証
