@@ -24,11 +24,18 @@ provider:
   name: aws
   runtime: python3.8
   lambdaHashingVersion: 20201221
+  # https://www.serverless.com/framework/docs/deprecations/#AWS_API_GATEWAY_NAME_STARTING_WITH_SERVICE
+  apiGateway:
+    shouldStartNameWithService: true
 
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
   region: ap-northeast-1
+
+plugins:
+  - serverless-python-requirements
+
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:

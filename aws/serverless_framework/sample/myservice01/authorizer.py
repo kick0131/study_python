@@ -1,4 +1,5 @@
 import pprint
+import cognito_helper
 
 
 def lambda_handler(event, context):
@@ -7,6 +8,11 @@ def lambda_handler(event, context):
 
     # IDトークンを期待
     token = event["headers"]["Authorization"]
+
+    # DEBUG CognitoIDトークンからユーザ名を取得
+    payload = cognito_helper.parse_idtoken(token)
+    decodedpayload = cognito_helper.decode_idtoken(payload)
+    print(f'username: {decodedpayload["cognito:username"]}')
 
     # IDトークン検証
     # ToDo: CognitoAPIを実行し、アクセストークンからユーザIDを取得

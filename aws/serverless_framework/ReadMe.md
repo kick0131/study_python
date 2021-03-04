@@ -6,13 +6,19 @@
 - **node.js**がインストールされていること
 - 対象クラウドサービスの実行アカウントが生成されていること
 
-AWSの場合は`aws configure --profile serverlessfw`などでアクセスキーを登録しておくと便利
+AWSの場合は`aws configure --profile XXXXX`などでアクセスキーを登録しておくと便利
 
 ### インストール
+serverlessコマンド未インストールの場合
 ```
 npm install -g serverless
 ```
 serverlessコマンドの短縮系が`sls`
+
+package-lock.jsonがある場合は追加で実行
+```
+npm install
+```
 
 ### 環境作成
 ```

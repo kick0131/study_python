@@ -9,3 +9,4 @@ log
 **/.ipynb_checkpoints
 **/*-output*
 **/.serverless
+**/node_modules
