@@ -88,9 +88,16 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  # 実行用Lambda
+  # 認証API
+  signin:
+    handler: hello.signin
+    events:
+      - http:
+          path: signin
+          method: post
+  # IoTAPI(ダミー)
   hello:
-    handler: hello.lambda_handler
+    handler: hello.execute
     events:
       - http:
           path: /
@@ -100,7 +107,7 @@ functions:
             resultTtlInSeconds: 300
             identitySource: method.request.header.Authorization
             type: request
-  # 認証用Lambda
+  # 認証認可
   authorizerFunc:
     handler: authorizer.lambda_handler
     # 環境変数は外部ファイルから上書きする

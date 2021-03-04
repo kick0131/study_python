@@ -6,4 +6,8 @@ eyJraWQiOiJ6V2ZDODFGdjBWcWZCRVhKU3R6SHlCaHQxTklnV1VtejZkdDdnc25RaFBZPSIsImFsZyI6
 sls deploy -v --aws-profile <profile>
 
 ### execute
+- get
 curl https://<API GW URL> -H Authorization:<JWT>
+
+- post
+curl https://<API GW URL> -X POST -H "ContentType: application/json" -d '{ "key":"value", "key":123 }'
