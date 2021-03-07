@@ -9,7 +9,7 @@ def genSample():
     """
 
     # 式をカッコでくくればgenerator
-    it = (len(x) for x in open('log/debug.log'))
+    it = (len(x) for x in open('log/debug.log', encoding="utf-8"))
     logger.debug(type(it))
 
     logger.debug(next(it))

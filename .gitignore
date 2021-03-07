@@ -11,3 +11,5 @@ log
 **/.serverless
 **/node_modules
 **/.*.yml
+**/.env
+**/*.pem
