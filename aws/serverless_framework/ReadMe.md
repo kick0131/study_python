@@ -32,8 +32,11 @@ sls create --template aws-python3 --name myservice --path myservice01
 ### デプロイ
 sls.ymlがあるディレクトリで以下コマンドを実行
 ```
-sls deploy -v --aws-profile serverlessfw 
+sls deploy -v --aws-profile XXXXX
 ```
-
-
+### 削除
+AWSリソースが全て消えるので注意
+```
+sls remove -v --aws-profile XXXXX 
+```
 

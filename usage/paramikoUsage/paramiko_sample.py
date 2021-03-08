@@ -1,5 +1,4 @@
 import sys
-import json
 import functools
 import os
 from os.path import join, dirname
@@ -40,7 +39,6 @@ def trace(func):
 
 class dummyclass:
     def __init__(self):
-        client = None
         pass
 
     def __repr__(self):
