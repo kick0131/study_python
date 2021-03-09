@@ -118,7 +118,6 @@ class CognitoManage:
         )
 
         logger.info('=== SIGN IN RESULT ===')
-        # logger.info(response)
         logger.info(json.dumps(response, indent=2))
         return response
 
@@ -134,7 +133,7 @@ class CognitoManage:
             AuthParameters={'USERNAME': user_id, 'PASSWORD': password},
         )
         logger.info('=== INITIATE AUTH(ADMIN) RESULT ===')
-        logger.info(json.dumps(response))
+        logger.info(json.dumps(response, indent=2))
         return response
 
     # ユーザ削除（管理者権限）

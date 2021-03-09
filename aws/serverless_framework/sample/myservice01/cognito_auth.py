@@ -1,6 +1,6 @@
 import json
 import loginit
-from boto3.session import Session
+# from boto3.session import Session
 import boto3
 
 # ロガー

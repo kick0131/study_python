@@ -29,10 +29,15 @@ def parse_idtoken(idtoken: str):
     repatter = re.compile('\\.')
     separaterIdx = [m.start() for m in repatter.finditer(idtoken)]
     logging.info(f'{separaterIdx}')
-    logging.info(idtoken[separaterIdx[0] + 1:separaterIdx[1]])
+    payload = idtoken[(separaterIdx[0] + 1):separaterIdx[1]]
+
+    # パディングの挿入
+    logging.info(f'payload長:{len(payload)} AddPading:{len(payload)%4}')
+    for i in range(len(payload) % 4):
+        payload += '='
 
     logging.info(f'{sys._getframe().f_code.co_name} end')
-    return idtoken[separaterIdx[0] + 1:separaterIdx[1]]
+    return payload
 
 
 def decode_idtoken(idtoken_payload: str):

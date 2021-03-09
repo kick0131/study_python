@@ -22,6 +22,7 @@ frameworkVersion: '2'
 
 plugins:
   - serverless-python-requirements
+  - serverless-dotenv-plugin
 
 custom:
   otherfile:
@@ -114,6 +115,8 @@ functions:
     environment:
       USER_POOL_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_POOL_ID}
       USER_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_ID}
+    layers:
+      - ${env:LAMBDALAYER_ARN}
 #
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
