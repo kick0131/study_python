@@ -32,6 +32,8 @@ def lambda_handler(event, context):
     veryfyInput = {'token': token}
     claims = decodeverifyjwt.lambda_handler(veryfyInput, None)
     print(f'claims : {claims}')
+    if claims is False:
+        return authorizerResponceV1(False)
 
     # ToDo: CognitoAPIを実行し、アクセストークンからユーザIDを取得
     # user_pool_id = "ap-northeast-1_TfjuIRFBa"
@@ -88,6 +90,7 @@ def authorizerResponceV1(isAllow: bool):
     }
     base64_context = base64.b64encode(json.dumps(context).encode('utf8'))
     policyDocument['context'] = {
+        'errmessage': 'this is sample message.',
         'additional_info': base64_context.decode('utf8')
     }
 
