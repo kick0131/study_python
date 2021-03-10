@@ -2,6 +2,8 @@ import pprint
 import cognito_helper
 import cognito_auth
 import os
+import base64
+import json
 # オーソライザー連携を行っているため、ローカル実行時など、使用しない場合はコメントアウト
 # Use decode-verify-jwt.py on Lambda Layer
 # https://github.com/awslabs/aws-support-tools/blob/master/Cognito/decode-verify-jwt/decode-verify-jwt.py
@@ -65,7 +67,7 @@ def authorizerResponceV1(isAllow: bool):
         AWS準拠のポリシードキュメント
     """
     effect = "Allow" if isAllow is True else "Deny"
-    return {
+    policyDocument = {
         "principalId": 1,
         "policyDocument": {
             "Version": "2012-10-17",
@@ -77,10 +79,16 @@ def authorizerResponceV1(isAllow: bool):
                 }
             ]
         },
-        # 後続のLambdaに渡すパラメータ
-        "context": {
-            "key": "value",
-            "numParam": 123,
-            "boolParam": True
-        }
     }
+    # 後続のLambdaに渡すパラメータ
+    context = {
+        "key": "value",
+        "numParam": 123,
+        "boolParam": True
+    }
+    base64_context = base64.b64encode(json.dumps(context).encode('utf8'))
+    policyDocument['context'] = {
+        'additional_info': base64_context.decode('utf8')
+    }
+
+    return policyDocument
