@@ -4,6 +4,7 @@ import cognito_auth
 import os
 import base64
 import json
+import re
 # オーソライザー連携を行っているため、ローカル実行時など、使用しない場合はコメントアウト
 # Use decode-verify-jwt.py on Lambda Layer
 # https://github.com/awslabs/aws-support-tools/blob/master/Cognito/decode-verify-jwt/decode-verify-jwt.py
@@ -20,6 +21,43 @@ def lambda_handler(event, context):
 
     # IDトークンを期待
     token = event["headers"]["Authorization"]
+    pprint.pprint(f'Before {token}')
+
+    # Debug オーソライザから返せるHTTPレスポンスのパターン
+    if '401' in token:
+        print('=== 401 rotue ===')
+        return "Unauthorized"
+    if '403' in token:
+        print('=== 403 rotue ===')
+        return authorizerResponceV1(False)
+    if '500' in token:
+        print('=== 500 rotue ===')
+        return "500 error"
+    if '1' in token:
+        print('=== 401 Unauthorized ===')
+        # 401を返す
+        raise Exception("Unauthorized")
+    if '2' in token:
+        print('=== 500 AUTHORIZER_ERROR ===')
+        raise Exception("Other Error")
+    if '3' in token:
+        print('=== 500 AUTHORIZER_CONFIGURATION_ERROR ===')
+        return "500 error"
+    if '4' in token:
+        print('=== 500 AUTHORIZER_CONFIGURATION_ERROR ===')
+        return {
+            "context": {
+                "errmessage": "Invalid token"
+            }
+        }
+ 
+    # RFC6750 Bearerを除いたJWT部分を抽出
+    if 'Bearer' in token:
+        token = re.sub(".*(Bearer) ", "", token)
+    else:
+        pprint.pprint('not exist Bearer')
+        return authorizerResponceV1(False)
+    pprint.pprint(f'After {token}')
 
     # DEBUG CognitoIDトークンからユーザ名を取得
     payload = cognito_helper.parse_idtoken(token)
@@ -35,7 +73,7 @@ def lambda_handler(event, context):
     if claims is False:
         return authorizerResponceV1(False)
 
-    # ToDo: CognitoAPIを実行し、アクセストークンからユーザIDを取得
+    # ToDo: CognitoAPIを実行し、IDトークンとアクセストークンからユーザIDを取得
     # user_pool_id = "ap-northeast-1_TfjuIRFBa"
     # user_id = "test"
     print('Call CognitoAPI')
@@ -51,6 +89,28 @@ def lambda_handler(event, context):
 
     # ここまで到達出来たら正常
     return authorizerResponceV1(True)
+
+
+def buildResponse(resdata: dict):
+    """辞書型の内容をJSONとして返す
+
+    # return {
+    #     "resCode": resCode,
+    #     "resMessage": f'resMessage[{resCode}]',
+    #     "resData": resdata
+    # }
+
+    Parameters
+    ----------
+    resdata : dict
+        オーソライザの戻り値として渡す情報
+
+    Returns
+    -------
+    dict
+        json形式の戻り値情報
+    """
+    return {k: v for k, v in resdata}
 
 
 def authorizerResponceV1(isAllow: bool):
@@ -95,3 +155,7 @@ def authorizerResponceV1(isAllow: bool):
     }
 
     return policyDocument
+
+
+def return401():
+    return "unauthorized"

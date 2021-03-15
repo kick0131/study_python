@@ -29,6 +29,10 @@ custom:
     environment:
       dev: ${file(./conf/dev/dev.yml)}
 
+package:
+  exclude:
+    - node_modules/**
+
 provider:
   name: aws
   runtime: python3.8
@@ -108,7 +112,7 @@ functions:
             resultTtlInSeconds: 300
             identitySource: method.request.header.Authorization
             type: request
- # 認証認可
+  #認証認可
   authorizerFunc:
     handler: authorizer.lambda_handler
     # 環境変数は外部ファイルから上書きする
@@ -169,3 +173,33 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+# ToDo change GatewayResponse
+resources:
+  Resources:
+    # ゲートウェイのレスポンスを変更
+    GatewayResponse403:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseTemplates:
+          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString}'
+        ResponseType: ACCESS_DENIED
+        RestApiId: !Ref ApiGatewayRestApi
+        StatusCode: '403'
+    GatewayResponse401:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseTemplates:
+          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString}'
+        ResponseType: UNAUTHORIZED
+        RestApiId: !Ref ApiGatewayRestApi
+        StatusCode: '401'
+    GatewayResponse500:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseTemplates:
+          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString}'
+        ResponseType: AUTHORIZER_CONFIGURATION_ERROR
+        RestApiId: !Ref ApiGatewayRestApi
+        StatusCode: '500'
+ 

@@ -31,44 +31,48 @@ provider:
 # you can overwrite defaults here
   stage: dev
   region: ap-northeast-1
-  iamRoleStatements:
-    # AmazonRDSDataFullAccess Sid:SecretsManagerDbCredentialsAccess
-    - Effect: "Allow"
-      Action:
-        - "secretsmanager:GetSecretValue"
-        - "secretsmanager:PutResourcePolicy"
-        - "secretsmanager:PutSecretValue"
-        - "secretsmanager:DeleteSecret"
-        - "secretsmanager:DescribeSecret"
-        - "secretsmanager:TagResource"
-      Resource: [
-        "arn:aws:secretsmanager:*:*:secret:rds-db-credentials/*",
-        "arn:aws:secretsmanager:ap-northeast-1:*:secret:*"
-      ]
-    # AmazonRDSDataFullAccess Sid:RDSDataServiceAccess + "rds:*"
-    - Effect: "Allow"
-      Action:
-        - "rds:*"
-        - "dbqms:CreateFavoriteQuery"
-        - "dbqms:DescribeFavoriteQueries"
-        - "dbqms:UpdateFavoriteQuery"
-        - "dbqms:DeleteFavoriteQueries"
-        - "dbqms:GetQueryString"
-        - "dbqms:CreateQueryHistory"
-        - "dbqms:DescribeQueryHistory"
-        - "dbqms:UpdateQueryHistory"
-        - "dbqms:DeleteQueryHistory"
-        - "rds-data:ExecuteSql"
-        - "rds-data:ExecuteStatement"
-        - "rds-data:BatchExecuteStatement"
-        - "rds-data:BeginTransaction"
-        - "rds-data:CommitTransaction"
-        - "rds-data:RollbackTransaction"
-        - "secretsmanager:CreateSecret"
-        - "secretsmanager:ListSecrets"
-        - "secretsmanager:GetRandomPassword"
-        - "tag:GetResources"
-      Resource: "*"
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+  iam:
+    role:
+      statements:
+        # AmazonRDSDataFullAccess Sid:SecretsManagerDbCredentialsAccess
+        - Effect: "Allow"
+          Action:
+            - "secretsmanager:GetSecretValue"
+            - "secretsmanager:PutResourcePolicy"
+            - "secretsmanager:PutSecretValue"
+            - "secretsmanager:DeleteSecret"
+            - "secretsmanager:DescribeSecret"
+            - "secretsmanager:TagResource"
+          Resource: [
+            "arn:aws:secretsmanager:*:*:secret:rds-db-credentials/*",
+            "arn:aws:secretsmanager:ap-northeast-1:*:secret:*"
+          ]
+        # AmazonRDSDataFullAccess Sid:RDSDataServiceAccess + "rds:*"
+        - Effect: "Allow"
+          Action:
+            # - "rds:*"
+            - "dbqms:CreateFavoriteQuery"
+            - "dbqms:DescribeFavoriteQueries"
+            - "dbqms:UpdateFavoriteQuery"
+            - "dbqms:DeleteFavoriteQueries"
+            - "dbqms:GetQueryString"
+            - "dbqms:CreateQueryHistory"
+            - "dbqms:DescribeQueryHistory"
+            - "dbqms:UpdateQueryHistory"
+            - "dbqms:DeleteQueryHistory"
+            - "rds-data:ExecuteSql"
+            - "rds-data:ExecuteStatement"
+            - "rds-data:BatchExecuteStatement"
+            - "rds-data:BeginTransaction"
+            - "rds-data:CommitTransaction"
+            - "rds-data:RollbackTransaction"
+            - "secretsmanager:CreateSecret"
+            - "secretsmanager:ListSecrets"
+            - "secretsmanager:GetRandomPassword"
+            - "tag:GetResources"
+          Resource: "*"
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:

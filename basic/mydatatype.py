@@ -6,11 +6,13 @@
 import logging
 import sys
 # import json
+import re
 from functools import wraps
 
 logging.basicConfig(
     level=logging.DEBUG,            # ログレベル
     format=' %(asctime)s - %(levelname)s - %(message)s')
+
 
 def printfunc():
     """ 関数名を出力するデコレータ
@@ -229,6 +231,51 @@ def listdic_extraction():
     logging.info(newlist)
 
 
+def stringsub():
+    before1 = ' Bearer XXXX.YYYY.ZZZZ'  # OK
+    before2 = 'Bearer XXXX.YYYY.ZZZZ'  # OK
+    before3 = ' XXXX.YYYY.ZZZZ'        # NG
+    before4 = 'XXXX.YYYY.ZZZZ'         # NG
+    before5 = 'Bearer eyJraWQiOiJTZ0c1T0xKalpzN2Y3c09JNlpUVStmOGtyTThuOFwvT3BLVE8zMkZUY2EyMD0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI0YzUxNDQ0Zi00NGZhLTQ4NmYtYTRiZC0xMzk5ZDcxNzRlMjMiLCJhdWQiOiI1djFkMXVhZDdvYmExOGw2c3A3aDc0N3VxYSIsImV2ZW50X2lkIjoiZThkZTBiZmYtNjhhYS00NTdmLTgwZDAtMmIyMGQ3ZTY1Njg3IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MTUyNjg0MjAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1ub3J0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1ub3J0aGVhc3QtMV9UZmp1SVJGQmEiLCJjb2duaXRvOnVzZXJuYW1lIjoiaGlyYW1hdHN1IiwiZXhwIjoxNjE1MjcyMDIwLCJpYXQiOjE2MTUyNjg0MjAsImVtYWlsIjoiaGlyYW1hdHN1LmNockBuY29udHIuY29tIn0.TwjRTEqDwMoS7euK2j9qA2khCrYwiw3tkGWarkBcOSpXb2ZIyzMY4bLsRBa-z0pHkbuw_BFTUxbiJQIZN78SG7Y7lS0GIJuWcmQPVread10LmJ_3uNKL4IAp6caJEI9DfOvWi99o-AWZVoJXWxWSas538wgLnglyU3ZsfDRyfSfw67n-RwcM4c9RlD4XGuNv6EhG8EdBZr9NUqshU1FjLtMlfPxP4T1b8-gH-VptFS-p9U2rubTynGk1JDvZam4D3OEFxKfYqiia2tczRFjy2_V3HAPehmsz5Q2x2ciki_Bj2I1LjUIaGAJ_qZtr437H4hYFIAQRolViY4GbjCw7sg'
+
+    if 'Bearer' in before1:
+        logging.info(f'before1 : {re.sub(".*(Bearer) ", "", before1)}')
+    if 'Bearer' in before2:
+        logging.info(f'before2 : {re.sub(".*(Bearer) ", "", before2)}')
+    if 'Bearer' in before3:
+        logging.info(f'before3 : {re.sub(".*(Bearer) ", "", before3)}')
+    if 'Bearer' in before4:
+        logging.info(f'before4 : {re.sub(".*(Bearer) ", "", before4)}')
+    if 'Bearer' in before5:
+        logging.info(f'before5 : {re.sub(".*(Bearer) ", "", before5)}')
+
+
+def buildResponse(resdata: dict):
+    """辞書型の内容をJSONとして返す
+
+    # return {
+    #     "resCode": resCode,
+    #     "resMessage": f'resMessage[{resCode}]',
+    #     "resData": resdata
+    # }
+
+    Parameters
+    ----------
+    resdata : dict
+        オーソライザの戻り値として渡す情報
+
+    Returns
+    -------
+    dict
+        json形式の戻り値情報
+    """
+    return {k: v for k, v in resdata}
+
+
 if __name__ == '__main__':
-    listsample()
-    listdic_extraction()
+    data = {
+        "key1": "value",
+        "key2": 123,
+        "key3": True,
+    }
+    logging.info(f'{buildResponse(data)}')
