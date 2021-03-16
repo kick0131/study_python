@@ -33,24 +33,24 @@ def lambda_handler(event, context):
     if '500' in token:
         print('=== 500 rotue ===')
         return "500 error"
-    if '1' in token:
-        print('=== 401 Unauthorized ===')
-        # 401を返す
-        raise Exception("Unauthorized")
-    if '2' in token:
-        print('=== 500 AUTHORIZER_ERROR ===')
-        raise Exception("Other Error")
-    if '3' in token:
-        print('=== 500 AUTHORIZER_CONFIGURATION_ERROR ===')
-        return "500 error"
-    if '4' in token:
-        print('=== 500 AUTHORIZER_CONFIGURATION_ERROR ===')
-        return {
-            "context": {
-                "errmessage": "Invalid token"
-            }
-        }
- 
+    # if '1' in token:
+    #     print('=== 401 Unauthorized ===')
+    #     # 401を返す
+    #     raise Exception("Unauthorized")
+    # if '2' in token:
+    #     print('=== 500 AUTHORIZER_ERROR ===')
+    #     raise Exception("Other Error")
+    # if '3' in token:
+    #     print('=== 500 AUTHORIZER_CONFIGURATION_ERROR ===')
+    #     return "500 error"
+    # if '4' in token:
+    #     print('=== 500 AUTHORIZER_CONFIGURATION_ERROR ===')
+    #     return {
+    #         "context": {
+    #             "errmessage": "Invalid token"
+    #         }
+    #     }
+
     # RFC6750 Bearerを除いたJWT部分を抽出
     if 'Bearer' in token:
         token = re.sub(".*(Bearer) ", "", token)
@@ -148,10 +148,18 @@ def authorizerResponceV1(isAllow: bool):
         "numParam": 123,
         "boolParam": True
     }
-    base64_context = base64.b64encode(json.dumps(context).encode('utf8'))
+    # オーソライザから返却する場合の情報
+    context_res = {
+        "key": "value2",
+        "numParam": 456,
+        "boolParam": False
+    }
+    b64_info = base64.b64encode(json.dumps(context).encode('utf8'))
+    b64_res = base64.b64encode(json.dumps(context_res).encode('utf8'))
     policyDocument['context'] = {
         'errmessage': 'this is sample message.',
-        'additional_info': base64_context.decode('utf8')
+        'additional_info': b64_info.decode('utf8'),
+        'additional_res': b64_res.decode('utf8')
     }
 
     return policyDocument

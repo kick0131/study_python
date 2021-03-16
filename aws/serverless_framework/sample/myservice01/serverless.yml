@@ -182,7 +182,7 @@ resources:
       Type: AWS::ApiGateway::GatewayResponse
       Properties:
         ResponseTemplates:
-          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString}'
+          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString, "res": $context.authorizer.additional_res }'
         ResponseType: ACCESS_DENIED
         RestApiId: !Ref ApiGatewayRestApi
         StatusCode: '403'
@@ -190,7 +190,7 @@ resources:
       Type: AWS::ApiGateway::GatewayResponse
       Properties:
         ResponseTemplates:
-          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString}'
+          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString, "res": $context.authorizer.additional_res }'
         ResponseType: UNAUTHORIZED
         RestApiId: !Ref ApiGatewayRestApi
         StatusCode: '401'
@@ -198,7 +198,7 @@ resources:
       Type: AWS::ApiGateway::GatewayResponse
       Properties:
         ResponseTemplates:
-          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString}'
+          application/json: '{ "appMessage": $context.authorizer.errmessage, "message": $context.error.messageString, "res": $context.authorizer.additional_res }'
         ResponseType: AUTHORIZER_CONFIGURATION_ERROR
         RestApiId: !Ref ApiGatewayRestApi
         StatusCode: '500'
