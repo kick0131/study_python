@@ -1,5 +1,6 @@
 import json
 import boto3
+import botocore
 import loginit
 import os
 import functools
@@ -210,13 +211,32 @@ def hello(event, context):
         return errresponse
 
     # DataAPI実行
-    rdsResponse = rdsData.execute_statement(
-        resourceArn=cluster_arn,
-        secretArn=secret_arn,
-        database=database,
-        sql=query
-    )
-    logger.info(f'res:{rdsResponse}')
+    try:
+        rdsResponse = rdsData.execute_statement(
+            resourceArn=cluster_arn,
+            secretArn=secret_arn,
+            database=database,
+            sql=query
+        )
+        logger.info(f'res:{rdsResponse}')
+    except botocore.exceptions.ClientError as e:
+        logger.error(f'exception:{e}')
+        # APIリファレンスにある例外は以下の形で判定する
+        # RDSDataService.Client.exceptions.BadRequestException
+        #
+        # RDSDataService.Client.XXXXXというインスタンスがあるわけではない点、注意
+        #
+        if e.response['Error']['Code'] == 'BadRequestException':
+            logger.error('=== BadRequestException')
+        if e.response['Error']['Code'] == 'StatementTimeoutException':
+            logger.error('=== StatementTimeoutException')
+        if e.response['Error']['Code'] == 'InternalServerErrorException':
+            logger.error('=== InternalServerErrorException')
+        if e.response['Error']['Code'] == 'ForbiddenException':
+            logger.error('=== ForbiddenException')
+        if e.response['Error']['Code'] == 'ServiceUnavailableError':
+            logger.error('=== ServiceUnavailableError')
+        return None
 
     # レコード情報があればレスポンスボディに設定して返却
     body = rdsResponse['records'] if 'records' in rdsResponse else 'Empty'
