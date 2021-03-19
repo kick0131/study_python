@@ -1,6 +1,6 @@
-## Note
-Simple lambda access to AuroraServerless application.
-This is builded Serverless Framework.
+## Overview
+API GW<br>
+┗ Lambda Function -> (DataAPI) -> AuroraServerless
 
 ## First setting
 - initialize
