@@ -110,6 +110,10 @@ functions:
       CLUSTER_ARN: ${env:CLUSTER_ARN}
       SECRET_ARN: ${env:SECRET_ARN}
       DATABASE: ${env:DATABASE}
+  callCommon:
+    handler: handler.callCommon
+    layers:
+       - ${env:LAMBDALAYER_ARN}
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

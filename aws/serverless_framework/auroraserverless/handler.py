@@ -5,6 +5,7 @@ import loginit
 import os
 import functools
 import re
+import dataapiutil
 
 # ロガー
 logger = loginit.uselogger(__name__)
@@ -298,6 +299,19 @@ def main():
     for url in urlpattern:
         isApiAllow = checkAllowApi(selectresult, method, url)
         logger.info(f'url:{url} check:{isApiAllow}')
+
+
+def callCommon(event, context):
+    """LambdaLayerで定義されたモジュールを呼び出す
+
+    Parameters
+    ----------
+    event : lambdaハンドラ引数
+        呼び出し側から自由に設定、特に用途なし
+    context : コンテキスト
+        lambdaが設定するメタ情報なので、呼び出し側から指定不可
+    """
+    dataapiutil.hello(json.dumps(event, indent=2), logger=logger)
 
 
 if __name__ == '__main__':

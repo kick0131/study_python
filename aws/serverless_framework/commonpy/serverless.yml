@@ -69,16 +69,20 @@ provider:
 #    - exclude-me.py
 #    - exclude-me-dir/**
 
-functions:
-  hello:
-    handler: handler.hello
-    environment:
-      CLUSTER_ARN: ${env:CLUSTER_ARN}
-      SECRET_ARN: ${env:SECRET_ARN}
-      DATABASE: ${env:DATABASE}
+# functions:
+#   hello:
+#     handler: handler.hello
+#     environment:
+#       CLUSTER_ARN: ${env:CLUSTER_ARN}
+#       SECRET_ARN: ${env:SECRET_ARN}
+#       DATABASE: ${env:DATABASE}
 layers:
-  mylayer:
+  dataapiutil:
     path: dataapi
+    name: dataapi
+    compatibleRuntimes:
+    - python3.8
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
