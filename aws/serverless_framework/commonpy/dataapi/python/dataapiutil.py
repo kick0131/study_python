@@ -7,8 +7,10 @@ import loginit
 class DataApiUtil:
     def __init__(self, **kwargs):
         self._logger = loginit.uselogger(__name__)
-        self.cluster_arn = kwargs['cluster_arn'] if 'cluster_arn' in kwargs else None
-        self.secret_arn = kwargs['secret_arn'] if 'secret_arn' in kwargs else None
+        self.cluster_arn = (
+            kwargs['cluster_arn'] if 'cluster_arn' in kwargs else None)
+        self.secret_arn = (
+            kwargs['secret_arn'] if 'secret_arn' in kwargs else None)
         self.database = kwargs['database'] if 'database' in kwargs else None
 
     def __repr__(self):
