@@ -11,5 +11,7 @@ log
 **/.serverless
 **/node_modules
 **/.*.yml
-**/.env
 **/*.pem
+# 環境変数
+**/.env
+**/conf/
