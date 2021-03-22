@@ -7,11 +7,15 @@ import re
 # Use decode-verify-jwt.py on Lambda Layer
 # https://github.com/awslabs/aws-support-tools/blob/master/Cognito/decode-verify-jwt/decode-verify-jwt.py
 import decode_verify_jwt
+import dataapiutil
 
 
 def lambda_handler(event, context):
     print(f'--- {__name__} ---')
     pprint.pprint(event)
+
+    # DEBUG LambdaLayerの共通モジュール(サンプルメソッド)呼び出し
+    dataapiutil.hello("call to common.py")
 
     # IDトークンを期待
     token = event["headers"]["Authorization"]
