@@ -44,8 +44,7 @@ provider:
 
 # you can overwrite defaults here
   stage: ${opt:stage, self:custom.defaultStage}
-  # region: ${self:custom.environment.${self:provider.stage}.REGION}
-  region: ${self:custom.environment.prod.REGION}
+  region: ${self:custom.environment.${self:provider.stage}.REGION}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -100,16 +99,14 @@ functions:
     handler: authorizer.lambda_handler
     # 環境変数は外部ファイルから上書きする
     environment:
-      # REGION: ${self:custom.environment.${self:provider.stage}.REGION}
-      REGION: ${self:custom.environment.prod.REGION}
+      REGION: ${self:custom.environment.${self:provider.stage}.REGION}
       USER_POOL_ID: ${self:custom.environment.${self:provider.stage}.COGNITO.USER_POOL_ID}
       APP_CLIENT_ID: ${self:custom.environment.${self:provider.stage}.COGNITO.APP_CLIENT_ID}
     layers:
       # IDトークン検証処理
       - { Ref: JwtLambdaLayer }
       # 共通処理
-      # - ${self:custom.environment.${self:provider.stage}.COMMONLAMBDALAYER_ARN}
-      - ${self:custom.environment.prod.COMMONLAMBDALAYER_ARN}
+      - ${self:custom.environment.${self:provider.stage}.COMMONLAMBDALAYER_ARN}
 layers:
   jwt:
     path: checkjwt
