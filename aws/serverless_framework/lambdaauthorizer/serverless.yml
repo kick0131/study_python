@@ -22,12 +22,13 @@ frameworkVersion: '2'
 
 plugins:
   - serverless-python-requirements
-  - serverless-dotenv-plugin
+  - serverless-latest-layer-version
 
 custom:
-  otherfile:
-    environment:
-      dev: ${file(./conf/dev/dev.yml)}
+  defaultStage: dev
+  environment:
+    dev: ${file(./conf/dev/dev.yml)}
+    prod: ${file(./conf/dev/prod.yml)}
 
 package:
   exclude:
@@ -42,8 +43,9 @@ provider:
     shouldStartNameWithService: true
 
 # you can overwrite defaults here
-  stage: dev
-  region: ap-northeast-1
+  stage: ${opt:stage, self:custom.defaultStage}
+  # region: ${self:custom.environment.${self:provider.stage}.REGION}
+  region: ${self:custom.environment.prod.REGION}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -60,25 +62,6 @@ provider:
 #          - - "arn:aws:s3:::"
 #            - "Ref" : "ServerlessDeploymentBucket"
 #            - "/*"
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "cognito-identity:Describe*"
-        - "cognito-identity:Get*"
-        - "cognito-identity:List*"
-        - "cognito-idp:Describe*"
-        - "cognito-idp:AdminGet*"
-        - "cognito-idp:AdminList*"
-        - "cognito-idp:List*"
-        - "cognito-idp:Get*"
-        - "cognito-sync:Describe*"
-        - "cognito-sync:Get*"
-        - "cognito-sync:List*"
-        - "iam:ListOpenIdConnectProviders"
-        - "iam:ListRoles"
-        - "sns:ListPlatformApplications"
-      Resource: "*"
-
 # you can define service wide environment variables here
 #  environment:
 #    variable1: value1
@@ -117,12 +100,16 @@ functions:
     handler: authorizer.lambda_handler
     # 環境変数は外部ファイルから上書きする
     environment:
-      USER_POOL_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_POOL_ID}
-      USER_ID: ${self:custom.otherfile.environment.${self:provider.stage}.USER_ID}
-    # ToDo Lambda Layerを作ってから有効化
+      # REGION: ${self:custom.environment.${self:provider.stage}.REGION}
+      REGION: ${self:custom.environment.prod.REGION}
+      USER_POOL_ID: ${self:custom.environment.${self:provider.stage}.COGNITO.USER_POOL_ID}
+      APP_CLIENT_ID: ${self:custom.environment.${self:provider.stage}.COGNITO.APP_CLIENT_ID}
     layers:
+      # IDトークン検証処理
       - { Ref: JwtLambdaLayer }
-      # - ${env:LAMBDALAYER_ARN}
+      # 共通処理
+      # - ${self:custom.environment.${self:provider.stage}.COMMONLAMBDALAYER_ARN}
+      - ${self:custom.environment.prod.COMMONLAMBDALAYER_ARN}
 layers:
   jwt:
     path: checkjwt

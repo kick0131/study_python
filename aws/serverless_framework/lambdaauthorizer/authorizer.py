@@ -1,7 +1,5 @@
 import pprint
 import cognito_helper
-import cognito_auth
-import os
 import base64
 import json
 import re
@@ -9,10 +7,6 @@ import re
 # Use decode-verify-jwt.py on Lambda Layer
 # https://github.com/awslabs/aws-support-tools/blob/master/Cognito/decode-verify-jwt/decode-verify-jwt.py
 import decode_verify_jwt
-
-# Lambda環境変数からユーザプールIDを取得
-user_pool_id = os.getenv('USER_POOL_ID')
-user_id = os.getenv('USER_ID')
 
 
 def lambda_handler(event, context):
@@ -72,14 +66,6 @@ def lambda_handler(event, context):
     print(f'claims : {claims}')
     if claims is False:
         return authorizerResponceV1(False)
-
-    # ToDo: CognitoAPIを実行し、IDトークンとアクセストークンからユーザIDを取得
-    # user_pool_id = "ap-northeast-1_TfjuIRFBa"
-    # user_id = "test"
-    print('Call CognitoAPI')
-    cognito = cognito_auth.CognitoManage()
-    attr = cognito.admin_get_user(user_pool_id, user_id)
-    pprint.pprint(attr)
 
     # アクセス権限確認/属性情報取得
     # ToDo: Aurora Serverlessから必要な情報（許可URL）を取得

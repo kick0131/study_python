@@ -20,10 +20,21 @@ cd python
 pip install -t ./ python-jose
 ```
 
-## setup
-create `.env` at current directory
+## OSS
+
+- latest-layer-version(MIT License)
+https://www.npmjs.com/package/serverless-latest-layer-version
 ```
-LAMBDALAYER_ARN="arn:aws:lambda:<region>:<accountId>:layer:<LayerName>:<version>"
+npm i serverless-latest-layer-version --save-dev
+```
+
+## setup
+create `dev.yml` at `conf/dev/` directory
+```
+REGION: <region>
+USER_POOL_ID: XXXXX
+APP_CLIENT_ID: XXXXX
+COMMONLAMBDALAYER_ARN="arn:aws:lambda:<region>:<accountId>:layer:<LayerName>:<version>"
 ```
 
 ### sample JWT
