@@ -7,6 +7,8 @@ import random
 import string
 import datetime
 import time
+import base64
+import json
 # ログの設定
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -19,17 +21,27 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('datatypeSample')
 
 
-@app.route("/cats")
-def cats():
+@app.route("/")
+def root():
+    logger.info('=== root()')
+    logger.info(f'event: {request.environ["serverless.event"]}')
     return "Cats"
 
 
-@app.route("/dogs")
-def dogs():
+@app.route("/cats")
+def cats():
+    logger.info('=== cats()')
+    logger.info(f'event: {request.environ["serverless.event"]}')
+    return "Cats"
+
+
+@app.route("/dogs/<count>")
+def dogs(count: str):
     return jsonify(
         {
             'message': 'Dogs is gone.',
             'cause': 'Not Found',
+            'count': f'{count}',
             'otherType': {
                 'intdata': 123,
                 'booldata': True
@@ -168,10 +180,36 @@ def delete(id: str, name: str, delta: datetime.timedelta):
     return result
 
 
-def getTtl(endperiod):
-    now = datetime.now()
-    epoctime = now
-    return epoctime
+def authhoge(event, context):
+    logger.info('=== authhoge start')
+    logger.info(f'event: {event}')
+    policyDocument = {
+        "principalId": 1,
+        "policyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Action": "execute-api:Invoke",
+                    "Effect": "Allow",
+                    "Resource": "arn:aws:execute-api:*:*:*"
+                }
+            ]
+        },
+    }
+    # 後続のLambdaに渡すパラメータ
+    context = {
+        "key": "value",
+        "numParam": 123,
+        "boolParam": True
+    }
+    b64_info = base64.b64encode(json.dumps(context).encode('utf8'))
+    policyDocument['context'] = {
+        'errmessage': 'this is sample message.',
+        'additional_info': b64_info.decode('utf8')
+    }
+
+    logger.info('=== authhoge end')
+    return policyDocument
 
 
 def randomname(n):

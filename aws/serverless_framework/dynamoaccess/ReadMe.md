@@ -9,6 +9,9 @@ APIGatewayからFlaskアプリを介してDynamoDBにアクセスする
 endpoints:
   ANY - https://XXXXX.execute-api.ap-northeast-1.amazonaws.com/dev
 
+- get
+curl -H 'Authorization: XXX' <API GW URL>
+
 - post
 curl -d '{"name":"sample","action":"put"}' -H 'Content-Type: application/json' -X POST <API GW URL>
 
