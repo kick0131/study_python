@@ -40,3 +40,12 @@ AWSリソースが全て消えるので注意
 sls remove -v --aws-profile XXXXX 
 ```
 
+
+## プラグイン
+
+### serverless-wsgi
+WebServerGatewayInterface(ウィスキー)対応のアプリケーションに変換するプラグイン
+
+```
+sls plugin install -n serverless-wsgi
+```

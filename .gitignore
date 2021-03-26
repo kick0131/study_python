@@ -12,6 +12,7 @@ log
 **/node_modules
 **/.*.yml
 **/*.pem
+**/.requirements
 # 環境変数
 **/.env
 **/conf/

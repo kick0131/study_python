@@ -1,4 +1,6 @@
-import json
+# for WSGI
+from flask import Flask, jsonify, request
+# for Application
 import boto3
 import logging
 import random
@@ -9,9 +11,59 @@ import time
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+# Flask
+app = Flask(__name__)
+
 # DynamoDBオブジェクトの作成
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('datatypeSample')
+
+
+@app.route("/cats")
+def cats():
+    return "Cats"
+
+
+@app.route("/dogs")
+def dogs():
+    return jsonify(
+        {
+            'message': 'Dogs is gone.',
+            'cause': 'Not Found',
+            'otherType': {
+                'intdata': 123,
+                'booldata': True
+            }
+        }), 403
+
+
+@app.route("/hello", methods=["POST"])
+def flaskhello():
+
+    event = request.get_json()
+    logger.info(f'get_data: {event}')
+
+    id = randomname(10)
+    setid = event['id'] if 'id' in event else None
+    name = event['name'] if 'name' in event else None
+    action = event['action'] if 'action' in event else None
+    result = {}
+
+    if 'put' in action:
+        # テーブル書き込み
+        result = put(id, name)
+    if 'query' in action:
+        # テーブル読み込み
+        result = query(id, name)
+    if 'scan' in action:
+        # テーブル一覧
+        result = scan()
+    if 'delete' in action:
+        # テーブル論理削除
+        delta = datetime.timedelta(seconds=10)
+        result = delete(setid, name, delta)
+
+    return jsonify({'message': f'{result}'}, 200)
 
 
 def hello(event, context):
@@ -52,8 +104,8 @@ def put(id, name):
     """
     table.put_item(
         Item={
-            "id": id,
-            "name": name,
+            "tenantId": id,
+            "dataTypeId": name,
         }
     )
 
@@ -67,8 +119,8 @@ def query(id, name):
     """
     result = table.get_item(
         Key={
-            'id': id,
-            'name': name,
+            'tenantId': id,
+            'dataTypeId': name,
         }
     )
     return result
@@ -92,13 +144,13 @@ def delete(id: str, name: str, delta: datetime.timedelta):
     epoc = int(time.mktime(deleteAt.timetuple()))
     # 参考
     # https://dev.classmethod.jp/articles/dynamodb-update-expression-actions/
-    # 
+    #
     # boto3
     # https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.update_item
     result = table.update_item(
         Key={
-            'id': id,
-            'name': name
+            'tenantId': id,
+            'dataTypeId': name
         },
         UpdateExpression="SET #attribute = :val",
         ExpressionAttributeNames={
