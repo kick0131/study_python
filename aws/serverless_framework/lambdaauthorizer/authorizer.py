@@ -127,7 +127,7 @@ def authorizerResponceV1(isAllow: bool):
                 {
                     "Action": "execute-api:Invoke",
                     "Effect": effect,
-                    "Resource": "arn:aws:execute-api:*:*:*/*/*/"
+                    "Resource": "arn:aws:execute-api:*:*:*"
                 }
             ]
         },
