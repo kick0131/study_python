@@ -13,6 +13,6 @@ endpoints:
 curl -H 'Authorization: XXX' <API GW URL>
 
 - post
-curl -d '{"name":"sample","action":"put"}' -H 'Content-Type: application/json' -X POST <API GW URL>
+curl -H 'Authorization: XXX' -d '{"name":"sample","action":"put", "obj":{"key1":"value1", "key2","value2"}}' -H 'Content-Type: application/json' -X POST <API GW URL>
 
 ### デプロイ

@@ -21,11 +21,11 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('datatypeSample')
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def root():
     logger.info('=== root()')
     logger.info(f'event: {request.environ["serverless.event"]}')
-    return "Cats"
+    return "Root"
 
 
 @app.route("/cats")
