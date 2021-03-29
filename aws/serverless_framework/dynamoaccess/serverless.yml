@@ -29,6 +29,8 @@ package:
 functions:
   hello:
     handler: wsgi_handler.handler
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
     events:
       - http: ANY /
       - http:
@@ -90,3 +92,6 @@ custom:
   wsgi:
     app: handler.app
     packRequirements: false
+  pythonRequirements:
+    layer: true
+
