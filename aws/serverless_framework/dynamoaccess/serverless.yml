@@ -4,7 +4,6 @@ frameworkVersion: '2'
 provider:
   name: aws
   runtime: python3.8
-  lambdaHashingVersion: 20201221
   # https://www.serverless.com/framework/docs/deprecations/#AWS_API_GATEWAY_NAME_STARTING_WITH_SERVICE
   apiGateway:
     shouldStartNameWithService: true
@@ -48,7 +47,11 @@ functions:
           integration: lambda-proxy
   # 動作確認オーソライザ
   authorizerFunc:
-    handler: handler.authhoge
+    # LambdaLayerで定義している関数を指定
+    handler: authorizer.lambda_handler
+    layers:
+      # ARNベタ書きしているが、本来は環境変数ファイルからの参照
+      - arn:aws:lambda:ap-northeast-1:718248775023:layer:commonpy:1	
  
 # you can add CloudFormation resource templates here
 resources:
@@ -89,9 +92,8 @@ plugins:
   - serverless-python-requirements
   - serverless-wsgi
 custom:
+  pythonRequirements:
+    layer: true
   wsgi:
     app: handler.app
     packRequirements: false
-  pythonRequirements:
-    layer: true
-
