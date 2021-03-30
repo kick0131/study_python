@@ -45,6 +45,10 @@ functions:
           path: dogs/{count}
           method: GET
           integration: lambda-proxy
+      - http:
+          path: hello
+          method: POST
+          integration: lambda-proxy
   # 動作確認オーソライザ
   authorizerFunc:
     # LambdaLayerで定義している関数を指定

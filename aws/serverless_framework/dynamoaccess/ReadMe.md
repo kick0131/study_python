@@ -10,9 +10,13 @@ endpoints:
   ANY - https://XXXXX.execute-api.ap-northeast-1.amazonaws.com/dev
 
 - get
-curl -H 'Authorization: XXX' <API GW URL>
+curl -H Authorization:XXX <API GW URL>
 
 - post
-curl -H 'Authorization: XXX' -d '{"name":"sample","action":"put", "obj":{"key1":"value1", "key2","value2"}}' -H 'Content-Type: application/json' -X POST <API GW URL>
+curl -H Authorization:XXX -d '{"name":"sample","action":"put", "obj":{"key1":"value1", "key2","value2"}}' -H 'Content-Type: application/json' -X POST <API GW URL>
+
+- do query
+curl -H Authorization:XXX -d '{"action":"count" }' -H 'Content-Type: application/json' -X POST <API GW URL>/hello
 
 ### デプロイ
+sls deploy -v --aws-profile <profile>

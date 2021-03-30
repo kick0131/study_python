@@ -2,6 +2,7 @@
 from flask import Flask, jsonify, request
 # for Application
 import boto3
+from boto3.dynamodb.conditions import Key
 import logging
 import random
 import string
@@ -70,6 +71,9 @@ def flaskhello():
     if 'scan' in action:
         # テーブル一覧
         result = scan()
+    if 'count' in action:
+        # テーブル数カウント
+        result = count()
     if 'delete' in action:
         # テーブル論理削除
         delta = datetime.timedelta(seconds=10)
@@ -145,6 +149,19 @@ def scan():
     """
     result = table.scan()
     return result
+
+
+def count():
+    """
+    DynamoDBから条件付きでレコード検索する関数
+    @return レコード数
+    """
+    options = {
+        'Select': 'COUNT',
+        'KeyConditionExpression': Key('tenantId').eq('tenantA')
+    }
+    result = table.query(**options)
+    return result['Count']
 
 
 def delete(id: str, name: str, delta: datetime.timedelta):
