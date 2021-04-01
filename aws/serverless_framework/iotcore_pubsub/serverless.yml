@@ -1,0 +1,44 @@
+service: iotcorepubsub
+frameworkVersion: '2'
+
+package:
+  exclude:
+    - node_modules
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: ap-northeast-1
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "iot:*"
+          Resource: "*"
+functions:
+  fromIoT:
+    handler: handler.hello
+    events:
+      - iot:
+          name: LambdaInvokeRule
+          description: AWSIoTからLambdaをInvokeする
+          sql: "SELECT * FROM 'iot-serverless-topic'"
+          sqlversion: beta
+  toIoTwithIoTSDK:
+    handler: awsiotsdkv2.publish
+    layers:
+      - { Ref: AwsiotsdkLambdaLayer }
+  toIoTwithBoto3:
+    handler: botosample.publish
+ 
+layers:
+  awsiotsdk:
+    # 参照ディレクトリ
+    path: layer
+    # LambdaLayer上の表示名
+    name: awsiotsdk
+    compatibleRuntimes:
+    - python3.8
