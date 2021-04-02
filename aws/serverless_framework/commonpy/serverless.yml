@@ -1,9 +1,6 @@
 service: commonpy
 frameworkVersion: '2'
 
-plugins:
-  - serverless-dotenv-plugin
-
 package:
   exclude:
     - node_modules/**
@@ -14,24 +11,25 @@ provider:
   lambdaHashingVersion: 20201221
   stage: dev
   region: ap-northeast-1
-  iamManagedPolicies:
-    - "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
-  iam:
-    role:
-      statements:
-        # AmazonRDSDataFullAccess Sid:SecretsManagerDbCredentialsAccess
-        - Effect: "Allow"
-          Action:
-            - "secretsmanager:GetSecretValue"
-            - "secretsmanager:PutResourcePolicy"
-            - "secretsmanager:PutSecretValue"
-            - "secretsmanager:DeleteSecret"
-            - "secretsmanager:DescribeSecret"
-            - "secretsmanager:TagResource"
-          Resource: [
-            "arn:aws:secretsmanager:*:*:secret:rds-db-credentials/*",
-            "arn:aws:secretsmanager:ap-northeast-1:*:secret:*"
-          ]
+  # 使う側で記載が必要なポリシー
+  # iam:
+  #   role:
+  #     managedPolicies:
+  #       - "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+  #     statements:
+  #       # AmazonRDSDataFullAccess Sid:SecretsManagerDbCredentialsAccess
+  #       - Effect: "Allow"
+  #         Action:
+  #           - "secretsmanager:GetSecretValue"
+  #           - "secretsmanager:PutResourcePolicy"
+  #           - "secretsmanager:PutSecretValue"
+  #           - "secretsmanager:DeleteSecret"
+  #           - "secretsmanager:DescribeSecret"
+  #           - "secretsmanager:TagResource"
+  #         Resource: [
+  #           "arn:aws:secretsmanager:*:*:secret:rds-db-credentials/*",
+  #           "arn:aws:secretsmanager:ap-northeast-1:*:secret:*"
+  #         ]
 
 layers:
   dataapiutil:
