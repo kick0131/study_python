@@ -78,7 +78,11 @@ def flaskhello():
         # テーブル論理削除
         delta = datetime.timedelta(seconds=10)
         result = delete(setid, name, delta)
+    if 'put2' in action:
+        # テーブル書き込み(Map型あり)
+        result = put2(id, name)
 
+    logger.info(f'result: {result}')
     return jsonify({'message': f'{result}'}, 200)
 
 
@@ -122,6 +126,33 @@ def put(id, name):
         Item={
             "tenantId": id,
             "dataTypeId": name,
+        }
+    )
+
+
+def put2(id, name):
+    """
+    DynamoDBにレコードを登録する関数
+    @Param id ハッシュキー
+    @Param name レンジキー
+    """
+    table.put_item(
+        Item={
+            "tenantId": id,
+            "dataTypeId": name,
+            "dataTypeName": "dummy",
+            "convertInfo": [
+                {
+                    "column": "temp",
+                    "param": "temperture",
+                    "type": "decimal"
+                },
+                {
+                    "column": "craeteDate",
+                    "param": "createAt",
+                    "type": "datetime"
+                },
+            ]
         }
     )
 

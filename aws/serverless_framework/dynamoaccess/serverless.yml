@@ -36,11 +36,12 @@ functions:
           path: cats
           method: GET
           integration: lambda-proxy
-          authorizer:
-            name: authorizerFunc
-            resultTtlInSeconds: 300
-            identitySource: method.request.header.Authorization
-            type: request
+          # 必要に応じて有効化
+      #     authorizer:
+      #       name: authorizerFunc
+      #       resultTtlInSeconds: 300
+      #       identitySource: method.request.header.Authorization
+      #       type: request
       - http:
           path: dogs/{count}
           method: GET
@@ -50,12 +51,13 @@ functions:
           method: POST
           integration: lambda-proxy
   # 動作確認オーソライザ
-  authorizerFunc:
+  # 必要に応じて有効化
+  # authorizerFunc:
     # LambdaLayerで定義している関数を指定
-    handler: authorizer.lambda_handler
-    layers:
+    # handler: authorizer.lambda_handler
+    # layers:
       # ARNベタ書きしているが、本来は環境変数ファイルからの参照
-      - arn:aws:lambda:ap-northeast-1:718248775023:layer:commonpy:1	
+      # - arn:aws:lambda:ap-northeast-1:718248775023:layer:commonpy:1	
  
 # you can add CloudFormation resource templates here
 resources:
