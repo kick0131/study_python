@@ -6,7 +6,7 @@ from aws.cognito.cognito_auth import CognitoManage
 # 本ファイルは固有情報がある為、非公開
 
 # AWSプロファイル未使用の場合は空文字とする
-awsprofile = 'awshira'
+awsprofile = 'awsmiura'
 
 
 def lambda_handler(event, context):
@@ -75,10 +75,10 @@ def lambda_handler(event, context):
     # user_pool_id, user_id, attributes)
 
     # 属性情報取得(カスタム属性が取得出来ないので使用しない)
-    cognitoclass.get_user(accesstoken)
+    # cognitoclass.get_user(accesstoken)
 
     # 属性情報取得
-    cognitoclass.admin_get_user(user_pool_id, user_id)
+    # cognitoclass.admin_get_user(user_pool_id, user_id)
 
     # トークン更新
     # cognitoclass.refresh_token(user_pool_id, client_id, refreshtoken)
@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
         # オープンするファイルは非公開
         json_open = open((os.path.dirname(__file__)
-                          + '/../_privatejson/cognito_data.json'), 'r')
+                          + '/../_privatejson/cognito_data_mi.json'), 'r')
         event = json.load(json_open)
         lambda_handler(event, '')
 
