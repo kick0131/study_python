@@ -72,6 +72,12 @@ resources:
         -
           AttributeName: dataTypeId
           AttributeType: S
+        -
+          AttributeName: dataTypeName
+          AttributeType: S
+        # -
+        #   AttributeName: ExpirationTime
+        #   AttributeType: S
        # キーの種類を指定（ハッシュorレンジキー）
         KeySchema:
           -
@@ -89,6 +95,21 @@ resources:
         TimeToLiveSpecification:
           AttributeName: ExpirationTime
           Enabled: true
+        # LSI定義
+        LocalSecondaryIndexes:
+          -
+            IndexName: tenantId-dataTypeName-index
+            KeySchema:
+              -
+                AttributeName: tenantId
+                KeyType: HASH
+              -
+                AttributeName: dataTypeName
+                KeyType: RANGE
+            # インデックスから射影した属性に含める内容
+            Projection:
+              ProjectionType: ALL
+              
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"
