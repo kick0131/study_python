@@ -19,6 +19,9 @@ python-dotenv = "*"
 [dev-packages]
 pylint = "*"
 autopep8 = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3"
