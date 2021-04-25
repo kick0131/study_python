@@ -15,6 +15,7 @@ boto3 = "*"
 autopep8 = "*"
 paramiko = "*"
 python-dotenv = "*"
+atomicwrites = "*"
 
 [dev-packages]
 pylint = "*"
