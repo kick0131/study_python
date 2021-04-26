@@ -6,7 +6,6 @@ pytest sample
 pipenv install --dev pytest pytest-cov pytest-mock
 ```
 
-
 ## Test
 - コンソール出力
 
@@ -19,4 +18,9 @@ pipenv install --dev pytest pytest-cov pytest-mock
 - HTML出力(htmlcovに出力)
 
   `pytest -v --cov=api --cov-report=html <testpath>`
+
+
+## 注意点
+
+- conftest.pyはpytestが参照する固定ファイル名
 
