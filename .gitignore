@@ -16,3 +16,5 @@ log
 # 環境変数
 **/.env
 **/conf/
+# MacとWinを共存
+Pipfile.lock
