@@ -273,17 +273,23 @@ def buildResponse(resdata: dict):
     return {k: v for k, v in resdata}
 
 
-def parse_dataapi_result():
-    result01 = {'record': [[{'longValue': 100}]]}
-    result02 = {'record': [[{'isNull': True}]]}
+def get_dict_hierarchy():
+    """辞書型の階層構造データを取得する効率的な方法
+    """
+    sampledata = {
+        'key1': {
+            'key2': {
+                'key3': 'hello world'
+            }
+        }
+    }
 
-    record = result02['record']
-    data = record[0][0].get('longValue')
+    val = sampledata.get('key1', {}).get('key2', {}).get('key3', '')
+    if val is None:
+        val = ''
 
-    logging.info(f'{result01["record"]}')
-    logging.info(f'{result02["record"]}')
-    logging.info(f'{data}')
+    logging.info(f'{val}')
 
 
 if __name__ == '__main__':
-    parse_dataapi_result()
+    get_dict_hierarchy()

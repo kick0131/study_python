@@ -12,5 +12,22 @@ def parse_dataapi_result():
     return False
 
 
+def change_astar():
+    """アスタリスクを置換する
+    """
+    test = '*ab*cd*'
+    return test.replace('*', '')
+
+
+def change_astar2():
+    """アスタリスクを置換する
+    """
+    test = 'abcde*'
+    return test[len(test)-1:]
+
+
+
 if __name__ == '__main__':
-    print(f'{parse_dataapi_result()}')
+    print(f'{change_astar2()}')
+
+
