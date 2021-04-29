@@ -1,32 +1,17 @@
 import logging
 import logging.handlers
-from functools import wraps
-from logging import DEBUG, INFO, WARN
+from logging import DEBUG
 from basic.myfileaccess import createDir
 
 # ハンドラ共通フォーマット
-COMMON_HANDLER_FORMAT = '%(asctime)s - %(levelname)s - [%(name)s:%(lineno)s] %(message)s'
-
-def loglevel(level: int):
-    """ログレベルを変更するデコレータ
-
-    Parameters
-    ----------
-    level : int
-        ログレベル
-    """
-    def _loglevel(func):
-        @wraps(func)
-        def inner(*arg, **kwarg):
-            # get logger and change logLevel
-            ret = func(*arg, **kwarg)
-            ret.setLevel(level)
-            return ret
-        return inner
-    return _loglevel
+COMMON_HANDLER_FORMAT = (
+    '%(asctime)s [%(levelname)s] '
+    '%(filename)s:%(lineno)s %(funcName)s:%(message)s'
+)
 
 
-def createDeveloplogger(loggername: str, logfilePath: str, loglevel: int = DEBUG):
+def createDeveloplogger(
+        loggername: str, logfilePath: str, loglevel: int = DEBUG):
     """開発用ロガーを返す
 
     ログレベルはデフォルト引数を取り、デバッグレベルとする
@@ -45,15 +30,16 @@ def createDeveloplogger(loggername: str, logfilePath: str, loglevel: int = DEBUG
     [type]
         [description]
     """
+    print(loggername)
     logger = logging.getLogger(loggername)
     logger.setLevel(loglevel)
     # ルートロガーの出力を抑止
-    logger.propagate = False
+    # logger.propagate = False
     # ハンドラの登録
     logger.addHandler(createStreamHandler(loglevel))
     logger.addHandler(createTimedRotatingFileHandler(DEBUG, logfilePath))
     return logger
-    
+
 
 def createStreamHandler(loglevel: int):
     """標準出力を行うハンドラを返す
@@ -98,7 +84,8 @@ def createTimedRotatingFileHandler(loglevel: int, logfilePath: str):
     createDir(logfilePath)
 
     handler = logging.handlers.TimedRotatingFileHandler(
-        logfilePath, when='D', interval=1, backupCount=10, encoding='utf-8', delay=False, utc=False, atTime=None)
+        logfilePath, when='D', interval=1, backupCount=10,
+        encoding='utf-8', delay=False, utc=False, atTime=None)
     handler.setLevel(loglevel)
 
     # create formatter

@@ -9,7 +9,6 @@ import bs4          # pip install beautifulsoup4
 import sys          # nessesaly nead bs4
 import os           # nessesaly nead bs4
 import logging
-# from logging import DEBUG, INFO, WARN, ERROR, CRITICAL
 from lxml import html    # pip install lxml
 # import json
 import copy

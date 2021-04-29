@@ -26,8 +26,5 @@ def change_astar2():
     return test[len(test)-1:]
 
 
-
 if __name__ == '__main__':
     print(f'{change_astar2()}')
-
-

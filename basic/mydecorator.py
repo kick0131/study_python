@@ -1,5 +1,5 @@
 import functools
-from basic.mylogging_helper import createDeveloplogger
+from basic.logutil.mylogging_helper import createDeveloplogger
 """デコレータ色々
 
 Returns

@@ -1,9 +1,8 @@
 import datetime
 import time
-import sys
-import mylogging_helper
+from basic.logutil.mylogging_helper import createDeveloplogger
 
-logger = mylogging_helper.createDeveloplogger(__name__, 'log/debug.log')
+logger = createDeveloplogger(__name__, 'log/debug.log')
 
 
 def epoctime(dt: datetime):
