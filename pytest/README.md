@@ -1,6 +1,10 @@
 pytest sample
 ===
 
+## pytestの基本ルール
+
+- `test_`から始まるメソッドがテスト対象
+
 ## pip
 ```
 pipenv install --dev pytest pytest-cov pytest-mock
@@ -10,6 +14,11 @@ pipenv install --dev pytest pytest-cov pytest-mock
 - コンソール出力
 
   `pytest -s <testpath>`
+
+- メソッド名指定で実行
+
+  `pytest -k <search> <testpath>`
+
 
 - テスト＋カバレッジ
 

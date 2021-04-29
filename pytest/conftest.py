@@ -1,6 +1,10 @@
-import pytest
+"""pytest.fixtureの共通参照ファイル
 
-# セットアップ関連をこのファイルに集約
+- ここで記載した内容は他のファイルから利用可能
+
+"""
+
+import pytest
 
 
 @pytest.fixture(scope='module', autouse=True)
