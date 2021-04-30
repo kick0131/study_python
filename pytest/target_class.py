@@ -1,21 +1,28 @@
 """pytest動作確認用
 """
 import loginit
-import sys
 
 logger = loginit.uselogger(__name__)
 
 
-def funcname():
-    return f'{sys._getframe().f_code.co_name}'
+def funcname(func):
+    """デコレータを使った関数ログ
+    """
+    def _wrapper(*args, **kwargs):
+        print(f'=== {func.__name__} start')
+        result = func(*args, **kwargs)
+        print(f'=== {func.__name__} end')
+        return result
+    return _wrapper
 
 
 class BaseClass:
+    @funcname
     def basefunc01(self):
-        # logger.info(f'{sys._getframe().f_code.co_name}')
-        logger.info(f'{funcname}')
+        print('test method called')
+        return 'ABC'
 
 
 if __name__ == '__main__':
     target = BaseClass()
-    target.basefunc01()
+    print(f'test method result : {target.basefunc01()}')
