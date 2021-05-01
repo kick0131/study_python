@@ -41,10 +41,28 @@ def uppercase(func):
     func : [type]
         デコレータ対象のメソッド
     """
-    def _wrapper():
-        original_result = func()
+    def _wrapper(*args, **kwargs):
+        original_result = func(*args, **kwargs)
         modified_result = original_result.upper()
         return modified_result
+    return _wrapper
+
+
+def first(func):
+    """デコレータの呼び出し順序確認
+    """
+    def _wrapper(*args, **kwargs):
+        print('--first--')
+        return func(*args, **kwargs)
+    return _wrapper
+
+
+def second(func):
+    """デコレータの呼び出し順序確認
+    """
+    def _wrapper(*args, **kwargs):
+        print('--second--')
+        return func(*args, **kwargs)
     return _wrapper
 
 
@@ -56,30 +74,25 @@ class MyDecoSample:
         return f'{self.__class__.__name__} {__name__}'
 
     @InsertFuncLog
+    @uppercase
     def sample01(self):
         return 'hello'
 
+    @first
+    @second
     def sample02(self, value: str):
-        return 'hello' + str
-
-
-@uppercase
-def greet():
-    return 'hello'
+        return 'hello' + value
 
 
 def sample1():
-    logger.info(greet)
-    logger.info(uppercase(greet))
-    logger.info('-----')
-    logger.info(greet())
-    logger.info(uppercase(greet)())
+    my = MyDecoSample()
+    logger.info(my)
+    logger.info(my.sample01())
 
 
 def sample2():
     my = MyDecoSample()
-    logger.info(my)
-    logger.info(my.sample01())
+    logger.info(f'result : {my.sample02("call sample")}')
 
 
 if __name__ == '__main__':
