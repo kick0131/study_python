@@ -1,6 +1,7 @@
 import logging
 import logging.handlers
 from logging import DEBUG
+import functools
 from basic.myfileaccess import createDir
 
 # ハンドラ共通フォーマット
@@ -8,6 +9,46 @@ COMMON_HANDLER_FORMAT = (
     '%(asctime)s [%(levelname)s] '
     '%(filename)s:%(lineno)s %(funcName)s:%(message)s'
 )
+
+
+def InsertFuncLog(**kwargs):
+    """メソッドの開始と終わりのログを付与するデコレータ
+
+        位置引数でロガーを指定した場合のみ動作する
+
+    Returns:
+        func: デコレートされたメソッド
+
+    .. code-block:: python
+
+        mylogger=createDeveloplogger
+
+        @InsertFuncLog(logger=mylogger)
+        def hoge():
+            pass
+
+    """
+    logger = kwargs['logger'] if 'logger' in kwargs else None
+
+    def _InsertFuncLog(func):
+        """デコレータ本体
+        Args:
+            func: デコレータ対象のメソッド
+
+        Returns:
+            func: デコレートされたメソッド
+        """
+        @functools.wraps(func)
+        def _wrapper(*args, **kwargs):
+            if logger is not None:
+                logger.info(f'=== {func.__name__} start')
+            # print(f'args:{args} kwargs:{kwargs}')
+            result = func(*args, **kwargs)
+            if logger is not None:
+                logger.info(f'=== {func.__name__} end')
+            return result
+        return _wrapper
+    return _InsertFuncLog
 
 
 def createDeveloplogger(
