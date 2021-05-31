@@ -1,9 +1,7 @@
 import sys
 import os
 import pprint
-from basic.mylogging_helper import createDeveloplogger
-# import aws.Cognito.cognitoMain
-# import basic.datatype
+from basic.logutil.mylogging_helper import createDeveloplogger
 
 # ロガー
 logger = createDeveloplogger(__name__, 'log/debug.log')
@@ -22,7 +20,6 @@ if __name__ == '__main__':
 
     try:
         logger.debug('テスト')
-        # Cognito.cognitoMain.lambda_handler('', '')
 
     except Exception as err:
         logger.error('エラー発生:{}'.format(err))
