@@ -71,7 +71,6 @@ def createDeveloplogger(
     [type]
         [description]
     """
-    print(loggername)
     logger = logging.getLogger(loggername)
     logger.setLevel(loglevel)
     # ルートロガーの出力を抑止

@@ -6,7 +6,7 @@ from aws.cognito.cognito_auth import CognitoManage
 # 本ファイルは固有情報がある為、非公開
 
 # AWSプロファイル未使用の場合は空文字とする
-awsprofile = 'awsmiura'
+awsprofile = 'awsdcpf'
 
 
 def lambda_handler(event, context):
@@ -16,7 +16,7 @@ def lambda_handler(event, context):
     # TODO implement
     client_id = event['client_id']
     user_id = event['user_id']
-    # email = event['email']
+    email = event['email']
     password = event['password']
     # password2 = event['password2']
     # confirm_code = event['confirm_code']
@@ -48,15 +48,15 @@ def lambda_handler(event, context):
     # cognitoclass.admin_delete_user(user_pool_id,user_id)
 
     # サインイン（一般ユーザ）
-    res = cognitoclass.signin_user(client_id, user_id, password)
-    if len(accesstoken) == 0:
-        accesstoken = res['AuthenticationResult']['AccessToken']
-        logger.info(accesstoken)
+    # res = cognitoclass.signin_user(client_id, user_id, password)
+    # if len(accesstoken) == 0:
+    #     accesstoken = res['AuthenticationResult']['AccessToken']
+    #     logger.info(accesstoken)
 
     # サインアップ（管理者）
-    # cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
-    # cognitoclass.confirm_admin_user(
-    # user_pool_id, client_id, user_id, email, password)
+    cognitoclass.admin_create_user(user_pool_id, user_id, email, password)
+    cognitoclass.confirm_admin_user(
+        user_pool_id, client_id, user_id, email, password)
 
     # サインイン（管理者）
     # cognitoclass.signin_adminuser(user_pool_id, client_id, user_id, password)
@@ -84,7 +84,7 @@ def lambda_handler(event, context):
     # cognitoclass.refresh_token(user_pool_id, client_id, refreshtoken)
 
     # ユーザ一覧
-    cognitoclass.list_users(user_pool_id)
+    # cognitoclass.list_users(user_pool_id)
 
     return {
         'statusCode': 200,
@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
         # オープンするファイルは非公開
         json_open = open((os.path.dirname(__file__)
-                          + '/../_privatejson/cognito_data_mi.json'), 'r')
+                          + '/../_privatejson/cognito_data_dcpf.json'), 'r')
         event = json.load(json_open)
         lambda_handler(event, '')
 

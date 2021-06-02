@@ -1,6 +1,7 @@
 .vscode
 **/__pycache__
 **/*.pyc
+**/.pytest_cache
 aws/_privatejson
 basic/_ignorefiles
 forwin

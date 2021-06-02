@@ -13,12 +13,21 @@ Flaskアプリケーションのテスト
 pipenv install flask
 ```
 
+## Flaskアプリの起動
+
+`python usage/flask/simpleflask.py  `
+
+- api/__init__.pyでFlaskアプリを生成し、他のモジュールをimportすることでファイル分割を可能としている
+
 ## 実行例
 - コマンドプロンプト
 
     `curl -X POST -H "Content-Type: application/json" -d "{\"key\":\"value\"}" http://localhost:5000/post/ABCDE`
 
+- ブラウザからアクセス
+    `http://localhost:5000/<API>`
+
 ## pytest
 
-    `pytest -s .\usage\flask\test_app.py`
+    `pytest -s .\usage\flask\test_simpleflask.py`
 

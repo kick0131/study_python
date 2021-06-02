@@ -1,19 +1,12 @@
 """Flaskシンプルアプリ
-
-起動方法
-python app.py
-
 """
-
-from flask import Flask, request, redirect, url_for, jsonify
+from flask import request, redirect, url_for, jsonify
 import random
-from basic.logutil.logutil import LogUtil
+from basic.logutil.mylogging_helper import createDeveloplogger
+from usage.flask.api import app
 
 # ロガー
-logger = LogUtil.getlogger(__name__)
-
-# 自身の名称を app という名前でインスタンス化する
-app = Flask(__name__)
+logger = createDeveloplogger(__name__, 'log/debug.log')
 
 
 def picked_up():
