@@ -17,6 +17,7 @@ paramiko = "*"
 python-dotenv = "*"
 atomicwrites = "*"
 flask = "*"
+pycryptodome = "*"
 
 [dev-packages]
 pylint = "*"
