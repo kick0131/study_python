@@ -19,3 +19,4 @@ log
 **/conf/
 # MacとWinを共存
 Pipfile.lock
+encrypted.bin

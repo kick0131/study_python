@@ -18,6 +18,7 @@ python-dotenv = "*"
 atomicwrites = "*"
 flask = "*"
 pycryptodome = "*"
+elasticsearch = "*"
 
 [dev-packages]
 pylint = "*"
