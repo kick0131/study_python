@@ -1,8 +1,17 @@
-python sample
+# python sample
 ===
+
+## ToDo
+
+- pyyaml
+- absl-py
+- pytz
+- psutil
+
 
 ## 作成方針
 * サンプルコードは`python 対象ファイル.py`で動作可能とする事
+* basicを除いてディレクトリ内で処理が完結する事
 * 利用するVsCode拡張機能など
 
     | 名称 | 用途 | 備考 |
@@ -23,7 +32,7 @@ python.linting.flake8Enabled　有効
 Python + AWS
 
 * Cognito
-* EC2StartandStop
+* EC2
 * SecretManager
 
 ### basic

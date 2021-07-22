@@ -19,6 +19,7 @@ atomicwrites = "*"
 flask = "*"
 pycryptodome = "*"
 elasticsearch = "*"
+elasticsearch-dsl = "*"
 
 [dev-packages]
 pylint = "*"
