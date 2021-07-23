@@ -1,5 +1,7 @@
+from usage.elasticsearchUsage.elasticsample import EsClass
 from elasticsearch_dsl import Search, A
 
+# サンプル
 query = {
     "size": 0,
     "query": {
@@ -21,30 +23,35 @@ query = {
 }
 
 
-def dslsample(es, index):
-    '''
-    queryをelasticsearch_dslに書き換えたサンプル
-    '''
+class EsClassDsl(EsClass):
+    def __init__(self, host, port):
+        super().__init__(host, port)
 
-    # 検索部分（Searchオブジェクト）
-    search = Search(using=es, index=index) \
-        .filter('range',
-                **{'@timestamp': {
-                    'gte': '2020-08-01T00:00:00+09:00',
-                    'lt': '2020-08-01T23:59:59+09:00',
-                    'format': 'date_time_no_millis'
-                }}) \
-        .extra(size=0)
+    def dslsample(self, index):
+        '''
+        queryをelasticsearch_dslに書き換えたサンプル
+        '''
 
-    # 集計部分（Aggregationオブジェクト）
-    aggs_port = A("terms", field="port", size=20)
+        # 検索部分（Searchオブジェクト）
+        s = Search(using=self.es, index=index) \
+            .filter('range',
+                    **{'createdAt': {
+                        'gte': '2020-07-01T00:00:00+09:00',
+                        'lt': '2020-08-01T23:59:59+09:00',
+                        'format': 'date_time_no_millis'
+                    }}) \
+            .extra(size=0)
+        print(f'XXX : {s.to_dict()}')
 
-    # Aggregation オブジェクトを Search オブジェクトに紐付ける
-    search.aggs.bucket("port-count", aggs_port)
+        # 集計部分（Aggregationオブジェクト）
+        aggs_port = A("terms", field="port", size=20)
 
-    result = search.execute()
+        # Aggregation オブジェクトを Search オブジェクトに紐付ける
+        s.aggs.bucket("port-count", aggs_port)
 
-    # 結果抽出(Attrlist型)
-    res_bucket = result.aggregations['port-count'].buckets
-    for item in res_bucket:
-        print(f'port_count : {item}')
+        result = s.execute()
+
+        # 結果抽出(Attrlist型)
+        res_bucket = result.aggregations['port-count'].buckets
+        for item in res_bucket:
+            print(f'port_count : {item}')

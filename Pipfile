@@ -19,7 +19,7 @@ atomicwrites = "*"
 flask = "*"
 pycryptodome = "*"
 elasticsearch = "*"
-elasticsearch-dsl = "*"
+elasticsearch-dsl = "==7.0.0"
 
 [dev-packages]
 pylint = "*"
