@@ -24,7 +24,6 @@ class EsClass:
             self, host, port, timeout=10, max_retry=0, http_auth=False,
             user=None, pwd=None, certs=None):
         if http_auth:
-            self.es.close()
             self.es = Elasticsearch(
                 hosts=[{'host': host, 'port': port}],
                 http_auth=(user, pwd),
@@ -37,7 +36,6 @@ class EsClass:
                 port=30001
             )
         else:
-            self.es.close()
             self.es = Elasticsearch(
                 hosts=[{'host': host, 'port': port}],
                 timeout=timeout,
@@ -45,11 +43,11 @@ class EsClass:
                 retry_on_timeout=True
             )
 
-    def search(self, query: str):
-        return self.es.search(index='amazon', body=query)
+    def search(self, index: str, query: str):
+        return self.es.search(index=index, body=query)
 
-    def count(self, query: str):
-        return self.es.count(index='amazon', body=query)
+    def count(self, index: str, query: str):
+        return self.es.count(index=index, body=query)
 
 
 if __name__ == '__main__':
@@ -65,12 +63,27 @@ if __name__ == '__main__':
             }
         }
     }
+    # createdAtの部分は@timestampがよく使われる
+    query3 = {
+        'query': {
+            'range': {
+                "createdAt": {
+                    "gte": "2020-07-01T00:00:00+09:00",
+                    "lte": "2020-08-02T23:59:59+09:00",
+                    "format": "date_time_no_millis"
+                }
+            }
+        }
+    }
 
     es = EsClass()
-    for item in (query, query2):
-        result = es.search(item)
-        print('-- print es.search() ----------------------------')
+    # for index, item in [("amazon", query), ("porttest", query3)]:
+    for index, item in [("porttest", query3)]:
+        result = es.search(index, item)
+        print(
+            f'-- print es.search() index:{index} ----------------------------')
         print(json.dumps(result, indent=2))
-        result = es.count(item)
-        print('-- print es.count() ----------------------------')
-        print(json.dumps(result, indent=2))
+        # result = es.count(index, item)
+        # print(
+        #     f'-- print es.count() index:{index} ----------------------------')
+        # print(json.dumps(result, indent=2))

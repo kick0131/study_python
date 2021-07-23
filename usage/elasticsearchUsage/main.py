@@ -5,7 +5,10 @@ import usage.elasticsearchUsage.dsl as dsl
 if __name__ == '__main__':
     host = 'localhost'
     port = 9200
-    es = ElasticSample.EsClass.init_es(host, port)
+    index = 'porttest'
 
-    dsl.dslsample(es, 'amazon')
+    es = ElasticSample.EsClass()
+    # es.change_es(host=host, port=port)
+    # es = es.get_es()
 
+    dsl.dslsample(es, index)
