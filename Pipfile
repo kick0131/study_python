@@ -20,6 +20,7 @@ flask = "*"
 pycryptodome = "*"
 elasticsearch = "*"
 elasticsearch-dsl = "==7.0.0"
+pytz = "*"
 
 [dev-packages]
 pylint = "*"
