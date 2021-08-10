@@ -12,10 +12,9 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))
-sys.path.insert(0, os.path.abspath('../aws/Cognito/'))
-sys.path.insert(0, os.path.abspath('../aws/ec2/'))
-# sys.path.append(os.path.abspath('../aws/Cognito/'))
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../')))
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../aws/Cognito/')))
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../aws/ec2/')))
 
 
 # -- Project information -----------------------------------------------------
@@ -39,7 +38,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.napoleon',
     'sphinx_rtd_theme'
-]    
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

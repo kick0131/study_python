@@ -39,7 +39,7 @@ def scope_moduleB():
 
 
 @pytest.fixture(scope='class', autouse=True)
-def scope_class(scope_moduleA, scope_moduleB):
+def scope_class(scope_module, scope_moduleB):
     print('setup before class')
     yield(' class fixture')
     print('teardown after class')

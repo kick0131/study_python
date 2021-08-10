@@ -14,7 +14,7 @@
    sample/sample1
    aws
    aws.Cognito
-   aws.EC2StartandStop
+   aws.ec2
    aws.SecretManager
    basic
    modules

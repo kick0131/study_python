@@ -1,8 +1,16 @@
-"""pytest動作確認用
-"""
-import loginit
+import platform
 
-logger = loginit.uselogger(__name__)
+'''試験対象
+
+pymockから内容を書き換える事を確認する為のサンプルクラス、モジュール
+
+'''
+
+CONST_VALUE = 'this is const'
+
+
+def get_platform():
+    return platform.system()
 
 
 def funcname(func):
@@ -26,3 +34,4 @@ class BaseClass:
 if __name__ == '__main__':
     target = BaseClass()
     print(f'test method result : {target.basefunc01()}')
+    print(f'{get_platform()}')

@@ -1,4 +1,4 @@
-import test_target as target
+import pytest_target as target
 
 
 def test_monkeypatch_setattr(monkeypatch):

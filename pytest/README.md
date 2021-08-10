@@ -13,7 +13,8 @@ pipenv install --dev pytest pytest-cov pytest-mock
 ## Test
 - コンソール出力
 
-  `pytest -s <testpath>`
+  `pytest -s <testpath>`  
+  ex) `pytest -s ./pytest/`
 
 - メソッド名指定で実行
 

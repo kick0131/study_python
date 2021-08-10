@@ -5,7 +5,7 @@ https://github.com/aws/aws-iot-device-sdk-python-v2
 ### AWS IoT SDK v2をサブモジュールとして取り込み
 `git submodule add https://github.com/aws/aws-iot-device-sdk-python-v2`
 
-### middle ware
+### Use Middleware
 - awsiotsdk v2
 `pip install awsiotsdk`
 

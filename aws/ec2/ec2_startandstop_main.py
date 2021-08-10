@@ -7,11 +7,11 @@ import aws.loginit
 def lambda_handler(event, context):
     try:
         # 引数はAWSプロファイル名
-        cognitoclass = EC2Manage('hira')
+        ec2obj = EC2Manage('hira')
         instanceIds = event['startaction']['instanceIds']
         action = 'stop'
 
-        cognitoclass.startstopEC2(instanceIds, action)
+        ec2obj.startstopEC2(instanceIds, action)
 
     except Exception as err:
         logger.error('エラー発生:{}'.format(err))
