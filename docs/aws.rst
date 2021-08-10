@@ -7,9 +7,20 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   aws.cognito
+   aws.Cognito
+   aws.SecretManager
    aws.ec2
-   aws.secretmanager
+
+Submodules
+----------
+
+aws.loginit module
+------------------
+
+.. automodule:: aws.loginit
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

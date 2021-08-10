@@ -1,8 +1,8 @@
 import subprocess
-    """Sphinxドキュメントコマンド実行スクリプト
+"""Sphinxドキュメントコマンド実行スクリプト
 
     本プログラムを実行するだけで、最新版のSphinxドキュメントを生成します。
-    """
+"""
 
 
 def run():
@@ -10,7 +10,7 @@ def run():
     cmd_doc = "sphinx-build -b html ./docs ./docs/_build"
 
     for cmd in [cmd_api, cmd_doc]:
-        result = res = subprocess.Popen(
+        result = subprocess.Popen(
             cmd, shell=True, universal_newlines=False)
         print(result)
 

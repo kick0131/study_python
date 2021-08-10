@@ -20,14 +20,6 @@ aws.ec2.ec2\_startandstop\_main module
    :undoc-members:
    :show-inheritance:
 
-aws.ec2.loginit module
-----------------------
-
-.. automodule:: aws.ec2.loginit
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

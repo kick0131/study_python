@@ -1,6 +1,6 @@
 import os
 import json
-from ec2.ec2_manage import EC2Manage
+from aws.ec2.ec2_manage import EC2Manage
 import aws.loginit
 
 

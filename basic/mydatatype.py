@@ -1,12 +1,8 @@
-# 各種データ型
-# ・リスト
-# ・タプル
-# ・辞書
-
 import logging
 import sys
 # import json
 import re
+import os
 from functools import wraps
 
 logging.basicConfig(
@@ -166,7 +162,7 @@ def dicsample():
     logging.info('cat' in val['key1'].values())
 
 
-def listdiccreate():
+def listdic_create():
     """リスト内辞書データの連結作成
 
     リスト内に辞書型が組合された場合の動作サンプル。
@@ -175,7 +171,7 @@ def listdiccreate():
     Returns:
         連結された辞書データ
 
-    Note:
+    .. note:
         呼び出し元でjsonとして扱う想定
         {
             "data": [
@@ -201,7 +197,7 @@ def listdic_extraction():
     リスト内に辞書型が組合されたデータの抽出サンプル。
     DataAPIの応答結果を想定したケース。
 
-    Note:
+    .. note:
         以下テストデータとする
         {
             "data": [
@@ -236,9 +232,13 @@ def stringsub():
     before2 = 'Bearer XXXX.YYYY.ZZZZ'  # OK
     before3 = ' XXXX.YYYY.ZZZZ'        # NG
     before4 = 'XXXX.YYYY.ZZZZ'         # NG
-    before5 = (
-        'Bearer eyJraWQiOiJTZ0c1T0xKalpzN2Y3c09JNlpUVStmOGtyTThuOFwvT3BLVE8zMkZUY2EyMD0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI0YzUxNDQ0Zi00NGZhLTQ4NmYtYTRiZC0xMzk5ZDcxNzRlMjMiLCJhdWQiOiI1djFkMXVhZDdvYmExOGw2c3A3aDc0N3VxYSIsImV2ZW50X2lkIjoiZThkZTBiZmYtNjhhYS00NTdmLTgwZDAtMmIyMGQ3ZTY1Njg3IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2MTUyNjg0MjAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1ub3J0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1ub3J0aGVhc3QtMV9UZmp1SVJGQmEiLCJjb2duaXRvOnVzZXJuYW1lIjoiaGlyYW1hdHN1IiwiZXhwIjoxNjE1MjcyMDIwLCJpYXQiOjE2MTUyNjg0MjAsImVtYWlsIjoiaGlyYW1hdHN1LmNockBuY29udHIuY29tIn0.TwjRTEqDwMoS7euK2j9qA2khCrYwiw3tkGWarkBcOSpXb2ZIyzMY4bLsRBa-z0pHkbuw_BFTUxbiJQIZN78SG7Y7lS0GIJuWcmQPVread10LmJ_3uNKL4IAp6caJEI9DfOvWi99o-AWZVoJXWxWSas538wgLnglyU3ZsfDRyfSfw67n-RwcM4c9RlD4XGuNv6EhG8EdBZr9NUqshU1FjLtMlfPxP4T1b8-gH-VptFS-p9U2rubTynGk1JDvZam4D3OEFxKfYqiia2tczRFjy2_V3HAPehmsz5Q2x2ciki_Bj2I1LjUIaGAJ_qZtr437H4hYFIAQRolViY4GbjCw7sg'
-    )
+
+    # 同じディレクトリに存在するファイルを指定
+    tokenfilepath = os.path.join(os.path.dirname(__file__), 'bearer')
+    before5 = ''
+    with open(tokenfilepath, mode='r', encoding='utf_8') as f:
+        before5 = f.read()
+
     if 'Bearer' in before1:
         logging.info(f'before1 : {re.sub(".*(Bearer) ", "", before1)}')
     if 'Bearer' in before2:
@@ -293,3 +293,4 @@ def get_dict_hierarchy():
 
 if __name__ == '__main__':
     get_dict_hierarchy()
+    stringsub()

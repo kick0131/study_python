@@ -17,6 +17,7 @@
    aws.EC2StartandStop
    aws.SecretManager
    basic
+   modules
    
 
 Indices and tables

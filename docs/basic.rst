@@ -12,10 +12,34 @@ basic.effectivepython\_samples module
    :undoc-members:
    :show-inheritance:
 
+basic.myclass module
+--------------------
+
+.. automodule:: basic.myclass
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 basic.mydatatype module
 -----------------------
 
 .. automodule:: basic.mydatatype
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mydatetime module
+-----------------------
+
+.. automodule:: basic.mydatetime
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mydecorator module
+------------------------
+
+.. automodule:: basic.mydecorator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -44,26 +68,34 @@ basic.mygenerator module
    :undoc-members:
    :show-inheritance:
 
-basic.mylogging\_helper module
-------------------------------
+basic.mylist module
+-------------------
 
-.. automodule:: basic.mylogging_helper
+.. automodule:: basic.mylist
    :members:
    :undoc-members:
    :show-inheritance:
 
-basic.mystring\_helper module
------------------------------
+basic.mymain module
+-------------------
 
-.. automodule:: basic.mystring_helper
+.. automodule:: basic.mymain
    :members:
    :undoc-members:
    :show-inheritance:
 
-basic.myxpath module
+basic.mypath module
+-------------------
+
+.. automodule:: basic.mypath
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.myregex module
 --------------------
 
-.. automodule:: basic.myxpath
+.. automodule:: basic.myregex
    :members:
    :undoc-members:
    :show-inheritance:
