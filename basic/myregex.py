@@ -26,5 +26,21 @@ def change_astar2():
     return test[len(test)-1:]
 
 
+def re_search():
+    """正規表現チェック
+    """
+    test = 'aaa@xxx.com, bbb@yyy.com, ccc@zzz.net'
+    # どちらでもOK
+    m = re.search(r'[a-z]+@[a-z]+\.net', test)
+    m = re.search(r'\w+@\w+\.net', test)
+    print(f'{m}')
+
+    test = 'ABCDE2021.08'
+    # どちらでもOK
+    m = re.search(r'.*[0-9]{4}\.[0-9]{2}', test)
+    m = re.search(r'.*\d{4}\.\d{2}', test)
+    print(f'{m}')
+
+
 if __name__ == '__main__':
-    print(f'{change_astar2()}')
+    print(f'{re_search()}')
