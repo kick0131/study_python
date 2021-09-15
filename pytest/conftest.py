@@ -8,23 +8,23 @@ import pytest
 
 
 @pytest.fixture(scope='module', autouse=True)
-def scope_module():
-    print('setup before moduleA -- conftest')
-    yield(' moduleA fixture')
-    print('teardown after moduleA -- conftest')
+def conftext_moduleA():
+    print('setup before ---- conftext_moduleA')
+    yield(' yield conftext_moduleA')
+    print('teardown after -- conftext_moduleA')
 
 
 @pytest.fixture(scope='module', autouse=True)
-def scope_moduleB():
-    print('setup before moduleB -- conftest')
-    yield(' moduleB fixture')
-    print('teardown after moduleB -- conftest')
+def conftext_moduleB():
+    print('setup before ---- conftext_moduleB')
+    yield(' yield conftext_moduleB')
+    print('teardown after -- conftext_moduleB')
 
 
 @pytest.fixture(scope='class', autouse=True)
-def scope_class(scope_module, scope_moduleB):
-    print('setup before class -- conftest')
-    print(scope_module)
-    print(scope_moduleB)
-    yield(' class fixture')
-    print('teardown after class -- conftest')
+def constest_class(conftext_moduleA, conftext_moduleB):
+    print('setup before ---- constest_class')
+    print(conftext_moduleA)
+    print(conftext_moduleB)
+    yield(' yield constest_class')
+    print('teardown after -- constest_class')

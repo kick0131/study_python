@@ -12,37 +12,37 @@ import pytest
 
 @pytest.fixture(scope='function', autouse=True)
 def scope_functionA():
-    print('setup before functionA')
+    print('setup before ---- scope_functionA')
     yield(' functionA fixture')
-    print('teardown after functionA')
+    print('teardown after -- scope_functionA')
 
 
 @pytest.fixture(scope='function', autouse=True)
 def scope_functionB():
-    print('setup before functionB')
+    print('setup before ---- scope_functionB')
     yield(' functionB fixture')
-    print('teardown after functionB')
+    print('teardown after -- scope_functionB')
 
 
 @pytest.fixture(scope='module', autouse=True)
 def scope_moduleA():
-    print('setup before moduleA')
+    print('setup before ---- scope_moduleA')
     yield(' moduleA fixture')
-    print('teardown after moduleA')
+    print('teardown after -- scope_moduleA')
 
 
 @pytest.fixture(scope='module', autouse=True)
 def scope_moduleB():
-    print('setup before moduleB')
+    print('setup before ---- scope_moduleB')
     yield(' moduleB fixture')
-    print('teardown after moduleB')
+    print('teardown after -- scope_moduleB')
 
 
 @pytest.fixture(scope='class', autouse=True)
-def scope_class(scope_module, scope_moduleB):
-    print('setup before class')
+def scope_class(conftext_moduleA, scope_moduleB):
+    print('setup before ---- scope_class')
     yield(' class fixture')
-    print('teardown after class')
+    print('teardown after -- scope_class')
 
 
 def test_always_scceeds(
