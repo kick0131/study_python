@@ -273,24 +273,37 @@ def buildResponse(resdata: dict):
     return {k: v for k, v in resdata}
 
 
+hierarchy = {
+    'key1': {
+        'key2': {
+            'key3': 'hello world'
+        }
+    }
+}
+
+
 def get_dict_hierarchy():
     """辞書型の階層構造データを取得する効率的な方法
     """
-    sampledata = {
-        'key1': {
-            'key2': {
-                'key3': 'hello world'
-            }
-        }
-    }
-
-    val = sampledata.get('key1', {}).get('key2', {}).get('key3', '')
+    val = hierarchy.get('key1', {}).get('key2', {}).get('key3', '')
     if val is None:
         val = ''
 
     logging.info(f'{val}')
 
 
+def dict_comprehension():
+    """内包表記
+    """
+    # set型
+    humans = {name for name in ['taro', 'jiro', 'saburo']}
+    # 辞書型(同じキーに上書きされるので、結局要素は1つ)
+    humans2 = {'hoge': name for name in ['taro', 'jiro', 'saburo']}
+    print(humans)
+    print(f'type: {type(humans)}')
+    print(humans2)
+    print(f'type: {type(humans2)}')
+
+
 if __name__ == '__main__':
-    get_dict_hierarchy()
-    stringsub()
+    dict_comprehension()
