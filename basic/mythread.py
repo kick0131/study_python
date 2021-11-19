@@ -22,14 +22,17 @@ def task(task_val, timer=0):
 
     Parameters
     ----------
-    task_arg : dict
-        可変数引数
+    task_val : any
+        No use
+    timer : int, optional
+        additional sleep timer, by default 0
 
     Returns
     -------
-    [type]
-        [description]
+    any
+        echo task_val
     """
+
     getLogger().info(f'{task_val} start')
     time.sleep(1.0 + timer)
     getLogger().info(f'{task_val} end')
@@ -64,7 +67,8 @@ def multithread_with_submit():
         ]
 
         # スレッド即時に応答し、実行結果格納オブジェクト(Future)を受け取る
-        futures = [executor.submit(task, arg['id'], timer=arg['timer']) for arg in args]
+        futures = [executor.submit(
+            task, arg['id'], timer=arg['timer']) for arg in args]
         try:
             # 完了まで待機、timeoutの単位は秒
             for future in concurrent.futures.as_completed(futures, timeout=3):
