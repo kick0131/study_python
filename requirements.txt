@@ -3,3 +3,4 @@
 
 # for develop module manual instal such as 
 # `pip install -r requirements/dev.txt`
+-r requirements/dev.txt
