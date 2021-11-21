@@ -7,7 +7,8 @@
 - absl-py
 - pytz
 - psutil
-
+- aiohttp
+- asyncio
 
 ## 作成方針
 * サンプルコードは`python 対象ファイル.py`で動作可能とする事
@@ -27,16 +28,14 @@ python.linting.flake8Enabled　有効
 ### コメントルール
 
 ## ディレクトリ説明
-
-### aws
-Python + AWS
-
-### basic
-Pythonの基本文法習得用
-
-### docs
-Sphinx
-
+```
+    /aws    AWS SDK(boto3)
+    /basic  標準モジュール
+    /docs   Sphinx
+    /usage  3rdPartyモジュール
+    /pytest pytest練習
+    /requirements requirements.txt参照先
+```
 ### usage
 その他ライブラリ練習
 
@@ -79,6 +78,7 @@ Sphinx
 - venv
 
     `python3 -m venv forwin`  
+    `python3 -m venv .venv`  
     ※ディレクトリ名は環境に応じて適宜読み替える。  
     環境によってはpython3ではなくpython
 
