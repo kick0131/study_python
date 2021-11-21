@@ -1,0 +1,5 @@
+# read requirements.txt file
+-r requirements/prod.txt
+
+# for develop module manual instal such as 
+# `pip install -r requirements/dev.txt`
