@@ -1,3 +1,4 @@
+aiohttp
 sphinx
 flake8
 numpy

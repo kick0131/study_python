@@ -3,7 +3,11 @@ import requests
 from logging import StreamHandler, Formatter, INFO, getLogger
 from requests.exceptions import Timeout, ConnectionError, ConnectTimeout
 import json
-"""HTTPリクエスト
+"""requestsモジュールサンプル
+
+    aiohttp,asyncioとの比較
+
+
 """
 
 

@@ -1,6 +1,9 @@
 ## 内容
-HTTPクライアントライブラリ(pytz)
-https://docs.python-requests.org/en/master/user/install/
+HTTPリクエストを複数の方法で例示し、特徴を比較
+- requests(3rdParty,同期)
+- aiohttp(標準ライブラリ,非同期)
+- asyncio(標準ライブラリ,非同期)
+
 
 ## 準備
 ```
