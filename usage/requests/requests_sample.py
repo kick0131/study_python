@@ -23,7 +23,7 @@ def get():
     #     "http": "http://xxxxx",
     #     "https": "http://xxxxx"
     # }
-    # url = 'https://api.github.com/events'
+    url = 'https://api.github.com/events'
     with requests.get(url) as r:
         getLogger().info(f'url: {r.url}')
         getLogger().info(f'encoding: {r.encoding}')
