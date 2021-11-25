@@ -14,3 +14,4 @@ if __name__ == '__main__':
     print(f'相対パス                 : {os.path.relpath(samplepath)}')
     print(f'相対パスから絶対パスに変換 : {os.path.abspath(samplepath_rel)}')
     print(f'パスの結合               : {os.path.join(os.getcwd(), "hello")}')
+    print(f'パスの結合               : {os.path.join(os.getcwd(), "hello/")}')
