@@ -1,5 +1,7 @@
 import os
 import zipfile
+import tempfile
+import shutil
 from logging import StreamHandler, Formatter, INFO, getLogger
 
 """ZIP処理
@@ -66,10 +68,52 @@ def check_zip(filepath: str):
         # getLogger().info(f'filelen : {len(existing_zip.namelist())}')
 
 
+def check_zip2(filepath: str):
+    """改良版
+
+    - zipパスに影響されず任意のパスに任意のファイル名で格納
+    - 自動で削除されるテンポラリディレクトリを用意
+
+    Parameters
+    ----------
+    filepath : str
+        zipファイルパス
+    """
+    if zipfile.is_zipfile(filepath) is False:
+        getLogger().error(f'zipファイルではない : {filepath}')
+        return
+
+    # 一時ディレクトリ内で作業
+    with tempfile.TemporaryDirectory() as dname:
+        # zipfile read
+        with zipfile.ZipFile(filepath) as existing_zip:
+            # create target zippath
+            zippath = 'zipsample/folderA/'
+            zippathlists = [name for name in existing_zip.namelist()
+                            if zippath in name]
+            for zippath in zippathlists:
+                getLogger().info(f'name : {zippath}')
+                if existing_zip.getinfo(zippath).is_dir() is True:
+                    getLogger().info('ディレクトリパス')
+                    continue
+                # extract zip
+                existing_zip.extract(zippath, path=dname)
+
+            # file move from temporary dir
+            for zippath in zippathlists:
+                srcpath = os.path.join(dname, zippath)
+                dstpath = os.path.join(EXTRACT_PATH, os.path.basename(zippath))
+                getLogger().info(f'dst : {dstpath}')
+                if os.path.isdir(srcpath) is True:
+                    getLogger().info('ディレクトリパス')
+                    continue
+                shutil.move(srcpath, dstpath)
+
+
 def main():
     init_logger()
 
-    check_zip(ZIP_PATH)
+    check_zip2(ZIP_PATH)
 
 
 if __name__ == "__main__":
