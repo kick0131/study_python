@@ -1,4 +1,4 @@
-
+import json
 
 def xxx():
     listdata = [
@@ -11,5 +11,13 @@ def xxx():
         print(f'strdata:{strdata} intdata:{intdata}')
 
 
+def stringlist():
+    """文字列化したリストを扱うパターン
+    """
+    listdata = '[{"greet":"hello","os":"linux"},{"greet":"こんにちは","os":"windows"}]'
+    output = json.loads(listdata)
+    print(output)
+
+
 if __name__ == '__main__':
-    xxx()
+    stringlist()
