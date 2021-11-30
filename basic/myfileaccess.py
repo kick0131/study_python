@@ -2,6 +2,7 @@ import os
 import pprint
 import traceback
 import shutil
+import json
 
 
 def overrapped(func):
@@ -160,23 +161,17 @@ def sampleRun():
     return result
 
 
-# メイン処理
 if __name__ == '__main__':
     # print("result:{0}".format(sampleRun()))
     filepath = os.getcwd() + '/log/logA/'
-
-    # dummy
-    dummy_func('hoge', None, None, None, None)
-    dummy_func('ABCDE', None, None, None, None)
-    dummy_func('dummy', None, None, None, None)
 
     # create directry
     # createDir(filepath)
 
     # create file
-    filename = 'hogehoge'
-    for i in range(3):
-        increamentFile(filepath, filename, 'huga')
+    # filename = 'hogehoge'
+    # for i in range(3):
+    #     increamentFile(filepath, filename, 'huga')
 
     # remove file path
     # rmSample(filepath)

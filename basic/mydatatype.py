@@ -1,6 +1,6 @@
 import logging
 import sys
-# import json
+import json
 import re
 import os
 from functools import wraps
@@ -228,27 +228,25 @@ def listdic_extraction():
 
 
 def stringsub():
-    before1 = ' Bearer XXXX.YYYY.ZZZZ'  # OK
-    before2 = 'Bearer XXXX.YYYY.ZZZZ'  # OK
-    before3 = ' XXXX.YYYY.ZZZZ'        # NG
-    before4 = 'XXXX.YYYY.ZZZZ'         # NG
+    """文字列から特定キーワードを除去する
+    """
+    KEYWORD = 'Bearer'
+    before_str = []
+    before_str.append(' Bearer XXXX.YYYY.ZZZZ')  # OK
+    before_str.append('Bearer XXXX.YYYY.ZZZZ')  # OK
+    before_str.append(' XXXX.YYYY.ZZZZ')        # NG
+    before_str.append('XXXX.YYYY.ZZZZ')         # NG
 
     # 同じディレクトリに存在するファイルを指定
     tokenfilepath = os.path.join(os.path.dirname(__file__), 'bearer')
-    before5 = ''
     with open(tokenfilepath, mode='r', encoding='utf_8') as f:
-        before5 = f.read()
+        before_str.append(f.read())
 
-    if 'Bearer' in before1:
-        logging.info(f'before1 : {re.sub(".*(Bearer) ", "", before1)}')
-    if 'Bearer' in before2:
-        logging.info(f'before2 : {re.sub(".*(Bearer) ", "", before2)}')
-    if 'Bearer' in before3:
-        logging.info(f'before3 : {re.sub(".*(Bearer) ", "", before3)}')
-    if 'Bearer' in before4:
-        logging.info(f'before4 : {re.sub(".*(Bearer) ", "", before4)}')
-    if 'Bearer' in before5:
-        logging.info(f'before5 : {re.sub(".*(Bearer) ", "", before5)}')
+    # 特定キーワードを除外
+    regex_str = f".*({KEYWORD}) "
+    for line in before_str:
+        if KEYWORD in line:
+            logging.info(f'before : {re.sub(regex_str, "", line)}')
 
 
 def buildResponse(resdata: dict):
@@ -273,18 +271,17 @@ def buildResponse(resdata: dict):
     return {k: v for k, v in resdata}
 
 
-hierarchy = {
-    'key1': {
-        'key2': {
-            'key3': 'hello world'
-        }
-    }
-}
-
-
 def get_dict_hierarchy():
     """辞書型の階層構造データを取得する効率的な方法
     """
+    hierarchy = {
+        'key1': {
+            'key2': {
+                'key3': 'hello world'
+            }
+        }
+    }
+
     val = hierarchy.get('key1', {}).get('key2', {}).get('key3', '')
     if val is None:
         val = ''
@@ -293,7 +290,7 @@ def get_dict_hierarchy():
 
 
 def dict_comprehension():
-    """内包表記
+    """辞書型の内包表記
     """
     # set型
     humans = {name for name in ['taro', 'jiro', 'saburo']}
@@ -305,5 +302,125 @@ def dict_comprehension():
     print(f'type: {type(humans2)}')
 
 
+def dict_filtering():
+    """辞書型のフィルタリング
+    {
+        "name":"taro",
+        "age":10,
+        "moreinfo":{
+            "country":"japan",
+            "addr": {
+                "capital" : "tokyo",
+                "word" : "chiyodaku"
+            }
+        }
+    }
+
+    から
+
+    {
+        "addr": {
+            "capital" : "tokyo",
+            "word" : "chiyodaku"
+        }
+    }
+    を作る
+
+    """
+    human_info = {
+        "name": "taro",
+        "age": 10,
+        "moreinfo": {
+            "country": "japan",
+            "addr": {
+                "capital": "tokyo",
+                "word": "chiyodaku"
+            }
+        }
+    }
+
+    # 取得元キーのパス
+    # 新規作成時に割り当てるキーのパス
+    # 存在しないパスはスキップする動作を期待
+    mapping_list = [
+        ['moreinfo.addr.capital', 'addr.capital'],
+        ['moreinfo.addr.word', 'word'],
+        ['xxx.yyy.zzz', 'word'],
+    ]
+
+    new_dict = {}
+    for before, after in mapping_list:
+        # print(f'befor :{before}')
+        # print(f'after :{after}')
+        # beforeのキーパスからvalueを取得
+        value = get_dictval(human_info, before.split('.'))
+        if value is not None:
+            # afterのキーパスにvalueを設定
+            set_dictval(new_dict, after.split('.'), value)
+
+    print(new_dict)
+
+
+def get_dictval(target_dict: dict, keys: list):
+    """辞書型からの値取得処理（ネスト対応）
+
+    Parameters
+    ----------
+    target_dict : dict
+        取得元辞書
+    keys : list
+        アクセス元キー名。ネストされた場合は複数要素となる
+        ex)
+        A : {
+            B : value
+        }
+        の場合、['A','B']の入力を期待する
+
+    Returns
+    -------
+    any
+        取得した値
+    """
+    # print(f'get_dictval keys:{keys}')
+    if len(keys) >= 2:
+        key = keys.pop(0)
+        if key in target_dict:
+            return get_dictval(target_dict[key], keys)
+        else:
+            return None
+    else:
+        return target_dict.get(keys.pop(0))
+
+
+def set_dictval(target_dict: dict, keys: list, value):
+    """辞書型へ値の設定処理（ネスト対応）
+
+    階層構造化した辞書型のキーパスに値を設定する
+
+    Parameters
+    ----------
+    target_dict : dict
+        設定先辞書
+    keys : list
+        階層化されたキー名で分割されたリスト
+    value : any
+        設定値
+
+    Returns
+    -------
+    func or None
+        キーパスが残っている間、本メソッドで再帰する
+    """
+    # print(f'set_dictval keys:{keys} value : {value}')
+    if len(keys) >= 2:
+        key = keys.pop(0)
+        if key not in target_dict:
+            target_dict[key] = {}
+        return set_dictval(target_dict[key], keys, value)
+    else:
+        target_dict[keys.pop(0)] = value
+        return None
+
+
 if __name__ == '__main__':
-    dict_comprehension()
+    dict_filtering()
