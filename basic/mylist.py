@@ -1,4 +1,6 @@
 import json
+import re
+
 
 def xxx():
     listdata = [
@@ -16,8 +18,42 @@ def stringlist():
     """
     listdata = '[{"greet":"hello","os":"linux"},{"greet":"こんにちは","os":"windows"}]'
     output = json.loads(listdata)
-    print(output)
+
+    # list
+    print(f'type:{type(output)} output:{output}')
+    # dict
+    print(f'type:{type(output[0])} output:{output[0]}')
+
+
+def listcomprehension():
+    """リスト内包処理
+
+    [式 for 任意の変数名 in イテラブルオブジェクト if 条件式]
+    -----
+    【条件式】に合致した【イテラブルオブジェクト】を【任意の変数名】に出力し、
+    【式】で評価したものをリスト化する
+
+    """
+    names = ['ada', 'bob', 'adam', 'caccy', 'amanda']
+    a_names = [name + ' start with A.' for name in names if re.match('a+', name)]
+    for name in a_names:
+        print(f'{name}')
+
+
+def listcomprehension2():
+    """リスト内包処理2
+
+    元のリストがdict型だった場合
+
+    """
+    listdata = '[{"greet":"hello","os":"linux"},{"greet":"こんにちは","os":"windows"}]'
+    output = json.loads(listdata)
+
+    dictitems = [dictitem for dictitem in output if re.match(
+        'hello', dictitem['greet'])]
+    for dictitem in dictitems:
+        print(f'{dictitem}')
 
 
 if __name__ == '__main__':
-    stringlist()
+    listcomprehension2()

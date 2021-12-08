@@ -423,4 +423,10 @@ def set_dictval(target_dict: dict, keys: list, value):
 
 
 if __name__ == '__main__':
-    dict_filtering()
+    # dict_filtering()
+
+    listsample = []
+    if listsample:
+        print('not empty')
+    else:
+        print('empty')
