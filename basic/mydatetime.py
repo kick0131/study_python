@@ -1,11 +1,12 @@
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, tzinfo
 import time
 from basic.logutil.logutil import LogUtil
 from dateutil.relativedelta import relativedelta
 
 logger = LogUtil.getlogger(__name__)
 
-'''
+"""
+
     datetime
     コンストラクタにtzinfoを渡すかどうかで内容が変わる
     - Timezone情報を持つモジュール    : aware
@@ -15,9 +16,8 @@ logger = LogUtil.getlogger(__name__)
 
     DST
       夏時間の事、基本使わない
+"""
 
-
-'''
 
 # timezoneオブジェクト
 # timedelta(0)はName='UTC'が入る、以下は同じ
@@ -30,11 +30,19 @@ JST = timezone(timedelta(hours=+9), 'JST')
 
 
 @LogUtil.insertfunclog
-def epoctime(dt: datetime):
-    '''
-    エポック時間(Unix時刻)の出力
-    '''
-    logger.info(f'datetime: {dt}')
+def epoctime(dt: datetime) -> float:
+    """エポック時間(Unix時刻)の出力
+
+    Parameters
+    ----------
+    dt : datetime
+        [description]
+
+    Returns
+    -------
+    float
+        [description]
+    """
 
     # timetuple()は名前付きタプルを持ったオブジェクトを返す
     # インデックス 属性
@@ -43,35 +51,67 @@ def epoctime(dt: datetime):
     # 2           tm_mday
     # 3           tm_hour
     # ...
-    # mktime()はローカル時刻を返す
-    epoc = int(time.mktime(dt.timetuple()))
-    logger.info(f'epoctime: {epoc}')
+    # mktime()はローカル時刻を秒単位で返す
+    # マイクロ秒はmicrosecond属性から小数点以下を算出して加える
+    epoc = int(time.mktime(dt.timetuple())) + dt.microsecond / 1000000
+    logger.info(f'datetime   : {dt}')
+    logger.info(f'microsecond: {dt.microsecond}')
+    logger.info(f'epoctime   : {epoc}')
+
     return epoc
 
 
 @LogUtil.insertfunclog
-def epoc_toUTC(epoc: int):
-    '''
-    エポック時間から変換
-    '''
-    dt_utc = datetime(2021, 12, 1, 10, 20, 30, tzinfo=UTC)
-    dt_jst = datetime(2021, 12, 1, 10, 20, 30, tzinfo=JST)
-    dt_epoc = datetime.fromtimestamp(epoc)
+def epoctext_to_pcapformat(epoctext: str, tz_info: tzinfo = None):
+    """
+    文字列のエポック時間をpcapのframe.time相当の
+    Human Readableなフォーマットに変換
+
+    "1633137008.525944000"
+    ↓
+    "Oct  2, 2021 10:10:08.525944000 JST"
+    """
+    f_epoc = float(epoctext)
+    logger.info(f'f_epoc   : {f_epoc}')
+    epoc_to_pcapformat(f_epoc, tzinfo)
+    readable_format = '%b %d, %Y %H:%M:%S.%f000 %Z'
+    logger.info(
+        f'{datetime.fromtimestamp(f_epoc, tz_info).strftime(readable_format)}')
+
+
+@LogUtil.insertfunclog
+def epoc_to_datetime(epoc: float, tz_info: tzinfo = None):
+    """エポック時間からdatetime型に変換
+
+    Parameters
+    ----------
+    epoc : float
+        [description]
+    tz_info : tzinfo, optional
+        [description], by default None
+
+    Returns
+    -------
+    [type]
+        [description]
+    """
+
+    dt_epoc = datetime.fromtimestamp(epoc, tz_info)
     dt_epoc_utc = datetime.fromtimestamp(epoc, UTC)
     dt_epoc_jst = datetime.fromtimestamp(epoc, JST)
 
-    logger.info(f'dt_utc      : {dt_utc}')
-    logger.info(f'dt_jst      : {dt_jst}')
     logger.info(f'dt_epoc     : {dt_epoc}')
     logger.info(f'dt_epoc_utc : {dt_epoc_utc}')
     logger.info(f'dt_epoc_jst : {dt_epoc_jst}')
 
+    return dt_epoc
+
 
 @LogUtil.insertfunclog
 def howtimedelta():
-    '''
-    timedeltaの使い方
-    '''
+    """timedeltaの使い方
+    """
+
     # 時間の間隔を表すtimedeltaオブジェクト
     delta1 = timedelta(seconds=10)
     logger.info(f'delta: {delta1}')
@@ -85,10 +125,8 @@ def howtimedelta():
 
 @LogUtil.insertfunclog
 def howtimedelta2():
-    '''
-    timedelta色々
-    - 閏年
-    '''
+    """timedelta色々
+    """
 
     # 閏年の境目をサンプルデータとして用意
     dt = datetime.now(JST)
@@ -138,13 +176,19 @@ def howtimedelta2():
 
 @LogUtil.insertfunclog
 def formatdatetimeSample(dt: datetime):
-    '''
+    """フォーマット色々
+
     書式指定
     https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-behavior
 
     結論から書くと、タイムゾーンの有無によって
     %zに時差情報が入るかどうかの違いが生じた
-    '''
+
+    Parameters
+    ----------
+    dt : datetime
+        [description]
+    """
 
     # ElasticSearchで使用されるtimestampフォーマット
     # 2020-10-01T00:00:00+09:00
@@ -179,6 +223,20 @@ def formatdatetimeSample(dt: datetime):
     logger.info(f'{datetime.now(UTC).strftime(readable_format)}')
 
 
+@LogUtil.insertfunclog
+def epoc_to_pcapformat(epoc: float, tz_info: tzinfo = None):
+    """エポック秒からpcapの文字列時刻表記形式に変換
+
+    Parameters
+    ----------
+    epoc : float
+        エポック秒
+    """
+    readable_format = '%b %d, %Y %H:%M:%S.%f000 %Z'
+    logger.info(
+        f'{datetime.fromtimestamp(epoc, tz_info).strftime(readable_format)}')
+
+
 def formatdatetime(dt: datetime):
     ElasticSearchFmt = '%Y-%m-%dT%H:%M:%S%z'
     return dt.strftime(ElasticSearchFmt)
@@ -193,5 +251,8 @@ if __name__ == '__main__':
     # epoctime(datetime.now())
     # howtimedelta()
     # howtimedelta2()
-    formatdatetimeSample(datetime.now())
-    # epoc_toUTC(epoctime(datetime.now()))
+    # formatdatetimeSample(datetime.now())
+    # epoctime(epoc_to_datetime(epoctime(datetime.now(JST)), JST))
+    # epoc_to_pcapformat(epoctime(datetime.now()))
+
+    epoctext_to_epoc('1633137008.525944000', UTC)
