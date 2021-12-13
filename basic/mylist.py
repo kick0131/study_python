@@ -35,7 +35,8 @@ def listcomprehension():
 
     """
     names = ['ada', 'bob', 'adam', 'caccy', 'amanda']
-    a_names = [name + ' start with A.' for name in names if re.match('a+', name)]
+    a_names = [
+        name + ' start with A.' for name in names if re.match('a+', name)]
     for name in a_names:
         print(f'{name}')
 
@@ -55,5 +56,45 @@ def listcomprehension2():
         print(f'{dictitem}')
 
 
+def appendlistmove():
+    """append操作の罠
+
+    オブジェクト要素のコピー例として、
+    一時オブジェクトを経由せずに直接appendするのはいけないという話
+
+    """
+    listdata = '[{"greet":"hello","os":"linux"},{"greet":"こんにちは","os":"windows"}]'
+    output = json.loads(listdata)
+
+    # --------------------------------------------------------
+    # OKパターン
+    #
+    dictlist = []
+    for listitem in output:
+        tmp_dict = {}
+        # オブジェクトIDの確認
+        print(id(tmp_dict))
+        tmp_dict['greet'] = listitem['greet']
+        tmp_dict['os'] = listitem['os']
+        dictlist.append(tmp_dict)
+
+    # tmp_dictで格納しているオブジェクトが毎回異なるので
+    # 設定元を変えてもコピー先は影響しない
+    output[0]['greet'] = 'hogehoge'
+    for listitem in dictlist:
+        print(listitem)
+
+    # --------------------------------------------------------
+    # NGパターン
+    # 直接オブジェクトをappendしているのでsharrow copyになっている
+    #
+    dictlist = []
+    for listitem in output:
+        dictlist.append(listitem)
+    output[0]['greet'] = 'hogehoge'
+    for listitem in dictlist:
+        print(listitem)
+
+
 if __name__ == '__main__':
-    listcomprehension2()
+    appendlistmove()
