@@ -24,10 +24,18 @@ def call_for_win():
     getLogger().info('start')
     try:
         # Popenとrunどちらの方法でも実行可能、run推奨
-        subprocess.Popen('dir', shell=True)
+        # subprocess.Popen('dir', shell=True)
 
         # タイムアウト待ちを行い、エラーを発生させる例
         # subprocess.run(['timeout', '/T', '2'], shell=True, timeout=1)
+
+        # check_output利用方法
+        # エラーにしたかったがならない
+        exe_cmd = "echo �X�}�J��\r\n"
+        o = subprocess.check_output(exe_cmd.split(' '),
+                                    shell=True,
+                                    timeout=1).decode('utf-8')
+        print(o)
 
     except Exception as e:
         getLogger().error(e)

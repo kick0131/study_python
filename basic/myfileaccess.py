@@ -161,8 +161,18 @@ def sampleRun():
     return result
 
 
+def readjson(filepath):
+    with open(filepath, 'r', encoding='utf-8') as r:
+        json_load = json.dumps(json.load(r)).decode('utf-8')
+        print(f'type:{type(json_load)}')
+        print(f'{json_load}')
+
+
 if __name__ == '__main__':
-    # print("result:{0}".format(sampleRun()))
+
+    # 自身のファイルパスからの相対パス
+    OWN_FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+
     filepath = os.getcwd() + '/log/logA/'
 
     # create directry
@@ -175,3 +185,8 @@ if __name__ == '__main__':
 
     # remove file path
     # rmSample(filepath)
+
+    # read json
+    # filepath = os.path.join(OWN_FILE_DIR, *['data', 'json', 'ok.json'])
+    filepath = os.path.join(OWN_FILE_DIR, *['data', 'json', 'not_utf8.json'])
+    readjson(filepath)
