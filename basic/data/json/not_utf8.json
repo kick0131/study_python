@@ -1,0 +1,11 @@
+{
+  "http.request.line": [
+    "Connection: close     \r\n",
+    "Pragma: no-cache\r\n",
+    "Authorization: Basic Og==\r\n",
+    "Content-Length: 0\r\n",
+    "User-Agent: �X�}�J��\r\n",
+    "Host: www.planex.co.jp\r\n",
+    "Cache-Control: no-cache\r\n"
+  ]
+}
