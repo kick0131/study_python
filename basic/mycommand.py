@@ -31,10 +31,16 @@ def call_for_win():
 
         # check_output利用方法
         # エラーにしたかったがならない
+        moji = b'\x83X\x83}\x83J\x83\x81\r\n'
+        hensu = moji
+        print(hensu)
+        # print(moji.decode('utf-8'))
         exe_cmd = "echo �X�}�J��\r\n"
-        o = subprocess.check_output(exe_cmd.split(' '),
+        exe_cmd = "echo \x83X\x83}\x83J\x83\x81\r\n"
+        exe_cmd = ['echo', b'\x83X\x83}\x83J\x83\x81']
+        o = subprocess.check_output(exe_cmd,
                                     shell=True,
-                                    timeout=1).decode('utf-8')
+                                    timeout=1)
         print(o)
 
     except Exception as e:
