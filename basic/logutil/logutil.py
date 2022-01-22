@@ -104,11 +104,12 @@ class LogUtil:
         """
         @functools.wraps(func)
         def _wrapper(*args, **kwargs):
+            funcname = func.__name__
             if cls._innerlogger is not None:
-                cls._innerlogger.info(f'=== {func.__name__} start')
+                cls._innerlogger.info(f'=== {funcname} start')
             result = func(*args, **kwargs)
             if cls._innerlogger is not None:
-                cls._innerlogger.info(f'=== {func.__name__} end')
+                cls._innerlogger.info(f'=== {funcname} end')
             return result
         return _wrapper
 

@@ -38,14 +38,16 @@ def InsertFuncLog(**kwargs):
         Returns:
             func: デコレートされたメソッド
         """
+        funcname = func.__name__
+
         @functools.wraps(func)
         def _wrapper(*args, **kwargs):
             if logger is not None:
-                logger.info(f'=== {func.__name__} start')
+                logger.info(f'=== {funcname} start')
             # print(f'args:{args} kwargs:{kwargs}')
             result = func(*args, **kwargs)
             if logger is not None:
-                logger.info(f'=== {func.__name__} end')
+                logger.info(f'=== {funcname} end')
             return result
         return _wrapper
     return _InsertFuncLog
