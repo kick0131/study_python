@@ -1,17 +1,18 @@
 import os
 import requests
-from logging import StreamHandler, Formatter, INFO, getLogger
+from logging import StreamHandler, Formatter, DEBUG, getLogger
 from requests.exceptions import Timeout, ConnectionError, ConnectTimeout
 import json
 from dotenv import load_dotenv
+import hashlib
+import base64
+
 
 """virustotal実行サンプル
 """
 load_dotenv()
 apikey = os.getenv('APIKEY')
 print(apikey)
-# urlはVirusTotalのURLをBase64エンコードしたもの
-url = "https://www.virustotal.com/api/v3/urls/aHR0cHM6Ly9zdXBwb3J0LnZpcnVzdG90YWwuY29tL2hjL2VuLXVz"
 
 # APIキーは環境変数から取得する事
 headers = {
@@ -20,19 +21,56 @@ headers = {
 }
 
 
-def virustotal():
+def createhash(data: str):
+    """引数からハッシュを生成する
+
+    デフォルトはsha256
+    Parameters
+    ----------
+    data : str
+        変換データ
+
+    """
+    return hashlib.sha256(data.encode()).hexdigest()
+
+
+def createbase64(data: str) -> bytes:
+    """base64エンコード結果を返す
+
+    VTのAPI Endpointの説明より、base64のパディングは不要なので、除去する
+    URL identifier or base64 representation of URL to scan (w/o padding)
+
+    URLに組み込むため、byte型をstr型に変換した値を返す
+
+    Parameters
+    ----------
+    data : str
+        変換データ
+
+    Returns
+    -------
+    bytes
+        base64エンコード結果
+    """
+    base64_org = base64.b64encode(data.encode())
+    base64_nopad = base64_org.replace(b'=', b'')
+    base64_ascii = base64_nopad.decode("ascii")
+    return base64_ascii
+
+
+def virustotal(url: str):
     with requests.request("GET", url, headers=headers, verify=False) as r:
         getLogger().info(r.text)
 
 
 def init_logger():
     handler = StreamHandler()
-    handler.setLevel(INFO)
+    handler.setLevel(DEBUG)
     handler.setFormatter(
         Formatter("[%(asctime)s] [%(threadName)s] [%(levelname)s] %(message)s"))
     logger = getLogger()
     logger.addHandler(handler)
-    logger.setLevel(INFO)
+    logger.setLevel(DEBUG)
 
 
 def get():
@@ -115,5 +153,21 @@ if __name__ == "__main__":
     init_logger()
 
     getLogger().info('start')
-    virustotal()
+
+    sample_url = 'https://excesssecurity.com/virustotal/'
+
+    # urlタイプのINPUTは対象URLをBase64エンコードしたもの
+    hashed_url = createhash(sample_url)
+    base64_url = createbase64(sample_url)
+    getLogger().debug(f'hashed_url : {hashed_url}')
+    getLogger().debug(f'base64_url : {base64_url}')
+
+    # test
+    input_url = f"https://www.virustotal.com/api/v3/urls/{base64_url}"
+    getLogger().debug(f'input_url : {input_url}')
+
+    # OK data(VirustotalそのものをVirustotalでチェック)
+    # input_url = "https://www.virustotal.com/api/v3/urls/aHR0cHM6Ly9zdXBwb3J0LnZpcnVzdG90YWwuY29tL2hjL2VuLXVz"
+
+    virustotal(input_url)
     getLogger().info('end')
