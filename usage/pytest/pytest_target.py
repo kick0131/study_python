@@ -16,10 +16,12 @@ def get_platform():
 def funcname(func):
     """デコレータを使った関数ログ
     """
+    funcname = func.__name__
+
     def _wrapper(*args, **kwargs):
-        print(f'=== {func.__name__} start')
+        print(f'=== {funcname} start')
         result = func(*args, **kwargs)
-        print(f'=== {func.__name__} end')
+        print(f'=== {funcname} end')
         return result
     return _wrapper
 
