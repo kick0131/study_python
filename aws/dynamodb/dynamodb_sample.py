@@ -37,7 +37,8 @@ def writedb(resource):
     table = resource.Table(TABLENAME)
     response = table.put_item(
         Item={
-            'sensorId': '2015',
+            # 'sensorId': '2015',
+            'CreatedId': '2015',
             'getDataTime': formatdatetimeSample(datetime.now()),
             'info': {
                 'plot': 'Nothing happens at all.',
@@ -53,8 +54,9 @@ def readdb(resource):
     table = resource.Table(TABLENAME)
     response = table.get_item(
         Key={
-            'sensorId': '2015',
-            'getDataTime': '2022/02/16T20:41:31+0900'
+            # 'sensorId': '2015',
+            'CreatedId': '2015'
+            # 'getDataTime': '2022/02/16T20:41:31+0900'
         }
     )
     logger.info(response)

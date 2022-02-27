@@ -57,8 +57,8 @@ python.linting.flake8Enabled　有効
 
 ### linux mac
 * 環境変数PYTHONPATHでmain.pyディレクトリまでのパスを通す
-    ```
-    export PYTHONPATH="/Users/hiramatsu/work/study_python:${PYTHONPATH}"
+    ```bash
+    export PYTHONPATH=`pwd`:"${PYTHONPATH}"
     ```
 
 # 仮想環境
@@ -67,7 +67,7 @@ Pipenvも過去に使っていたが、公式も非推奨とした為、
 標準でついてくるvenvを利用する方針に切り替え
 
 ### 環境構築
-```
+```bash
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
@@ -80,6 +80,4 @@ pip install -r requirements.txt
     `./.venv/bin/activate`  
     ※vsCodeでactivate実行時にPSSecurityExceptionが発生する場合、PowerShellで以下コマンドを実行  
     `Set-ExecutionPolicy RemoteSigned`
-
-
 
