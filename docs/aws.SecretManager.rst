@@ -1,13 +1,13 @@
-aws.SecretManager package
+aws.secretmanager package
 =========================
 
 Submodules
 ----------
 
-aws.SecretManager.mysecretmanager\_class module
+aws.secretmanager.mysecretmanager\_class module
 -----------------------------------------------
 
-.. automodule:: aws.SecretManager.mysecretmanager_class
+.. automodule:: aws.secretmanager.mysecretmanager_class
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ aws.SecretManager.mysecretmanager\_class module
 Module contents
 ---------------
 
-.. automodule:: aws.SecretManager
+.. automodule:: aws.secretmanager
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,29 +1,29 @@
-aws.Cognito package
+aws.cognito package
 ===================
 
 Submodules
 ----------
 
-aws.Cognito.cognito\_auth module
+aws.cognito.cognito\_auth module
 --------------------------------
 
-.. automodule:: aws.Cognito.cognito_auth
+.. automodule:: aws.cognito.cognito_auth
    :members:
    :undoc-members:
    :show-inheritance:
 
-aws.Cognito.cognito\_helper module
+aws.cognito.cognito\_helper module
 ----------------------------------
 
-.. automodule:: aws.Cognito.cognito_helper
+.. automodule:: aws.cognito.cognito_helper
    :members:
    :undoc-members:
    :show-inheritance:
 
-aws.Cognito.cognito\_main module
+aws.cognito.cognito\_main module
 --------------------------------
 
-.. automodule:: aws.Cognito.cognito_main
+.. automodule:: aws.cognito.cognito_main
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ aws.Cognito.cognito\_main module
 Module contents
 ---------------
 
-.. automodule:: aws.Cognito
+.. automodule:: aws.cognito
    :members:
    :undoc-members:
    :show-inheritance:

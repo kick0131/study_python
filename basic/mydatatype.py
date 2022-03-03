@@ -304,6 +304,7 @@ def dict_comprehension():
 
 def dict_filtering():
     """辞書型のフィルタリング
+
     {
         "name":"taro",
         "age":10,
@@ -325,7 +326,6 @@ def dict_filtering():
         }
     }
     を作る
-
     """
     human_info = {
         "name": "taro",

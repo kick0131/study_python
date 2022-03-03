@@ -20,6 +20,30 @@ basic.myclass module
    :undoc-members:
    :show-inheritance:
 
+basic.mycommand module
+----------------------
+
+.. automodule:: basic.mycommand
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.myconcurrent module
+-------------------------
+
+.. automodule:: basic.myconcurrent
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.mycorutine module
+-----------------------
+
+.. automodule:: basic.mycorutine
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 basic.mydatatype module
 -----------------------
 
@@ -96,6 +120,14 @@ basic.myregex module
 --------------------
 
 .. automodule:: basic.myregex
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+basic.myzip module
+------------------
+
+.. automodule:: basic.myzip
    :members:
    :undoc-members:
    :show-inheritance:

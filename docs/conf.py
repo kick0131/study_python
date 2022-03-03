@@ -15,6 +15,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../')))
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../aws/Cognito/')))
 sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../aws/ec2/')))
+sys.path.insert(0, os.path.abspath(os.path.join(__file__, '../basic/')))
 
 
 # -- Project information -----------------------------------------------------
@@ -36,8 +37,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    'sphinx.ext.napoleon',
-    'sphinx_rtd_theme'
+    'sphinx.ext.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
