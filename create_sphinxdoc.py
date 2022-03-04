@@ -1,12 +1,13 @@
-import subprocess
 """Sphinxドキュメントコマンド実行スクリプト
 
     本プログラムを実行するだけで、最新版のSphinxドキュメントを生成します。
+    python create_sphinxdoc.py
 
     # HTTPサーバ起動して動作確認
     python -m http.server 8000 --directory docs/_build/
 
 """
+import subprocess
 
 
 def run():

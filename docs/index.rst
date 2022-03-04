@@ -9,13 +9,12 @@
 .. toctree::
    :maxdepth: 4
    :caption: Contents:
-
-   main
+   
    sample/sample1
    aws
-   aws.Cognito
+   aws.cognito
    aws.ec2
-   aws.SecretManager
+   aws.secretmanager
    basic
    modules
    

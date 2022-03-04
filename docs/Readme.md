@@ -16,14 +16,17 @@
 ### 流れ
 rootディレクトリで実行すること
 1. conf.pyに従ったrstファイルを出力
-    ```
-     sphinx-apidoc.exe -f -o .\docs\ .
+    ```bash
+     sphinx-apidoc.exe -f -o .\docs .
     ```
 1. rstファイルからHTMLファイルを出力する
+    ```bash
+    sphinx-build.exe -b html .\docs .\docs\_build
     ```
-    sphinx-build.exe -b html .\docs\ .\docs\_build
+1. (必要に応じて)HTTPサーバで生成したHTMLを確認
+    ```bash
+    python -m http.server 8000 --directory docs/_build/
     ```
-
 
 ## 主要ファイル
 
@@ -64,7 +67,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
     'sphinx.ext.napoleon',
-    'sphinx_rtd_theme'
 ]
 html_theme = 'sphinx_rtd_theme'
 ```
