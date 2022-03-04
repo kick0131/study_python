@@ -15,6 +15,35 @@ logger = createDeveloplogger(__name__, 'log/debug.log')
 
 """
 
+# Kinesisレコードイベント
+kinesis_record = {
+    "Records": [
+        {
+            "kinesis": {
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "1",
+                "sequenceNumber": "49590338271490256608559692538361571095921575989136588898",
+                # Hello, this is a test.
+                "data": "SGVsbG8sIHRoaXMgaXMgYSB0ZXN0Lg==",
+                "approximateArrivalTimestamp": 1545084650.987
+            },
+            "eventSource": "aws:kinesis",
+            "eventVersion": "1.0",
+            "eventID": "shardId-000000000006:49590338271490256608559692538361571095921575989136588898",
+            "eventName": "aws:kinesis:record",
+            "invokeIdentityArn": "arn:aws:iam::123456789012:role/lambda-role",
+            "awsRegion": "us-east-2",
+            "eventSourceARN": "arn:aws:kinesis:us-east-2:123456789012:stream/lambda-stream"
+        }
+    ]
+}
+
+# サンプルデータ
+context = {
+    "key": "value",
+    "numParam": 123,
+    "boolParam": True
+}
 
 @InsertFuncLog(logger=logger)
 def b64encode(message: str):
@@ -34,11 +63,7 @@ def b64decode(bytedata: bytes):
 
 @InsertFuncLog(logger=logger)
 def jsonencode():
-    context = {
-        "key": "value",
-        "numParam": 123,
-        "boolParam": True
-    }
+
 
     # base64化
     b64_info = base64.b64encode(json.dumps(context).encode('utf8'))
@@ -50,9 +75,45 @@ def jsonencode():
     logger.info(f'b64_decode : {b64_decode} type: {type(b64_decode)}')
 
 
+def kinesisEventWithJson(body: dict) -> dict:
+    """Kinesisイベント生成
+
+    bodyにjsonデータが含まれるKinesisイベントを作成する。
+
+    以下の使い方を想定
+    kinesisevent = kinesisEventWithJson(jsondata)
+    lambda_handler(kinesisevent, context)
+
+    .. note::
+
+        KinesisのdataフィールドはBase64エンコード文字列を設定する決まりがある
+
+    Args:
+        body (dict): Kinesisレコードのdata部に設定するjson
+
+    Returns:
+        dict: Kinesisレコード
+    """
+    kinesis_record['Records'][0]['kinesis']['data'] = dictToBase64Str(body)
+    return kinesis_record
+
+
+def dictToBase64Str(body: dict) -> str:
+    """dictをBase64文字列に変換
+
+    jsonのシリアライズ
+
+    Args:
+        body (dict): Base64化したいデータ
+
+    Returns:
+        str: Base64変換した文字列
+    """
+    return base64.b64encode(json.dumps(body).encode()).decode()
+
+
 if __name__ == '__main__':
     encoded = b64encode('abcde')
     b64decode(encoded)
     jsonencode()
-
-
+    logger.info(dictToBase64Str(context))
