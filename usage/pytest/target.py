@@ -1,5 +1,5 @@
 import platform
-
+import os
 '''試験対象
 
 pymockから内容を書き換える事を確認する為のサンプルクラス、モジュール
@@ -8,6 +8,7 @@ pymockから内容を書き換える事を確認する為のサンプルクラ�
 
 CONST_VALUE = 'this is const'
 MYTIMEOUT_MESSAGE = '100ms over'
+region = os.getenv('AWS_REGION')
 
 
 class BaseException(Exception):
@@ -28,6 +29,10 @@ def get_platform():
 
 def exception_sample():
     raise MyTimeoutError(MYTIMEOUT_MESSAGE)
+
+
+def get_env():
+    return region
 
 
 def funcname(func):
