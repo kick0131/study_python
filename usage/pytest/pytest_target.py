@@ -7,10 +7,27 @@ pymockから内容を書き換える事を確認する為のサンプルクラ�
 '''
 
 CONST_VALUE = 'this is const'
+MYTIMEOUT_MESSAGE = '100ms over'
+
+
+class BaseException(Exception):
+    """ユーザ定義例外基底クラス
+    """
+    pass
+
+
+class MyTimeoutError(BaseException):
+    """自作例外1
+    """
+    pass
 
 
 def get_platform():
     return platform.system()
+
+
+def exception_sample():
+    raise MyTimeoutError(MYTIMEOUT_MESSAGE)
 
 
 def funcname(func):
