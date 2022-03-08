@@ -244,7 +244,11 @@ def formatdatetime(dt: datetime):
 
 @LogUtil.insertfunclog
 def timestamps():
-    pass
+    """文字列の時刻情報からdatetime型を作る
+    """
+    testdata = '2022/03/08 12:34:56'
+    FORMAT_STR = '%Y/%m/%d %H:%M:%S'
+    print(datetime.strptime(testdata, FORMAT_STR))
 
 
 if __name__ == '__main__':
@@ -255,4 +259,5 @@ if __name__ == '__main__':
     # epoctime(epoc_to_datetime(epoctime(datetime.now(JST)), JST))
     # epoc_to_pcapformat(epoctime(datetime.now()))
 
-    epoctext_to_epoc('1633137008.525944000', UTC)
+    # epoctext_to_epoc('1633137008.525944000', UTC)
+    timestamps()
