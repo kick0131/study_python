@@ -35,6 +35,10 @@ def get_env():
     return region
 
 
+def plus(a: int, b: int):
+    return a + b
+
+
 def funcname(func):
     """デコレータを使った関数ログ
     """

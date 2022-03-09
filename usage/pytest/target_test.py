@@ -2,7 +2,7 @@ import pytest
 import target
 
 
-def testGetEnv(setupEnv):
+def test_getenv(setupEnv):
     """環境変数の書き換え
 
     詳細はconftest.pyを参照
@@ -18,3 +18,24 @@ def test_mytimeout():
 
     # 例外メッセージの検証
     assert str(e.value) == target.MYTIMEOUT_MESSAGE
+
+
+@pytest.mark.skip
+def test_not_action():
+    """テスト対象外にするアノテーション
+    """
+    assert True
+
+
+@pytest.mark.parametrize(
+    "x, y, expect", [
+        (0, 1, 1),
+        (2, 2, 4),
+        (3, 4, 7)
+    ]
+)
+def test_parametrize(x, y, expect):
+    """引数のパターンチェック
+    """
+
+    assert target.plus(x, y) == expect
