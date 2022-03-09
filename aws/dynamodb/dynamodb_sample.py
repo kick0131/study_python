@@ -1,62 +1,32 @@
 # from botocore.exceptions import ClientError
 from basic.logutil.mylogging_helper import InsertFuncLog, createDeveloplogger
-from datetime import datetime, timezone, timedelta
 import aws.myenv as myenv
 
+TABLENAME = myenv.DYNAMODB_TABLE
 logger = createDeveloplogger(__name__, 'log/debug.log')
 
-UTC = timezone.utc
-JST = timezone(timedelta(hours=+9), 'JST')
-TABLENAME = myenv.DYNAMODB_TABLE
-
 
 @InsertFuncLog(logger=logger)
-def formatdatetimeSample(dt: datetime):
-    """フォーマット指定の時刻取得
-
-    書式指定
-    https://docs.python.org/ja/3/library/datetime.html#strftime-and-strptime-behavior
-
-    Parameters
-    ----------
-    dt : datetime
-        [description]
-    """
-    TimeFmt = '%Y/%m/%dT%H:%M:%S%z'
-
-    # 初期値
-    logger.info(f'before        : {dt}')
-
-    # Timezone指定あり
-    newdt = datetime.fromtimestamp(dt.timestamp(), JST)
-    return newdt.strftime(TimeFmt)
-
-
-@InsertFuncLog(logger=logger)
-def writedb(resource):
+def writedb(resource, item):
     table = resource.Table(TABLENAME)
-    response = table.put_item(
-        Item={
-            # 'sensorId': '2015',
-            'CreatedId': '2015',
-            'getDataTime': formatdatetimeSample(datetime.now()),
-            'info': {
-                'plot': 'Nothing happens at all.',
-                'rating': 0
-            }
-        }
-    )
+    response = table.put_item(Item=item)
     logger.info(response)
 
 
 @InsertFuncLog(logger=logger)
-def readdb(resource):
+def readdb(resource, key):
     table = resource.Table(TABLENAME)
-    response = table.get_item(
-        Key={
-            # 'sensorId': '2015',
-            'CreatedId': '2015'
-            # 'getDataTime': '2022/02/16T20:41:31+0900'
-        }
-    )
+    response = table.get_item(Key=key)
     logger.info(response)
+
+
+# 重複を許可する際に設定するキー
+PKEY = 'CreatedId'
+
+
+@InsertFuncLog(logger=logger)
+def bulkinsert(resource, listitem):
+    table = resource.Table(TABLENAME)
+    with table.batch_writer(overwrite_by_pkeys=[PKEY]) as batch:
+        for data in listitem:
+            batch.put_item(Item=data)

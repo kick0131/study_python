@@ -5,6 +5,7 @@ from aws.boto3_util import createAwsServiceResource
 from basic.logutil.mylogging_helper import InsertFuncLog, createDeveloplogger
 import aws.myenv as myenv
 import base64
+import sampledata
 
 logger = createDeveloplogger(__name__, 'log/debug.log')
 
@@ -73,8 +74,16 @@ def lambda_handler(event, context):
     try:
         resource = createAwsServiceResource(
             'dynamodb', profile=myenv.AWS_PROFILE)
-        mydynamo.writedb(resource)
-        mydynamo.readdb(resource)
+        # mydynamo.writedb(resource, sampledata.OneItem)
+
+        # 検索キー
+        key = {
+            'CreatedId': '2015'
+            # 'getDataTime': '2022/02/16T20:41:31+0900'
+        }
+        # mydynamo.readdb(resource, key)
+
+        mydynamo.bulkinsert(resource, sampledata.MultiItem)
 
     except Exception as err:
         logger.error('エラー発生:{}'.format(err))
@@ -89,8 +98,8 @@ if __name__ == '__main__':
         event = json.dumps(sample_json)
 
         # 疑似Lambda呼び出し
-        # lambda_handler(event, '')
-        lambda_handler_kinesis(kinesisRecodeEvents, '')
+        lambda_handler(event, '')
+        # lambda_handler_kinesis(kinesisRecodeEvents, '')
 
     except Exception as err:
         logger.error('エラー発生:{}'.format(err))
