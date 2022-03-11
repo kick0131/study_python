@@ -39,3 +39,7 @@ def test_parametrize(x, y, expect):
     """
 
     assert target.plus(x, y) == expect
+
+# TODO 実施したいテストケース
+# targetdynamo
+

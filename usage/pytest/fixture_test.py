@@ -1,9 +1,8 @@
 """Fixtureのスコープを確認するサンプル
-
-- 引数で使われたfixtureのみ有効
+- fixtureは引数に渡す渡さないに関わらず、スコープに応じて必ず実行される
+- fixtureで生成したオブジェクトを使用する場合はテストメソッドの引数として渡す
 - yieldを使うと「メソッドの最初」「メソッド終了時」に処理を分けられる
-- スコープ単位で処理が実行される
- - class : クラス単位で1回のみ実行
+- class : クラス単位で1回のみ実行
 
 """
 import sys
@@ -45,10 +44,8 @@ def scope_class(conftext_moduleA, scope_moduleB):
     print('teardown after -- scope_class')
 
 
-def test_always_scceeds(
-        scope_class, scope_functionA, scope_moduleA,
-        scope_functionB, scope_moduleB):
-    print('=== test_always_scceeds')
+def test_always_success():
+    print('=== test_always_success')
     assert True
 
 
