@@ -1,0 +1,34 @@
+service: sample-app
+frameworkVersion: '2'
+
+custom:
+  defaultStage: dev
+  # --stageオプションで読み込ませるファイルを切り替える仕組み
+  environment:
+    dev: ${file(./conf/dev/dev.yml)}
+  const:
+    awsregion: ${self:custom.environment.${self:provider.stage}.REGION}
+    awsaccountid: ${self:custom.environment.${self:provider.stage}.AWS_ACCOUNT_ID}
+    lambdarolearn: arn:aws:iam::${self:custom.const.awsaccountid}:role/${self:custom.environment.${self:provider.stage}.COMPONENT.LAMBDA_ROLE}
+
+package:
+  # デプロイ除外設定
+  exclude:
+    - conf/**
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ${self:custom.const.awsregion}
+  lambdaHashingVersion: 20201221
+
+functions:
+  helloworld:
+    handler: hello.lambda_handler
+    role: ${self:custom.const.lambdarolearn}
+    # EventBridgeを使い、定期的にLambdaを実行させる
+    # 例では毎日1時間毎に実行
+    events:
+      - eventBridge:
+          schedule: cron(0 */1 * * ? *)
