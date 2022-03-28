@@ -1,7 +1,6 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-import awscrt
 from awscrt import io, mqtt
 from awsiot import mqtt_connection_builder
 import time as t
@@ -17,10 +16,6 @@ MESSAGE = "Hello World"
 TOPIC = ""
 RANGE = 2
 
-proxy_options = awscrt.http.HttpProxyOptions(
-    'xxx.net',
-    8080
-)
 
 # Spin up resources
 event_loop_group = io.EventLoopGroup(1)
@@ -36,7 +31,9 @@ mqtt_connection = mqtt_connection_builder.mtls_from_path(
     clean_session=False,
     keep_alive_secs=6,
     # if use proxy, comment out.
-    # websocket_proxy_options=proxy_options,
+    # http_proxy_options=awscrt.http.HttpProxyOptions(
+    #     host_name='proxygate51.nic.nec.co.jp',
+    #     port=8080)
 )
 print("Connecting to {} with client ID '{}'...".format(
     ENDPOINT, CLIENT_ID))
