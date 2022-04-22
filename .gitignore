@@ -24,3 +24,5 @@ docs/*.rst
 Pipfile.lock
 encrypted.bin
 .venv
+# バイナリファイルは対象外
+**/.pdf
