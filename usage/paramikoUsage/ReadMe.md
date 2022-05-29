@@ -1,3 +1,7 @@
+# Paramikoとは
+対象サーバにSSH接続を行い、コマンドを実行するライブラリ
+https://www.paramiko.org/
+
 ## 準備
 .envファイルを作成
 ```

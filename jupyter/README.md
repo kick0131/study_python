@@ -1,19 +1,18 @@
 # Jupyter
+VSCodeを使う場合の最短ルートはおそらく以下
+- インタラクティブウィンドウ
 
-## カーネルをpipenvの環境に変更
-(引用)https://qiita.com/mzn/items/99d769d0ad9d03a5d73e
+## 1.インタラクティブウィンドウの活用
+`# %%`のコードブロック単位でjupyterのコマンドが実行できる  
+Ctrl + Enterでインタラクティブウィンドウが開き、実行結果が出力される
+```bash
+# %%
+jupyterのコード
 ```
-pipenv shell
-python -m ipykernel install --user --name=<お好きな名前>
-```
-jupyter接続後、インタープリタをpipenv環境のpythonに指定
+`.pyファイルでjupyterのコードが書ける点`が特徴  
+欠点は実行結果が残らない(gitの容量に優しいのでそういう意味では利点)
 
-## 実行方法
-1. (vscodeとは別のターミナルで実行)pipenv環境（Jupyterインストール済）で以下コマンドを実行
-    ```
-    jupyter lab
-    ```
-    Jupyterが起動し、自動でブラウザからJupyterにアクセスする
-
-2. notebookを開き、右上のJupyterServerから手順１で立ち上げたJupyterServerを選択する
-
+## 2.jupyter拡張機能を利用
+以下を条件にブラウザの代わりにVScodeで.ipynbファイルが開ける
+- 実行環境にjupyterがインストールされていること
+- VScodeのjupyter拡張機能がインストールされていること
